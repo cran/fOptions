@@ -1,34 +1,194 @@
 
+<P>
+<B><FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="7">
+   <FONT COLOR="#7F0000">Rmetrics</FONT></FONT></FONT></B>
+   <FONT FACE="Arial,Helvetica,Monaco"><B><FONT SIZE="3">
+   <FONT COLOR="#7F0000">Updates, Changes, and Enhancements</FONT></FONT></FONT> 
+</B></P>
 
-<FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2"><B><FONT COLOR="#7F0000">
-<H2>Rmetrics - Updates, Changes, and Enhancements</H2>
-</FONT></B></FONT></FONT></P>
-
+<P ALIGN=CENTER>
 <HR ALIGN=CENTER WIDTH="100%" SIZE="2">
+</P>
 
-<FONT FACE="Arial,Helvetica,Monaco">
-An Environment and Collection of Functions for Teaching<BR>
-Financial Engineering and Computational Finance<BR>
-with R<BR>
-</FONT>
+<P>
+<B><FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2">
+    2004-10-11 Built 200.10058</FONT></FONT>
+</B></P>
 
 
 <PRE>
 
-
-2004-07-04
-UPDATES, CHANGES AND ENHANCEMENTS IN RMETRICS:
-
-IMPORTANT NOTE:
-
-Built 1091.10057 has been submitted to the CRAN server ...
-
-Starting with Built 1090.10055 the packages should compile also under 
-    Linux and Mac OSX ... 
-
-Note, Rmetrics is build and tested under MS Windows XP (not under Linux)!
+This file reports the most recent updates, changes and enhancements made
+to the packages included in the Rmetrics environment.
 
 
+________________________________________________________________________________
+For the next Rmetrics VERSION 1091.10058
+
+
+2004-10-11 Rmetrics
+    The new version is now proofed to be conform witr R Version 2.0 for
+    all its functions.
+
+2004-10-03 fSeries: ArmaStatistics
+    The functions from the "ArmaStatisticts" collection have been merged
+    with the collection of "ArmaModelling" functions.
+    
+2004-10-01 Rmetrics:
+    The naming of the source and manual page files follows now a unique
+    naming convention.
+    
+2004-09-27 fSeries: demo/funSeries
+    Three new functions have been added to the "funSeries.R" file in the
+    demo directory: "tslag" - computes lagged or leading vector/matrix 
+    of selected order(s), "pdl" - creates a regressor matrix for 
+    polynomial distributed lags, and "disaggregate" - disaggregates 
+    a vector or time series from low to high frequency.
+
+2004-09-21 fBasics: BasicStatistics
+    All column and row statistics functions now allow for 'timeSeries' 
+    objects and any other 'rectangular' objects which can be transformed 
+    to a matrix as input.
+    
+2004-09-19 fSeries: RollingAnalysis
+    All rolling anslysis functions now allow for univariate 'timeSeries' 
+    objects and  any other objects which can be transformed to a vector 
+    as input.
+    
+2004-09-19 fSeries: TseriesTests
+    All test functions now allow for univariate 'timeSeries' objects and 
+    any other objects which can be transformed to a vector as input.
+    
+2004-09-19 fBasics: DistributionFits
+    All fitting functions now allow for univariate 'timeSeries' objects 
+    and any other objects which can be transformed to a vector as input.
+    
+2004-09-19 fBasics: StylizedFacts
+    All stylized facts functions now allow for univariate 'timeSeries' 
+    objects and any other objects which can be transformed to a vector 
+    as input.
+    
+2004-09-19 fBasics: ClassicalTests
+    All test functions now allow for univariate 'timeSeries' objects and 
+    any other objects which can be transformed to a vector as input.
+
+2004-09-18 fOptions: EBMDistributions, GammaFunctions, HypergeometricFunctions
+    Three new Chapters have been introduced with functions to compute
+    distributions, the error, gamma and related functions, and the 
+    confluent hypergeometric functions. These functions are useful in the
+    field of Exponential Brownian Motion and for the valuation of 
+    Asian Options. The demo file "demo/funOptions.R" where the functions 
+    where originally listed is now obsolete.
+
+2004-09-14 fSeries: UnitrootDistribution
+    Two functions to compute the cumulative probability, punitroot, 
+    and the quantiles, qunitroot, of the unit root test statistics 
+    have been added. The functions are based on the Fortran routine 
+    and the tables published by J.G. McKinnon 1988.
+    
+2004-09-10 fSeries: black.ts.csv
+    A data file which contains real monthly stock return data from January  
+    1978 to December 1987 which are constructed from Berndt's (1991) 
+    data set have been added.
+    
+2004-09-10 fSeries: LongMemoryModelling
+    Functions to simulate the long memory behaviour of an univariate 
+    time series process have been added. Inclided are Beran's, 
+    Durbin's, and Paxson's method to generate Fractional Gaussian
+    Noise.
+
+2004-09-08 fSeries: klein.csv
+    A data file which contains data for Klein's (1950) simple econometric 
+    model of the US economy has been added.
+    
+2004-09-08 fSeries: xmpZWChapter03
+    Demo files with examples from Chapter 3 of the book of Zivot and
+    Wang "Modeling Financial Time Series with Splus" have been added.
+
+2004-09-03 fSeries: RollingAnalysis
+    Caused by a typing error the function 'rollMean' failed when the 
+    argument 'trim' was set to FALSE. This has been corrected.
+
+2004-09-03 fSeries: EquationsModelling
+    We have added functions to perform fits of systems of regression 
+    equations. The underlying functions are those from the contributed 
+    R-package 'systemfit' written by Jeff D. Hamann and Arne Henningsen.
+    'systemfit' offers functions for fitting linear structural equations 
+    using Ordinary Least Squares (OLS), Weighted Least Squares (WLS), 
+    Seemingly Unrelated Regression (SUR), Two-Stage Least Squares (2SLS), 
+    Weighted Two-Stage Least Squares (W2SLS) or Three-Stage Least 
+    Squares (3SLS). The wrapper fullfills the naming conventions of 
+    Rmetrics, returns a S4 objects, and allows for 'timeSeries' objects 
+    as input. In addition a S-Plus like Finmetrics function 'SUR' is 
+    made available. 
+    
+2004-09-03 fSeries: xmpEqnsGreenfeld
+    An example to estimate Grunfeld's Model Data with OLS and SUR was
+    added. Different stock prices often move in the same direction at 
+    a given point in time. The SUR technique may provide more efficient 
+    estimates than OLS in this situation. The example was used by Zellner 
+    in his classic. 1962 paper on seemingly unrelated regressions. 
+   
+2004-09-03 fSeries: kmenta.csv
+    A data file which contains partly contrived data from Kmenta (1986) has
+    been added, constructed to illustrate estimation of a simultaneous 
+    equation models.
+    
+2004-09-02 fBasics: HolidayCalendars 
+    The function 'fjulian' got a new argument 'swap' making the old
+    one 'cc' obsolute. This change was inspired by the POSIX standard.
+    'swap' is an integer value which determines when dates without
+    the century specifications swap from the 19th to 20th century,
+    by default the value is 20, i.e. we swap 1920.
+
+2004-09-02 fBasics: WebImport
+    A new function named 'fredImport' has been added which allows for 
+    downloading daily financial market data from the St. Louis FED.
+    The import functions got a new argument 'sep' which allows to
+    specify the field separator in the data file, usually an Excel
+    *.csv file. The default is a semicolon.
+
+2004-08-05 fSeries: DESCRIPTION
+    The package 'modreg' has been merged into 'stats', so we have
+    removed it from the dependency list in the description file.
+    This caused for Mac OSX operated system a failure.
+
+2004-08-05 fSeries: surex1.ts.csv
+    A data file has been added which contains monthly sampled exchange 
+    rate spot returns and forward premium data ranging from March 1976 to 
+    June 1996 for the following currencies: USD vs. CAD, DEM, FFR, ITL,
+    JPY and GBP.  
+
+2004-07-07 fSeries: nelsonplosser.csv
+    The Nelson-Plosser data set containing the fourteen US economic time
+    series used by Nelson and Plosser in their seminal paper has been added.
+    
+2004-07-07 fSeries: xmpAparchModelling
+    The four demos "xmpAparchInnovations", "xmpAparchSimulation",
+    "xmpAparchEstimation", and "xmpAparchNYSERES" have been merged
+    to one new demo named "xmpAparchModelling" to reduce a little bit 
+    the large number of example files.
+    
+2004-07-07 fSeries: xmpArmaModelling
+    The two demos "xmpArmaAnalysis", and "xmpArmaModelling", have been
+    merged to one new demo named "xmpArmaModelling" to reduce a little
+    bit the large number of example files.
+    
+2004-07-07 fBasics: xmpImportInternet
+    The three demos "xmpImportYahoo", "xmpImportEconomagics", and
+    "xmpImportForecasts"  have been merged to one new demo named 
+    "xmpImportInternet" to reduce a little bit the large number of 
+    example files.
+ 
+2004-07-07 fBasics: xmpXtsBusinessTime
+    The four demos "xmpXtsDailyWeeklyHists", "xmpXtsInterpolation",
+    "xmpXtsDeSeasonalization", and "xmpXtsDeVolatilization" have been
+    merged to one new demo named "xmpXtsBusinessTime" to reduce a
+    little bit the large number of example files.
+   
+    + many other smaller improvements and fixings ...
+        
+  
 ________________________________________________________________________________
 Rmetrics VERSION 1091.10057
 
@@ -41,7 +201,7 @@ Rmetrics VERSION 1091.10057
     The FAQ file has been updated, now the FAQ's are providing more 
     information about Rmetrics.     
     
-2004-07-04 fbasics/R
+2004-07-04 fBasics/R
     In function .FirstLib we set a timezone if none found in 
     environment variables or options, as suggested by Dirk Eddelbuettel, 
     thanks Dirk.

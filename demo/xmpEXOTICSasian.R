@@ -28,7 +28,7 @@
 
 # Turnbull Wakeman Approximation:
 
-   TurnWakeAsianApproxOption("p", S = 90, SA = 88, 
+   TurnbullWakemanAsianApproxOption("p", S = 90, SA = 88, 
      X = 95, Time = 0.50, time = 0.25, tau = 0.0, r = 0.07, 
      b = 0.02, sigma = 0.25)
 

@@ -24,30 +24,24 @@
 
 \description{
 
-	This is a collection of functions to valuate plain vanilla options.
-	Included are functions for the Generalized Block-Scholes option 
-	pricing model, for options on futures, approximative formulas for
-	American options, some utility functions, and print and summary
-	methods for options.
-	
-	The functions are:
+    A collection and description of functions to valuate 
+    plain vanilla options. Included are functions for the 
+    Generalized Block-Scholes option pricing model, for 
+    options on futures, some utility functions, and print 
+    and summary methods for options.
+    \cr
+    
+    The functions are:
 
-	\tabular{rll}{
-	   1-3 	\tab 	\code{GBS*} 					
-	 		\tab 	Generalized Block-Scholes option, \cr
-	 	 4 	\tab 	\code{BlackScholesOption} 			
-	 		\tab 	a synonyme for GBSOption, \cr
-	     5 	\tab 	\code{Black76Option} 			
-	 		\tab 	options on Futures, \cr
-	 	 6 	\tab 	\code{MiltersenSchwartzOption} 	
-	 		\tab 	options on commodity futures, \cr
-	   7-9	\tab	\code{NDF, CND, CBND}
-	  		\tab	distribution functions, \cr
-	  	10	\tab	\code{print}
-	 		\tab    print method for Options, \cr
-	    11	\tab	\code{summary}
-	 		\tab	summary method for Options. }
-	
+    \tabular{ll}{
+    \code{GBS*} \tab the generalized Block-Scholes option, \cr
+    \code{BlackScholesOption} \tab a synonyme for the GBSOption, \cr
+    \code{Black76Option} \tab options on Futures, \cr
+    \code{MiltersenSchwartzOption} \tab options on commodity futures, \cr
+    \code{NDF, CND, CBND} \tab distribution functions, \cr
+    \code{print} \tab print method for Options, \cr
+    \code{summary} \tab summary method for Options. }
+    
 }
 
 
@@ -61,7 +55,7 @@ BlackScholesOption(\dots)
 Black76Option(TypeFlag, FT, X, Time, r, sigma)
 
 MiltersenSchwartzOption(TypeFlag, Pt, FT, X, time, Time, 
-	sigmaS, sigmaE, sigmaF, rhoSE, rhoSF, rhoEF, KappaE, KappaF)
+    sigmaS, sigmaE, sigmaF, rhoSE, rhoSF, rhoEF, KappaE, KappaF)
 
 NDF(x)
 CND(x)
@@ -74,203 +68,203 @@ CBND(x1, x2, rho)
 
 \arguments{
 
-  	\item{b}{
-		the annualized cost-of-carry rate, a numeric value; 
-		e.g. 0.1 means 10\% pa.
-		}
-  	\item{FT}
-  		{[Black76*][MiltersenSchwartz*] -
-		the futures price, a numeric value.
-		}
-  	\item{KappaE, KappaF}{
-  		[MiltersenSchwartz*] -
-		the speed of mean reversion of the forward interest rate (E),
-		the speed of mean reversion of the convenience yield (F), 
-		a numeric value.
-		}
-	\item{maxiter, tol}{
-	  	[GBSVolatility*] -
-	  	the maximum number of iterations and the tolerance to compute
-	  	the root of the GBS volatility equation, see \code{uniroot}.
-	  	}
-	\item{object}{
-		an object of class \code{"option"}.
-		}
-	\item{price}{
-	  	[GBSVolatility*] -
-	  	the price of the GBS option, a numerical value.
-	  	}
-  	\item{Pt}{
-  		[MiltersenSchwartz*] -
-		the zero coupon bond that expires on the option
-		maturity; a numeric value.
-		}
-  	\item{r}{
-		the annualized rate of interest, a numeric value; 
-		e.g. 0.25 means 25\% pa.
-		}
-  	\item{rhoSE, rhoSF, rhoEF}{
-  		[MiltersenSchwartz*] -
-		the correlations 
-		between the spot commodity price and the future convenience yield (SE),
-		between the spot commodity price and the forward interest rate (SF),
-		between the forward interest rate and the future convenience yield (EF), 
-		a numeric value.
-		}
-  	\item{S}{
-		the asset price, a numeric value.
-		}
-  	\item{Selection}{
-  		[GBSGreeks] -
-    	sensitivity to be computed, one of \code{"delta"}, \code{"gamma"},
-    	\code{"vega"}, \code{"theta"}, \code{"rho"}, or \code{"CoC"}, 
-    	a string value.
-    	}
-  	\item{sigma}{
-		the annualized volatility of the underlying security, 
-		a numeric value; e.g. 0.3 means 30\% volatility pa.
-		}
-  	\item{sigmaS, sigmaE, sigmaF}{
-  		[MiltersenSchwartz*] - 
-		numeric values, the annualized volatility 
-		of the spot commodity price (S),
-		of the future convenience yield (E), and
-		of the forward interest rate (F),
-		e.g. 0.25 means 25\% pa.
-		}
-	\item{time, Time}{
-		the time to maturity measured in years, a numeric value.
-		}
-  	\item{TypeFlag}{
-		a character string either \code{"c"} for a call option or 
-		a \code{"p"} for a put option.
-		}
-	\item{x, x1, x2, rho}{
-		[NDF][CND][CBND] -
-		the function argument \code{x} for the normal distribution 
-		function \code{NDF} and the cumulated normal distribution 
-		\code{CND}. The arguments for the bivariate function are
-		named \code{x1} and \code{x2}; \code{rho} is the correlation
-		coefficient. \cr
-		[print] -
-		the object \code{x} to be printed.
-		}
-  	\item{X}{
-		the exercise price, a numeric value.
-		}
-	\item{\dots}{
-		arguments to be passed.
-		}
+    \item{b}{
+        the annualized cost-of-carry rate, a numeric value; 
+        e.g. 0.1 means 10\% pa.
+        }
+    \item{FT}
+        {[Black76*][MiltersenSchwartz*] - \cr
+        the futures price, a numeric value.
+        }
+    \item{KappaE, KappaF}{
+        [MiltersenSchwartz*] - \cr
+        the speed of mean reversion of the forward interest rate (E),
+        the speed of mean reversion of the convenience yield (F), 
+        a numeric value.
+        }
+    \item{maxiter, tol}{
+        [GBSVolatility*] - \cr
+        the maximum number of iterations and the tolerance to compute
+        the root of the GBS volatility equation, see \code{uniroot}.
+        }
+    \item{object}{
+        an object of class \code{"option"}.
+        }
+    \item{price}{
+        [GBSVolatility*] - \cr
+        the price of the GBS option, a numerical value.
+        }
+    \item{Pt}{
+        [MiltersenSchwartz*] - \cr
+        the zero coupon bond that expires on the option
+        maturity; a numeric value.
+        }
+    \item{r}{
+        the annualized rate of interest, a numeric value; 
+        e.g. 0.25 means 25\% pa.
+        }
+    \item{rhoSE, rhoSF, rhoEF}{
+        [MiltersenSchwartz*] - \cr
+        the correlations 
+        between the spot commodity price and the future convenience yield (SE),
+        between the spot commodity price and the forward interest rate (SF),
+        between the forward interest rate and the future convenience yield (EF), 
+        a numeric value.
+        }
+    \item{S}{
+        the asset price, a numeric value.
+        }
+    \item{Selection}{
+        [GBSGreeks] - \cr
+        sensitivity to be computed, one of \code{"delta"}, \code{"gamma"},
+        \code{"vega"}, \code{"theta"}, \code{"rho"}, or \code{"CoC"}, 
+        a string value.
+        }
+    \item{sigma}{
+        the annualized volatility of the underlying security, 
+        a numeric value; e.g. 0.3 means 30\% volatility pa.
+        }
+    \item{sigmaS, sigmaE, sigmaF}{
+        [MiltersenSchwartz*] - \cr
+        numeric values, the annualized volatility 
+        of the spot commodity price (S),
+        of the future convenience yield (E), and
+        of the forward interest rate (F),
+        e.g. 0.25 means 25\% pa.
+        }
+    \item{time, Time}{
+        the time to maturity measured in years, a numeric value.
+        }
+    \item{TypeFlag}{
+        a character string either \code{"c"} for a call option or 
+        a \code{"p"} for a put option.
+        }
+    \item{x, x1, x2, rho}{
+        [NDF][CND][CBND] - \cr
+        the function argument \code{x} for the normal distribution 
+        function \code{NDF} and the cumulated normal distribution 
+        \code{CND}. The arguments for the bivariate function are
+        named \code{x1} and \code{x2}; \code{rho} is the correlation
+        coefficient. \cr
+        [print] - \cr
+        the object \code{x} to be printed.
+        }
+    \item{X}{
+        the exercise price, a numeric value.
+        }
+    \item{\dots}{
+        arguments to be passed.
+        }
 
 }
 
 
 \value{
   
-	\code{GBSOption}\cr
-	\code{BlackScholesOption}
-	\cr
-  	returns the option price, a numeric value. 
-  	\cr
+    \code{GBSOption}\cr
+    \code{BlackScholesOption}
+    \cr
+    returns the option price, a numeric value. 
+    \cr
 
-  	\code{GBSGreeks}
-  	\cr
-  	returns the option sensitivity for the selected Greek, a 
-  	numeric value.
-  	\cr
+    \code{GBSGreeks}
+    \cr
+    returns the option sensitivity for the selected Greek, a 
+    numeric value.
+    \cr
   
-  	\code{GBSCharacteristics}
-  	\cr
-  	returns a list with the following entries:
-  	\code{premium}, the option price,
-  	\code{delta}, the delta sensitivity, 
-  	\code{gamma}, the gamma sensitivity,
-  	\code{theta}, the theta sensitivity,
-  	\code{vega}, the vega sensitivity, 
-  	\code{rho}, the rho sensitivity,
-  	\code{lambda}, the lambda sensitivity.
-  	\cr
-  	
-  	\code{GBSVolatility}
-  	\cr
-  	returns the GBS option implied volatility for a given price.
-  	\cr
-  	
-  	\code{Black76Option},\cr 
-  	\code{MiltersenSchwartzOption}
-  	\cr
-  	returns the option price, a numeric value.
+    \code{GBSCharacteristics}
+    \cr
+    returns a list with the following entries:
+    \code{premium}, the option price,
+    \code{delta}, the delta sensitivity, 
+    \code{gamma}, the gamma sensitivity,
+    \code{theta}, the theta sensitivity,
+    \code{vega}, the vega sensitivity, 
+    \code{rho}, the rho sensitivity,
+    \code{lambda}, the lambda sensitivity.
+    \cr
+    
+    \code{GBSVolatility}
+    \cr
+    returns the GBS option implied volatility for a given price.
+    \cr
+    
+    \code{Black76Option},\cr 
+    \code{MiltersenSchwartzOption}
+    \cr
+    returns the option price, a numeric value.
  
 }
 
 
 \details{
 
-  	\bold{Generalized Black Scholes Options:}
-	\cr\cr
-  	\code{GBSOption} calculates the option price, \code{GBSGreeks}
-  	calculates option sensitivities delta, theta, vega, rho, lambda 
-  	and gamma, and \code{GBScharacterisitics} does both.
-  	\code{GBSVolatility} computes the implied volatility.
-  	\cr
-  	Note, that setting \code{b = r} we get Black and Scholes' stock option 
-  	model, \code{b = r-q} we get Merton's stock option model with continuous 
-  	dividend yield \code{q}, \code{b = 0} we get Black's futures option 
-  	model, and \code{b = r-rf} we get Garman and Kohlhagen's currency 
-  	option model with foreign interest rate \code{rf}.
-  	\cr
+    \bold{Generalized Black Scholes Options:}
+    \cr\cr
+    \code{GBSOption} calculates the option price, \code{GBSGreeks}
+    calculates option sensitivities delta, theta, vega, rho, lambda 
+    and gamma, and \code{GBScharacterisitics} does both.
+    \code{GBSVolatility} computes the implied volatility.
+    \cr
+    Note, that setting \code{b = r} we get Black and Scholes' stock option 
+    model, \code{b = r-q} we get Merton's stock option model with continuous 
+    dividend yield \code{q}, \code{b = 0} we get Black's futures option 
+    model, and \code{b = r-rf} we get Garman and Kohlhagen's currency 
+    option model with foreign interest rate \code{rf}.
+    \cr
   
-  		
-  	\bold{Options on Futures:}
-	\cr\cr
-  	The \code{Black76Option} pricing formula is applicable for valuing 
-  	European call and European put options on commodity futures. The 
-  	exact nature of the underlying commodity varies and may be anything 
-  	from a precious metal such as gold or silver to agricultural products.
-  	\cr
-  	The \code{Miltersen Schwartz Option} model is a three factor model 
-  	with stochastic futures prices, term structures and convenience 
-  	yields, and interest rates. The model is based on lognormal 
-  	distributed commodity prices and normal distributed continuously 
-  	compounded forward interest rates and future convenience yields.
-  	\cr
-  	
-	
-	\bold{Miltersen Schwartz Options:}
-	\cr\cr
-	The \code{MiltersenSchwartzOption} function allows for pricing 
-	options on commodity futures. The model is a three factor model
-	with stochastic futures prices, term structures of convenience 
-	yields, and interest rates. The model is based on lognormal
-	distributed commodity prices and normal distributed continuously
-	compounded forward interest rates and futures convenience yields.
-	\cr
-  	
-  	
-  	\bold{Distribution Functions:}
-  	\cr\cr
-  	The functions \code{NDF}, \code{CND}, and \code{CBND} compute 
-  	vlues for the Normal density functions, for the normal 
-  	probability function, and for the bivariate normal probability
-  	functions. The functions are implemented as described in the
-  	book of E.G. Haug.
-  	\cr
-  	
-  	
-  	\bold{Print and Summary Method:}
-  	\cr\cr
-  	Thes are two methods to print and sumarize an object of class
-  	\code{"option"}. 
+        
+    \bold{Options on Futures:}
+    \cr\cr
+    The \code{Black76Option} pricing formula is applicable for valuing 
+    European call and European put options on commodity futures. The 
+    exact nature of the underlying commodity varies and may be anything 
+    from a precious metal such as gold or silver to agricultural products.
+    \cr
+    The \code{Miltersen Schwartz Option} model is a three factor model 
+    with stochastic futures prices, term structures and convenience 
+    yields, and interest rates. The model is based on lognormal 
+    distributed commodity prices and normal distributed continuously 
+    compounded forward interest rates and future convenience yields.
+    \cr
+    
+    
+    \bold{Miltersen Schwartz Options:}
+    \cr\cr
+    The \code{MiltersenSchwartzOption} function allows for pricing 
+    options on commodity futures. The model is a three factor model
+    with stochastic futures prices, term structures of convenience 
+    yields, and interest rates. The model is based on lognormal
+    distributed commodity prices and normal distributed continuously
+    compounded forward interest rates and futures convenience yields.
+    \cr
+    
+    
+    \bold{Distribution Functions:}
+    \cr\cr
+    The functions \code{NDF}, \code{CND}, and \code{CBND} compute 
+    vlues for the Normal density functions, for the normal 
+    probability function, and for the bivariate normal probability
+    functions. The functions are implemented as described in the
+    book of E.G. Haug.
+    \cr
+    
+    
+    \bold{Print and Summary Method:}
+    \cr\cr
+    Thes are two methods to print and sumarize an object of class
+    \code{"option"}. 
   
 }
 
 
 \note{
   
-	The functions implement algorithms to valuate plain vanilla 
-  	options and to compute option Greeks as described in Chapter 1 
-  	of Haug's Option Guide (1997).
-  	
+    The functions implement algorithms to valuate plain vanilla 
+    options and to compute option Greeks as described in Chapter 1 
+    of Haug's Option Guide (1997).
+    
 }
 
 
@@ -289,7 +283,7 @@ CBND(x1, x2, rho)
    S0  =  100; r  =  0.10; D1  =  D2  =  2; t1  =  1/4; t2  =  1/2
    S  =  S0 - 2*exp(-r*t1) - 2*exp(-r*t2)
    GBSOption(TypeFlag = "c", S = S, X = 90, Time = 3/4, r = r, b = r, 
-   	 sigma = 0.25)
+     sigma = 0.25)
    
 ## Options on Stock Indexes [Haug 1.2.3]
    xmpOptions("\nNext: Options on Stock Indexes > ")
@@ -300,7 +294,7 @@ CBND(x1, x2, rho)
    xmpOptions("\nNext: Option on Futures > ")
    FuturesPrice  =  19
    GBSOption(TypeFlag = "c", S = FuturesPrice, X = 19, Time = 3/4, 
-   	 r = 0.10, b = 0, sigma = 0.28)  
+     r = 0.10, b = 0, sigma = 0.28)  
         
 ## Currency Option [Haug 1.1.5]
    xmpOptions("\nNext: Currency Option > ")
@@ -346,11 +340,11 @@ CBND(x1, x2, rho)
 ## vs. Black76 Option on Futures:
    xmpOptions("\nNext: Miltersen Schwartz Option > ")
    MiltersenSchwartzOption(TypeFlag = "c", Pt = exp(-0.05/4), FT = 95, 
-   	 X = 80, time = 1/4, Time = 1/2, sigmaS = 0.2660, sigmaE = 0.2490, 
-   	 sigmaF = 0.0096, rhoSE = 0.805, rhoSF = 0.0805, rhoEF = 0.1243, 
-   	 KappaE = 1.045, KappaF = 0.200)
+     X = 80, time = 1/4, Time = 1/2, sigmaS = 0.2660, sigmaE = 0.2490, 
+     sigmaF = 0.0096, rhoSE = 0.805, rhoSF = 0.0805, rhoEF = 0.1243, 
+     KappaE = 1.045, KappaF = 0.200)
    Black76Option(TypeFlag = "c", FT = 95, X = 80, Time = 1/2, r = 0.05, 
-   	 sigma = 0.266)  
+     sigma = 0.266)  
 
 }
 
@@ -358,29 +352,29 @@ CBND(x1, x2, rho)
 \references{
 
 Black F., Scholes M. (1973);
-	\emph{The Pricing of Options and Corporate Liabilities},
-	Journal of Political Economy 81, 637--654.
+    \emph{The Pricing of Options and Corporate Liabilities},
+    Journal of Political Economy 81, 637--654.
 
 Haug E.G. (1997); 
-	\emph{The Complete Guide to Option Pricing Formulas}, 
-	Chapter 1, McGraw-Hill, New York.
+    \emph{The Complete Guide to Option Pricing Formulas}, 
+    Chapter 1, McGraw-Hill, New York.
 
 Hull J.C. (1998);
-	\emph{Introduction to Futures and Options Markets},
-	Prentice Hall, London.
-	
+    \emph{Introduction to Futures and Options Markets},
+    Prentice Hall, London.
+    
 Miltersen K., Schwartz E.S. (1998);
-	\emph{Pricing of Options on Commodity Futures with
-	Stochastic Term Structuures of Convenience Yields and 
-	Interest Rates},
-	Journal of Financial and Quantitative Analysis 33, 33--59.
+    \emph{Pricing of Options on Commodity Futures with
+    Stochastic Term Structuures of Convenience Yields and 
+    Interest Rates},
+    Journal of Financial and Quantitative Analysis 33, 33--59.
 
 }
 
 
 \author{
 
-	Diethelm Wuertz for this R-Port.
+    Diethelm Wuertz for this R-Port.
 
 }
 

@@ -79,7 +79,7 @@
 		xlab = "Monte Carlo Loops", ylab = "Option Price")
 
 	# Turnbull Wakeman Asian Approximation:
-	TurnWakeAsianApproxOption(TypeFlag = "c", S = 2, SA = 2, 
+	TurnbullWakemanAsianApproxOption(TypeFlag = "c", S = 2, SA = 2, 
    	  X = 2, Time = 1/12, time = 1/12, tau = 0 , r = 0.05, b = 0.05, 
    	  sigma = 0.5)$price
     

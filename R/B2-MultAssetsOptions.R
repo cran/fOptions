@@ -14,27 +14,27 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
 # MA  02111-1307  USA
 
-# Copyrights (C) 
-# this R-port: 
-#   by Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
+# Copyrights (C)
+# for this R-port: 
+#   1999 - 2004, Diethelm Wuertz, GPL
+#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
+#   info@rmetrics.org
+#   www.rmetrics.org
 # for the code accessed (or partly included) from other R-ports:
-#   R: see R's copyright and license file
-# for Haug's Option Pricing Formulas:
-#   Formulas are implemented along the book and the Excel spreadsheets of 
-#     E.G. Haug, "The Complete Guide to Option Pricing"; documentation
-#     is partly taken from www.derivicom.com which implements
-#     a C Library based on Haug. For non-academic and commercial use 
-#     we recommend the professional software from "www.derivicom.com".  
+#   see R's copyright and license files
+# for the code accessed (or partly included) from contributed R-ports
+# and other sources
+#   see Rmetrics's copyright file  
 
 
 ################################################################################
 # FUNCTION:                       DESCRIPTION:
 # Multiple Asset Options:
 #   TwoAssetCorrelationOption       Two Asset Correlation Option
-#   ExchangeOneForAnotherOption     Exchane One For Another Option  
-#   ExchangeOnExchangeOption        Exchange Exchange Option
+#   [ExchangeOneForAnotherOption     Exchane One For Another Option]  
 #   EuropeanExchangeOption          European Exchange Optionn
 #   AmericanExchangeOption          American Exchange Option
+#   ExchangeOnExchangeOption        Exchange Exchange Option
 #   TwoRiskyAssetsOption            Option On The MinMax
 #   SpreadApproxOption              Spread Approximated Option              
 ################################################################################

@@ -14,24 +14,24 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
 # MA  02111-1307  USA
 
-# Copyrights (C) 
-# this R-port: 
-#   by Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
+# Copyrights (C)
+# for this R-port: 
+#   1999 - 2004, Diethelm Wuertz, GPL
+#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
+#   info@rmetrics.org
+#   www.rmetrics.org
 # for the code accessed (or partly included) from other R-ports:
-#   R: see R's copyright and license file
-# for Haug's Option Pricing Formulas:
-#   Formulas are implemented along the book and the Excel spreadsheets of 
-#     E.G. Haug, "The Complete Guide to Option Pricing"; documentation
-#     is partly taken from www.derivicom.com which implements
-#     a C Library based on Haug. For non-academic and commercial use 
-#     we recommend the professional software from "www.derivicom.com".  
+#   see R's copyright and license files
+# for the code accessed (or partly included) from contributed R-ports
+# and other sources
+#   see Rmetrics's copyright file  
 
 
 ################################################################################
 # FUNCTION:                         DESCRIPTION:
 # Asian Options:
-#   GeometricAverageAsianOption       Geometric Average Rate Option
-# Arithmetic Average-Rater Options:
+#   GeometricAverageRateOption        Geometric Average Rate Option
+# Arithmetic AverageRate Options:
 #   TurnbullWakemanAsianApproxOption  Turnbull-Wakeman Approximated Asian Option
 #   LevyAsianApproxOption             Levy Approximated Asian Option
 ################################################################################
@@ -70,7 +70,7 @@ function(TypeFlag = c("c", "p"), S, X, Time, r, b, sigma)
 # ------------------------------------------------------------------------------
 
 
-TurnWakeAsianApproxOption = 
+TurnbullWakemanAsianApproxOption = 
 function(TypeFlag = c("c", "p"), S, SA, X, Time, time, tau, r, b, sigma)
 {   # A function implemented by Diethelm Wuertz           
 
