@@ -1,13 +1,4 @@
 
-#*******************************************************************************
-# fOptions - A SOFTWARE COLLECTION FOR FINANCIAL ENGINEERS
-# Valuation of Options
-#
-# collected by Diethelm Wuertz
-#    
-#*******************************************************************************
-                                                        
-
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
 # License as published by the Free Software Foundation; either
@@ -39,17 +30,27 @@
 ################################################################################
 
 
-.First.lib = 
+.First.lib =  
 function(lib, pkg)
-{   # A function implemented by D. Wuertz
-    
-    # Package:
-    cat("\nRmetrics, (C) 1999-2004, Diethelm Wuertz, GPL")
-    cat("\nfOptions: Valuation of Options\n")
-    
-    # Load dll: 
-    library.dynam("fOptions", pkg, lib)
+{   
+    # Startup Mesage and Desription:
+    MSG <- if(getRversion() >= "2.5") packageStartupMessage else message
+    dsc <- packageDescription(pkg)
+    if(interactive() || getOption("verbose")) { 
+        # not in test scripts
+        MSG(sprintf("\nPackage %s (%s) loaded.\n%s\n",
+            pkg, dsc$Version, dsc$Title),
+            "Rmetrics, (C) 1999-2007, Diethelm Wuertz, GPL\n")
+    }
+
+    # Load dll:
+    library.dynam("fOptions", pkg, lib) 
 }
+
+
+if(!exists("Sys.setenv", mode = "function")) # pre R-2.5.0, use "old form"
+    Sys.setenv <- Sys.putenv
+
 
 
 ################################################################################
