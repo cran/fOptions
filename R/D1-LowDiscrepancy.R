@@ -1,0 +1,294 @@
+
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Library General Public
+# License as published by the Free Software Foundation; either
+# version 2 of the License, or (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+# GNU Library General Public License for more details.
+#
+# You should have received a copy of the GNU Library General 
+# Public License along with this library; if not, write to the 
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+# MA  02111-1307  USA
+
+# Copyrights (C) 
+# for the Rmetrics port: 
+#   by Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
+# for the code accessed (or partly included) from other R-ports:
+#   R: see R's copyright and license file
+# for Haug's Option Pricing Formulas:
+#   Formulas are implemented along the book and the Excel spreadsheets of 
+#     E.G. Haug, "The Complete Guide to Option Pricing"; documentation
+#     is partly taken from www.derivicom.com which implements
+#     a C Library based on Haug. For non-academic and commercial use 
+#     we recommend the professional software from "www.derivicom.com".  
+
+
+################################################################################
+# FUNCTION:             DESCRIPTION:                      
+#  runif.pseudo           Uniform Pseudo Random number sequence
+#  rnorm.pseudo           Normal Pseudo Random number sequence
+#  runif.halton           Uniform Halton low discrepancy sequence
+#  rnorm.halton           Normal Halton low discrepancy sequence
+#  runif.sobol            Uniform Sobol low discrepancy sequence
+#  rnorm.sobol            Normal Sobol low discrepancy sequence
+###############################################################################
+
+
+runif.pseudo = 
+function(n, dimension, init = NULL) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Uniform Pseudo Random number sequence   
+    
+    # FUNCTION:
+    
+    # Deviates:
+    result = matrix(runif(n*dimension), ncol = dimension)
+    
+    # Return Value:
+    result
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+rnorm.pseudo = 
+function(n, dimension, init = TRUE) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Normal Pseudo Random number sequence    
+    
+    # FUNCTION:
+    
+    # Deviates:
+    result = matrix(rnorm(n*dimension), ncol = dimension)
+    
+    # Return Value:
+    result
+}
+
+
+# -----------------------------------------------------------------------------
+    
+
+runif.halton = 
+function (n, dimension, init = TRUE)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Uniform Halton Low Discrepancy Sequence
+
+    # Details: 
+    #   DIMENSION : dimension <= 200
+    #       N : LD numbers to create
+
+    # FUNCTION:
+    
+    # Restart Settings:
+    if (init) {
+        runif.halton.seed <<- list()
+        runif.halton.seed$base <<- rep(0, dimension)
+        runif.halton.seed$offset <<- 0 }
+    
+    # Generate:
+    qn = rep(0, n*dimension)
+    
+    # SUBROUTINE HALTON(QN, N, DIMEN, BASE, OFFSET, INIT, TRANSFORM)
+    result = .Fortran("halton",  
+        as.double(qn),
+        as.integer(n),
+        as.integer(dimension),
+        as.integer(runif.halton.seed$base),
+        as.integer(runif.halton.seed$offset),
+        as.integer(init),
+        as.integer(0),
+        PACKAGE = "fOptions")
+    
+    # For the next numbers save:    
+    runif.halton.seed$base <<- result[[4]]
+    runif.halton.seed$offset <<- result[[5]]
+    
+    # Deviates:
+    result = matrix(result[[1]], ncol = dimension)
+    
+    # Return Value:
+    result
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+rnorm.halton = 
+function (n, dimension, init = TRUE)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Normal Halton Low Discrepancy Sequence
+
+    # Details: 
+    #   DIMENSION : dimension <= 200
+    #       N : LD numbers to create
+
+    # FUNCTION:
+    
+    # Restart Settings:
+    if (init) {
+        rnorm.halton.seed <<- list()
+        rnorm.halton.seed$base <<- rep(0, dimension)
+        rnorm.halton.seed$offset <<- 0 }
+    
+    # Generate:
+    qn = rep(0, n*dimension)
+    
+    # SUBROUTINE HALTON(QN, N, DIMEN, BASE, OFFSET, INIT, TRANSFORM)
+    result = .Fortran("halton",  
+        as.double(qn),
+        as.integer(n),
+        as.integer(dimension),
+        as.integer(rnorm.halton.seed$base),
+        as.integer(rnorm.halton.seed$offset),
+        as.integer(init),
+        as.integer(1),
+        PACKAGE = "fOptions")
+        
+    # For the next numbers save:    
+    rnorm.halton.seed$base <<- result[[4]]
+    rnorm.halton.seed$offset <<- result[[5]]
+    
+    # Deviates:
+    result = matrix(result[[1]], ncol = dimension)
+    
+    # Return Value:
+    result
+}
+
+
+# -----------------------------------------------------------------------------
+
+
+runif.sobol = 
+function (n, dimension, init = TRUE, scrambling = 0, seed = 4711)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Uniform Sobol Low Discrepancy Sequence
+
+    # Details: 
+    #   DIMENSION : dimension <= 200
+    #           N : LD numbers to create
+    #  SCRAMBLING : One of the numbers 0,1,2,3
+    #
+
+    # FUNCTION:
+    
+    # Restart Settings:
+    if (init) {
+        runif.sobol.seed <<- list()
+        runif.sobol.seed$quasi <<- rep(0, dimension)
+        runif.sobol.seed$ll <<- 0
+        runif.sobol.seed$count <<- 0
+        runif.sobol.seed$sv <<- rep(0, dimension*30)
+        runif.sobol.seed$seed <<- seed }
+    
+    # Generate:
+    qn = rep(0.0, n*dimension)
+    
+    # SSOBOL(QN,N,DIMEN,QUASI,LL,COUNT,SV,IFLAG,SEED,INIT,TRANSFORM)
+    result = .Fortran("sobol",  
+        as.double(qn),
+        as.integer(n),
+        as.integer(dimension),
+        as.double (runif.sobol.seed$quasi),
+        as.integer(runif.sobol.seed$ll),
+        as.integer(runif.sobol.seed$count),
+        as.integer(runif.sobol.seed$sv),
+        as.integer(scrambling),
+        as.integer(runif.sobol.seed$seed),
+        as.integer(init),
+        as.integer(0),
+        PACKAGE = "fOptions")
+        
+    # For the next numbers save:    
+    runif.sobol.seed$quasi <<- result[[4]]
+    runif.sobol.seed$ll <<- result[[5]]
+    runif.sobol.seed$count <<- result[[6]]
+    runif.sobol.seed$sv <<- result[[7]]
+    runif.sobol.seed$seed <<- result[[9]]
+    
+    # Deviates:
+    result = matrix(result[[1]], ncol = dimension)
+    
+    # Return Value:
+    result
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+rnorm.sobol = 
+function (n, dimension, init = TRUE, scrambling = 0, seed = 4711)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Normal Sobol Low Discrepancy Sequence
+
+    # Details: 
+    #   DIMENSION : dimension <= 200
+    #           N : LD numbers to create
+    #  SCRAMBLING : One of the numbers 0,1,2,3
+
+    # FUNCTION:
+    
+    # Restart Settings:
+    if (init) {
+        rnorm.sobol.seed <<- list()
+        rnorm.sobol.seed$quasi <<- rep(0, dimension)
+        rnorm.sobol.seed$ll <<- 0
+        rnorm.sobol.seed$count <<- 0
+        rnorm.sobol.seed$sv <<- rep(0, dimension*30)
+        rnorm.sobol.seed$seed <<- seed  }
+
+    # Generate:
+    qn = rep(0.0, n*dimension)      
+    
+    # SSOBOL(QN,N,DIMEN,QUASI,LL,COUNT,SV,IFLAG,SEED,INIT,TRANSFORM)
+    result = .Fortran("sobol",  
+        as.double(qn),
+        as.integer(n),
+        as.integer(dimension),
+        as.double (rnorm.sobol.seed$quasi),
+        as.integer(rnorm.sobol.seed$ll),
+        as.integer(rnorm.sobol.seed$count),
+        as.integer(rnorm.sobol.seed$sv),
+        as.integer(scrambling),
+        as.integer(rnorm.sobol.seed$seed),
+        as.integer(init),
+        as.integer(1),
+        PACKAGE = "fOptions")   
+                
+    # For the next numbers save:    
+    rnorm.sobol.seed$quasi <<- result[[4]]
+    rnorm.sobol.seed$ll <<- result[[5]]
+    rnorm.sobol.seed$count <<- result[[6]]
+    rnorm.sobol.seed$sv <<- result[[7]]
+    rnorm.sobol.seed$seed <<- result[[9]]
+    
+    # Deviates:
+    result = matrix(result[[1]], ncol = dimension) 
+    
+    # Return Value:
+    result
+}
+
+
+# ******************************************************************************
+

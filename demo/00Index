@@ -1,0 +1,41 @@
+funOptions          fOptions Function Addon
+
+xmpGBSpayoff		Profit/Loss in Buying and Writing Calls and Puts
+
+xmpGBSoption		Generalized Black-Scholes Option Prices
+xmpGBSoption2D		Plots 2-D Graphs of GBS Option Prices
+xmpGBSoption3D		Plots 3-D Graphs of GBS Option Prices
+
+xmpGBSgreeks		Generalized Black-Scholes Option Sensitivities
+xmpGBSgreeks2D		Plots 2-D Graphs of GBS Option Sensitivities
+xmpGBSgreeks3D		Plots 3-D Graphs of GBS Option Sensitivities
+
+xmpAMERICANskd		Americam Calls on Dividend Paying Stocks
+xmpAMERICANbaw		Barone-Adesi and Whaley Approximation
+xmpAMERICANbsa		Bjerksund and Stensland Approximation
+
+xmpTREEbinomial		Binomial Tree Option Model
+xmpTREEtrinomial  	Trinomial Tree Option Model
+
+xmpEXOTICSbinary    Valuates Binary Options
+xmpEXOTICSchooser   Valuates Chooser Option
+xmpEXOTICSasian     Valuates Asian Options
+xmpEXOTICSlookback	Valuates Lookback Options
+xmpEXOTICSbarrier	Valuates Barrier Options
+xmpEXOTICSmultiple	Valuates Multiple Assets Options
+
+xmpSpecFunsEBM      Gamma, Confluent Hypergeometric and Related Functions
+
+xmpHNGoption		Computes the price of Heston-Nandi Options 
+xmpHNGgreeks		Computes the Greeks of Heston-Nandi Options
+
+xmpHNgarchsim		Simulation of HN GARCH(1,1) Price Paths
+xmpHNgarchfit		HN GARCH(1,1) Log Likelihood Parameter Estimation
+
+xmpHNGscaling		Scaling Behavior of HN GARCH(1,1) Options
+xmpHNGsmile			Smile Effect of HN GARCH(1,1) Options
+
+xmpLDShalton		Computes Halton low discrepancy numbers
+xmpLDSsobol			Computes Sobol low discrepancy numbers
+
+xmpMCoption 		Valuates Option by Monte Carlo Simulation

@@ -1,0 +1,425 @@
+
+
+<FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2"><B><FONT COLOR="#7F0000">
+<H2>Rmetrics - Updates, Changes, and Enhancements</H2>
+</FONT></B></FONT></FONT></P>
+
+<HR ALIGN=CENTER WIDTH="100%" SIZE="2">
+
+<FONT FACE="Arial,Helvetica,Monaco">
+An Environment and Collection of Functions for Teaching<BR>
+Financial Engineering and Computational Finance<BR>
+with R<BR>
+</FONT>
+
+
+<PRE>
+
+
+2004-07-04
+UPDATES, CHANGES AND ENHANCEMENTS IN RMETRICS:
+
+IMPORTANT NOTE:
+
+Built 1091.10057 has been submitted to the CRAN server ...
+
+Starting with Built 1090.10055 the packages should compile also under 
+    Linux and Mac OSX ... 
+
+Note, Rmetrics is build and tested under MS Windows XP (not under Linux)!
+
+
+________________________________________________________________________________
+Rmetrics VERSION 1091.10057
+
+
+2004-07-04 Rmetrics
+    The new version is now proofed to be Debian license conform 
+    for all its functions.
+    
+2004-07-04 FAQ
+    The FAQ file has been updated, now the FAQ's are providing more 
+    information about Rmetrics.     
+    
+2004-07-04 fbasics/R
+    In function .FirstLib we set a timezone if none found in 
+    environment variables or options, as suggested by Dirk Eddelbuettel, 
+    thanks Dirk.
+    
+2004-06-30 fExtremes/R
+    A new utility function named "gridVector" has been added which
+    creates all grid points from two vectors which span a rectangular 
+    grid.
+    
+2004-06-29 fOptions/demo
+    A new example file named "funDensitiesEBM.R" has been added
+    which adds some distributions and related functions which are
+    useful in the theory of exponential Brownian Motion.
+    The functions compute densities and probabilities for the 
+    log-Normal distribution, the Gamma distribution, the 
+    Reciprocal-Gamma distribution, and the Johnson Type-I
+    distribution. Functions are made available for the compution
+    of moments including the Normal, the log-Normal, the
+    Reciprocal-Gamma, and the Asian-Option Density. In addition
+    a function is given to compute numerically first and second
+    derivatives of a given function.
+        
+2004-06-29 fOptions/demo
+    A new example file named "funSpecFunsEBM.R" has been added
+    with special mathematical functions which are used in the 
+    theory of exponential Brownian Motion. The functions included 
+    are: In Part I, the Error Function "erf", the Psi or Digamma
+    Function "Psi", the Incomplete Gamma Function "igamma", the
+    Gamma Function fpr complex arguments, and the Pochhammer Symbol
+    "Pochhammer". In Part II, the Confluent Hypergeometric Functions 
+    of the 1st Kind and 2nd Kind "kummerM" and "kummerU", the
+    Whittaker Functions "whittakerM" and "whittakerW" and the
+    Hermite Polynomials "hermiteH"
+
+2004-06-29 fOptions/demo
+    A new example file named "xmpSpecFunsEBM.R" has been added
+    which shows how to use Gamma Functions, Confluent Hypergeometric
+    and related functions under R.  
+        
+2004-06-29 fSeries/R
+    New functions to fit the parameters by the maximum log-likelihood
+    method for the symmetric and skew Normal, Student-t with unit 
+    variance, and generalized error distribution have been added.
+                
+2004-06-28 fBasics/demo
+    A new example file "xmpImportForecasts.R" has been added including
+    a function named "forecastsImport" to download monthly financial 
+    market data from the "www.forecasts.org" web site. 
+
+2004-06-28 fBasics/R
+    A new function named "keystatsImport" has been added which 
+    downloads key statistic and fundamental data for equities from 
+    Yahoo's web site.
+       
+2004-06-25 fBasics/R
+    The function "as.timeSeries" got two additional arguments which
+    allow to pass dimension names and the timeDate format in POSIX
+    notation to the returned "timeSeries" object.
+
+2004-06-25 fSeries/R
+    New functions "[dpqr]ged" and "[dpqr]sged" have been added which 
+    compute density, distribution function, quantile function and 
+    generate random variates for the symmetric and skew generalized 
+    error distribution.
+
+2004-06-25 fSeries/R
+    New functions "[dpqr]std" and "[dpqr]sstd" have been added which 
+    compute density, distribution function, quantile function and  
+    generate random variates for the symmetric and skew Student-t 
+    distribution with unit variance.
+
+2004-06-25 fSeries/R
+    New functions "[dpqr]snorm" have been added which compute density, 
+    distribution function, quantile function and generate random 
+    variates for the skew normal distribution. 
+        
+2004-06-25 fSeries/demo
+    A new example file "xmpDistTESTskew.R" has been added with 
+    integration tests for the skew normal, for the skew Student-t 
+    with unit variance, and for the skew GED distribution.      
+                
+2004-06-25 fSeries/R
+    New functions have been added which compute the Haeviside "H" and
+    related functions; just another sign function "Sign", the delta 
+    function "delta", the boxcar function "boxcar" and the ramp 
+    function "ramp".
+        
+2004-06-24 fOptions/demo
+    The 3D Plot functions for the generalized Black-Scholes option 
+    prices and the sensitivities have been moved to the examples 
+    located in the demo directory.
+
+2004-06-14 fSeries/data
+    The data sets from the book "The Econometric Modelling of 
+    Financial Time Series" (2nd Edition) written by Terence C.
+    Mills have been added to the data directory.
+    
+    + many other smaller improvements and fixings ...
+    
+
+________________________________________________________________________________
+fBasics VERSION 1090.10056
+
+
+2004-06-13 fbasics
+    Some minor internal updates have been made to Rmetrics, now
+    coming with version number 190.10056
+
+
+________________________________________________________________________________
+Rmetrics VERSION 1090.10055
+
+
+2004-06-13 Rmetrics
+    The new version should be compiled out of the box on MS Windows
+    Linux, and Mac OSX Platforms. I tested it under Windows XP and 
+    Debian Linux, and OSX. Binary packages for MS Windows and Source 
+    packages can be found on www.rmetrics.org.
+        
+2004-06-11 fSeries/demo
+    A new demo named "xmpSeriesFilter.R" has been added which discusses 
+    time series filters under R and which implements a R function for 
+    the Hodrick-Prescott filter.
+        
+2004-06-11 fBasics/demo
+    The three demo files "xmpCor*.R", dealing with autocorrelations,
+    the Taylor effect and the long memory behaviour of the NYSE
+    Composite have been merged into one demo file.
+        
+2004-06-11 fBasics/demo
+    A new demo file named "xmpCalChron.R" has been added which shows 
+    how to manage chronological objects from R's contributed "chron" 
+    package. The topics include, generation of objects, representation 
+    of objects, mathematical operations, and object transformations.
+        
+2004-06-11 fBasics/demo
+    A new demo file named "xmpCalPosix.R" has been added which shows   
+    how to manage POSIXt objects from R's "base" package. The topics 
+    include, generation of objects, representation of objects, mathematical 
+    operations, and object transformations.
+        
+2004-06-09 fSeries/demo
+    A new demo file named "xmpChaosMaps.R" has been added which shows 
+    how to write R functions which generate chaotic time series models. 
+    The functions are: "henonSim" simulates data from Henon Map, "ikedaSim" 
+    from the "Ikeda Map", "logisticSim" from Logistic Map, "lorentzSim" 
+    from the Lorentz Map, and "roesslerSim, from the Roessler Map.
+        
+2004-06-08 fBasics/src
+    Thanks to James McCulloch the Builtin Fortran program named 
+    "fBasics-symstb.f" which is called by the functions "dsymstb" and 
+    "psymstb" is now under the GNU  GPL license.
+        
+2004-06-08 fBasics/src
+    Thanks to Tierry Terneau the Builtin C program named "DATE-char_date.c"
+    which is called by the function "fjulian" is now under the GNU GPL 
+    license.
+
+2004-06-08 fBasics/R
+    The function "alignDailySeries" has been extended to handle
+    multivariate time series objects.
+        
+2004-06-08 fBasics/R
+    New test functions for testing normality have been added. This
+    includes as Builtin functions the functions from R's contributed
+    package "nortest" and a function for the D'Agostina normal test.
+    
+    + many other smaller improvements and fixings ...
+        
+                
+________________________________________________________________________________
+Rmetrics VERSION 1090.10054
+
+
+2004-06-07 Rmetrics
+    The new version should be compiled out of the box both on MS
+    Windows and Linux Platforms. I tested it under Windows XP and 
+    Debian Linux. Binary packages and Source packages can be found
+    on www.Rmetrics.org.
+
+2004-06-07 fBasics/demo/xmpDistDFssd.R
+    Demo file added which demonstrates how to estimate probability  
+    densities using smoothing spline ANOVA models with cubic spline,  
+    linear spline, or thin-plate spline marginals for numerical 
+    variables.
+
+2004-06-07 fBasics/demo/xmpDistDFecfd.R
+    Demo File added which demonstrates how to compute or plot an 
+    empirical cumulative distribution function.
+
+2004-06-07 fSeries/data/dem2gbp.csv
+    Benchmark data file for GARCH modeling added.
+
+2004-06-07 fSeries/demo/xmpRollingAnalysis.R
+    Demo file added which implements two functions computing a Simple 
+    Moving Average "SMA" and an Exponential Moving Average "EWMA"
+    which can be used together with the book "Modelling Financial 
+    Time Series with SPlus" written by E. Zivot and J. Wang.
+
+2004-06-07 fSeries/deno/xmpRegOLS.R
+    Demo file added which implements a simple OLS function which can  
+    be used together with the book "Modelling Financial Time Series 
+    with SPlus" written by E. Zivot and J. Wang.
+
+2004-06-07 fSeries/demo/xmpMatrixAddonNA.R
+    Demo file added which demonstates how to manage missing
+    values in a matrix object. Included are functions to remove,
+    to substitute, to interpolate and to impute missing values.
+
+2004-06-07 fSeries/demo/xmpGarchOx.R
+    Demo file which demonstrates how to interface R with the
+    GarchOx package running under Ox. Note, Ox and GarchOx are
+    not part of this distribution.
+
+2004-06-07 fSeries/demo/xmpChaosMaps.R
+    Demo file added which demonstrates how to generate some chaotic 
+    time series models. These include the Henon map, the Ikeda Map,
+    the Logistic map, the Lorenz map and the Roessler Map.
+        
+2004-06-07 fExtremes/demo/xmpEDAlargenumPlot.R
+    Demo file added with two R functions "sllnPlot" and "lilPlot" 
+    where the first verifies Kolmogorov's Strong Law of Large 
+    Numbers and the second verifies Hartman-Wintner's Law of the 
+    iterated logarithm.
+
+2004-06-07 fExtremes/demo/xmpDISTmoments.R
+    Demo file added with two R functions "gevMoments" and 
+    "gpdMoments" which compute true mean and variance for the 
+    Generalized Extreme Value distribution and for the 
+    Generalized Pareto distribution.
+        
+2004-06-07 fOptions/demo/xmpTREEtrinomialOption.R
+    Demo file added which shows how to write a function to compute 
+    the call and put price of an European or American style option 
+    using a trinomial tree approach.
+    
+    + many other smaller improvements and fixings ...
+
+        
+________________________________________________________________________________
+Rmetrics VERSION 1090.10053
+
+
+2004-06-04 fBasics/demo/xmpZW-Chapter-2.R
+    Demo files added with examples from Chapter 2 of the book
+    of Zivot and Wang "Modeling Financial Time Series with Splus".
+
+2004-06-04 Rmetrics 
+    Code parts from contributed packages are now integrated as
+    BUILTIN functions (invisible for the user). That makes
+    Rmetrics running out of the box on an R default installation
+    and allows for a better unit testing.
+        
+2004-06-03 Rmetrics 
+    Rmetrics goes unit testing. I decided to use the RUnit package
+    for unit testing under Rmetrics.
+
+2004-06-03 fBasics 
+    Internal GNU Ical time/date concept improved, so that timeDate
+    operations become faster and now also run under Debian Linux.
+        
+2004-06-03 fExtremes/fOptions 
+    are now running out of the box under Debian Linux.
+
+2004-06-02 Rmetrics 
+    All keywords in the help pages have been replaced with R's 
+    standardized keywords from the KEYWORD.db Database.
+
+2004-06-02 fSeries 
+    New functions have been added supporting "Matrix Arithmetics 
+    and Linear Algebra". The help page summarizes selected functions 
+    available under R and addititional functions are documented 
+    which have been added by Rmetrics.
+
+2004-05-01 fBasics 
+    The Fortran Code for the hyperbolic distribution "hyp" has been 
+    withdrawn and is now replaced by pur R code. The Random number 
+    Generator implements "rhyperb" from R's "HyperbolicDist" package 
+    written by David Scott.
+
+2004-05-29 fBasics 
+    The "timeDate" and "timeSeries" classes have been added to 
+    the Rmetrics "fBasics" package. Also available are examples
+    from Chapter 2 for the book "Modelling Financial Time Series
+    with SPlus" written E. Zivot and J. Wang.
+
+2004-05-28 Rmetrics 
+    MS Windows specific features have been removed from the packages. 
+    This is a precondition to build the packages in the future also 
+    under Linux and Mac OSX.
+
+2004-05-19 Rmetrics 
+    readline() function in examples replaced by xmp* functions which
+    allow for an optional interactive prompt, so that R CMD CHECK no 
+    longer fails when the examples ask for a prompt. 
+
+2004-05-03 fBasics 
+    Installer and Updater "menu" added for installing and updating 
+    packages from the "Rmetrics" server, (MS Windows only).
+    
+2004-04-29 fBasics 
+    webImport: The functions "economagicImport" and "yahooImport" got  
+    a new argument named "try" for testing the Internet connection. 
+    So the program doesn't fail any longer if the Internet is down.
+        
+        
+________________________________________________________________________________
+Rmetrics VERSION 1081
+
+
+2004-04-22 fOptions
+    Two new functions added for valution of options by the binomial 
+    tree method. These are: "JRBinomialTreeOption" and 
+    "TIANBinomialTreeOption".
+    
+2004-04-21 fExtremes
+    All "*Fit" functions which the parameter estimation functions 
+    from the "evir" and "ismev" packages have now a common print, 
+    plot and summary S3 method which deliver their output in the 
+    same form.
+        
+2004-03-21 fExtremes
+    A new function "interactivePlot" was added which allows for 
+    plots in different ways by an argument named "which". If which 
+    is a character string named "all" all plots are created, if 
+    which is a logical vector of the length of the number of plots, 
+    those plots are created which elements of this vector set "TRUE", 
+    or if which a a character string named named "ask" the plots 
+    interact with their user.
+        
+2004-02-14 fOptions
+    New functions have been added for the valuation of options 
+    by Monte Carlo simulations. These are: "wienerPath", 
+    "plainVanillaPayoff", "arithmeticAsianPayoff", and 
+    "MonteCarloOption".
+    
+2004-01-29 fBasics
+    data: "*.csv" data files have now as delimiter a semicaolon 
+    instead of a comma, thus we use R's default for *.csv files.
+
+2004-01-29 fBasics
+    "print.coefmat" was deprecated in R's Version 1.8.1, thus we 
+    have it replaced by the current function "printCoefmat".
+
+2004-01-29 fBasics
+    "yahooImport" was updated due to format changes.
+
+2004-01-29 fBasics
+    "skewness" now support as input data.frame and POSIX objects. 
+    New methods
+      skewness.default(), skewness.data.frame(),
+      skewness.POSIXct() and skewness.POSIXlt()
+    were added.
+
+2004-01-29 fBasics
+    "kurtosis" now support as input data.frame and POSIX objects. 
+    New methods
+      kurtosis.default(), kurtosis.data.frame()
+      kurtosis.POSIXct() and kurtosis.POSIXlt()
+    were added.
+        
+2004-01-29 fSeries
+    "regFit" has now S4 print, plot, summary and predict methods. 
+    All methods are now integrated in one function with argument 
+    "method" for selection.
+        
+2004-01-29 fSeries
+    "lmTest" has now integrated all tests in one functions with 
+    argument "method" for selection. The individual functions can 
+    be used through the underlying "lmtest" package.
+
+2004-01-29 fSeries
+    The collection "technicalAnalysis" was devided into two 
+    collections, the first is still "technicalAnalysis", the 
+    added one is named "benchmarkAnalysis".
+
+2004-01-23 fBasics
+    "src/chardate.c" removed, now using R-package "date"
+        
+
+</PRE>      
