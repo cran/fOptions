@@ -1,16 +1,16 @@
 Package: fOptions
-Version: 260.72
-Date: 1997 - 2007
-Title: Rmetrics - Basics of Option Valuation
+Version: 270.73
+Date: 1997 - 2008
+Title: Basics of Option Valuation
 Author: Diethelm Wuertz and many others, see the SOURCE file
-Depends: R (>= 2.4.0), fBasics
-Maintainer: Diethelm Wuertz and Rmetrics Core Team <Rmetrics-core@r-project.org>
+Depends: R (>= 2.4.0), methods, fBasics
+Maintainer: Rmetrics Core Team <Rmetrics-core@r-project.org>
 Description: Environment for teaching "Financial Engineering and Computational Finance"
 NOTE: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE FUTURE.
       THIS TYPICALLY INCLUDES FUNCTION AND ARGUMENT NAMES,
       AS WELL AS DEFAULTS FOR ARGUMENTS AND RETURN VALUES.
 LazyLoad: yes
 LazyData: yes
-License: GPL Version 2 or later
+License: GPL (>= 2)
 URL: http://www.rmetrics.org
-Packaged: Mon Oct  8 14:08:29 2007; myself
+Packaged: Thu Oct 23 10:16:22 2008; yankee
