@@ -76,8 +76,12 @@ function(x)
     
     # FUNCTION:
     
+    # Result
+    # DW 2005-05-04
+    ans = 2 * pnorm(sqrt(2) * x) - 1
+    
     # Return Value:
-    2 * pnorm(sqrt(2) * x)
+    ans
 }
 
 
