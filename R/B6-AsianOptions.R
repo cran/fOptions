@@ -29,6 +29,7 @@
 
 ################################################################################
 # FUNCTION:                         DESCRIPTION:
+# Asian Options:
 #  GeometricAverageRateOption        Geometric Average Rate Option
 #  TurnbullWakemanAsianApproxOption  Turnbull-Wakeman Approximated Asian Option
 #  LevyAsianApproxOption             Levy Approximated Asian Option

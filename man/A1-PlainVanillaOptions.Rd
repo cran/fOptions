@@ -308,8 +308,37 @@ CBND(x1, x2, rho)
 }
 
 
+\references{
+
+Black F., Scholes M. (1973);
+    \emph{The Pricing of Options and Corporate Liabilities},
+    Journal of Political Economy 81, 637--654.
+
+Haug E.G. (1997); 
+    \emph{The Complete Guide to Option Pricing Formulas}, 
+    Chapter 1, McGraw-Hill, New York.
+
+Hull J.C. (1998);
+    \emph{Introduction to Futures and Options Markets},
+    Prentice Hall, London.
+    
+Miltersen K., Schwartz E.S. (1998);
+    \emph{Pricing of Options on Commodity Futures with
+    Stochastic Term Structuures of Convenience Yields and 
+    Interest Rates},
+    Journal of Financial and Quantitative Analysis 33, 33--59.
+
+}
+
+
+\author{
+
+    Diethelm Wuertz for the Rmetrics \R-port.
+
+}
+
+
 \examples{
-## SOURCE("fBasics.A0-SPlusCompatibility")
 ## SOURCE("fOptions.A1-PlainVanillaOptions")
 
 ## All the examples are from Haug's Option Guide (1997)
@@ -387,36 +416,6 @@ CBND(x1, x2, rho)
      KappaE = 1.045, KappaF = 0.200)
    Black76Option(TypeFlag = "c", FT = 95, X = 80, Time = 1/2, r = 0.05, 
      sigma = 0.266)  
-
-}
-
-
-\references{
-
-Black F., Scholes M. (1973);
-    \emph{The Pricing of Options and Corporate Liabilities},
-    Journal of Political Economy 81, 637--654.
-
-Haug E.G. (1997); 
-    \emph{The Complete Guide to Option Pricing Formulas}, 
-    Chapter 1, McGraw-Hill, New York.
-
-Hull J.C. (1998);
-    \emph{Introduction to Futures and Options Markets},
-    Prentice Hall, London.
-    
-Miltersen K., Schwartz E.S. (1998);
-    \emph{Pricing of Options on Commodity Futures with
-    Stochastic Term Structuures of Convenience Yields and 
-    Interest Rates},
-    Journal of Financial and Quantitative Analysis 33, 33--59.
-
-}
-
-
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
 
 }
 

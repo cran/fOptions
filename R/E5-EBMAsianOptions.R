@@ -40,6 +40,7 @@
 # 
 # GRAM CHARLIER SERIES EXPANSION:    DESCRIPTION:
 #  GramCharlierAsianOption            Calculate Gram-Charlier option prices
+#  .GramCharlierAsianDensity          NA
 #
 # STATE SPACE MOMENTS:               DESCRIPTION:
 #  AsianOptionMoments                 Methods to calculate Asian Moments
@@ -49,17 +50,18 @@
 #  .TolmatzAsianOptionMoments          Asymptotic Behavior after Tolmatz
 #
 # STATE SPACE DENSITIES:              DESCRIPTION:
-#  StateSpaceAsianDensity
-#  .Schroeder1AsianDensity             S1
-#  .Schroeder2AsianDensity             S2
-#  .Yor1AsianDensity                   Y1
-#  .Yor2AsianDensity                   Y2
-#  .TolmatzAsianDensity                T
-#  .TolmatzAsianProbability
+#  StateSpaceAsianDensity              NA
+#  .Schroeder1AsianDensity             NA
+#  .Schroeder2AsianDensity             NA
+#  .Yor1AsianDensity                   NA
+#  .Yor2AsianDensity                   NA
+#  .TolmatzAsianDensity                NA
+#  .TolmatzAsianProbability            NA
 #
 # PARTIAL DIFFERENTIAL EQUATIONS:     DESCRIPTION:
 #  PDEAsianOption                      PDE Asian Option Pricing
 #   .ZhangAsianOption                   Asian option price by Zhang's 1D PDE
+#    ZhangApproximateAsianOption
 #   .VecerAsianOption                   Asian option price by Vecer's 1D PDE 
 #
 # LAPLACE INVERSION:                  DESCRIPTION:
@@ -71,10 +73,10 @@
 #   gLinetzky                          Function to be integrated
 #
 # BOUNDS ON OPTION PRICES:            DESCRIPTION:
-#   BoundOnAsianOption                 Lower and upper bonds on Asian calls
-#    CurranThompsonLowerBound           From Thompson's continuous limit
-#    RogerShiThompsonLowerBound         From Thompson's single integral formula   
-#    ThompsonUpperBound                 Thompson's upper bound 
+#   BoundsOnAsianOption                 Lower and upper bonds on Asian calls
+#    CurranThompsonAsianOption          From Thompson's continuous limit
+#    RogerShiThompsonAsianOption        From Thompson's single integral formula   
+#    ThompsonAsianOption                Thompson's upper bound 
 #
 # SYMMETRY RELATIONS:                 DESCRIPTION:
 #   CallPutParityAsianOption           Call-Put parity Relation
@@ -431,6 +433,15 @@ sigma = 0.30, table = NA, method = c("LN", "RG", "JI"))
 }  
 
 
+.GramCharlierAsianDensity = 
+function(Time = 1, r = 0.09, sigma = 0.30, method = c("LN", "RG", "JI"))
+{	# A function ported by Diethelm Wuertz 
+
+	# Return Value:
+	NA
+}
+
+
 ################################################################################
 # STATE SPACE MOMENTS:
 
@@ -724,11 +735,12 @@ dt = 1.0e-10)
         Price[i] = result[[13]]*S[i]
     }
     
-    #Price = Price + 
-    #	ZhangApproximateAsianOption(TypeFlag, S, X, Time, r, sigma, table) 
+    # ?
+    Price = Price + 
+    	ZhangApproximateAsianOption(TypeFlag, S, X, Time, r, sigma, table) 
     
     # Return Value:
-    result = Price
+    Price
 }
 
 
@@ -862,7 +874,7 @@ sigma = 0.30, table = NA, nint = 800, eps = 1.0e-8, dt = 1.0e-10)
     }
     
     # Return Value:
-    result = Price
+    Price
 }
 
 
@@ -877,12 +889,14 @@ log = FALSE, doplot = FALSE)
 
     # Description:
     #   Calculates function to be Laplace inverted
-    #   Equation 4.9 with notation as in
-    #       Sudler G.F. [1999], "Asian Options: Inverse Laplace
-    #       Transform and Martingale Methods Revisited".
     
     # Arguments:
     #   lambda - complex vector
+    
+    # Notes:
+    #   Equation 4.9 with notation as in
+    #       Sudler G.F. [1999], "Asian Options: Inverse Laplace
+    #       Transform and Martingale Methods Revisited".
     
     # FUNCTION:
     
@@ -1031,7 +1045,14 @@ function(x, y, tau, nu, ip = 0)
     #   in the expression for the spectral representation of
     #   $ P^{(\nu)} (k, \tau) $. Proposition 2 described bu eq. (16)
 
-    # Function:
+    # Note:
+	#   Requires Confluent Hypergeometric Functions
+
+	# Reference:
+	#	[L] V. Linetzky, Spectral Expansions for Asian (Average Price)
+	#  	Options, Preprint, revised Version from October 2002
+
+	# Function:
     result = V = rep(0, length = length(x))
     for (i in 1:length(x)) {
         p = x[i]
@@ -1088,9 +1109,9 @@ function(x, y, tau, nu, ip = 0)
 
 
 LinetzkyAsianOption = 
-function(TypeFlag = c("c", "p"), S = 2, X = 2, Time = 1, r = 0.02, sigma = 0.1, 
-table = NA, lower = 0, upper = 100, method = "adaptive", subdivisions = 100, 
-ip = 0, doprint = TRUE, doplot = TRUE,...)
+function(TypeFlag = c("c", "p"), S = 2, X = 2, Time = 1, r = 0.02, 
+sigma = 0.1, table = NA, lower = 0, upper = 100, method = "adaptive", 
+subdivisions = 100, ip = 0, doprint = TRUE, doplot = TRUE,...)
 {   # A function implemented by Diethelm Wuertz
     
     # Test for Table:
@@ -1262,13 +1283,16 @@ sigma = 0.30)
     #   Thompson's formula describing the continuous limit
     #   of Curran's approximation.
     
+    # Note:
+    #	Rescale sigma:
+    # 	Note the formula of Thompson work for Time=1 only!
+    # 	Thus the easiest way to cover times to maturity different
+    #     from unity can be achieved by scale the volatility and 
+    #     interest rate! - Just do it
+    
     # FUNCTION:
     
-    # Rescale sigma:
-    # Note the formula of Thompson work for Time=1 only!
-    # Thus the easiest way to cover times to maturity different
-    #   from unity can be achieved by scale the volatility and 
-    #   interest rate! - Just do it
+    # Settings:
     TypeFlag = TypeFlag[1]
     sigma = sigma*sqrt(Time)
     r = r*Time
@@ -1340,13 +1364,16 @@ sigma = 0.30)
     #   only, whereas Roger and Shi's formula requires 
     #   double integration.
     
+    # Note:
+    #	Rescale sigma:
+    # 	Note the formula of Thompson work for Time=1 only!
+    # 	Thus the easiest way to cover times to maturity different
+    #     from unity can be achieved by scale the volatility and 
+    #     interest rate! - Just do it
+    
     # FUNCTION:
     
-    # Rescale sigma:
-    # Note the formula of Thompson work for Time=1 only!
-    # Thus the easiest way to cover times to maturity different
-    #   from unity can be achieved by scaling the volatility and 
-    #   interest rate! - Just do it
+    # Settings:
     TypeFlag = TypeFlag[1]
     sigma = sigma*sqrt(Time)
     r = r*Time
@@ -1418,17 +1445,20 @@ sigma = 0.30)
     #   Calculates "upper bound" for Asian Call Option from
     #   Thompson's formula. 
     
-    # Rescale sigma:
-    # Note the formula of Thompson work for Time=1 only!
-    # Thus the easiest way to cover times to maturity different
-    #   from unity can be achieved by scale the volatility and 
-    #   interest rate! - Just do it
+    # Note:
+    #	Rescale sigma:
+    # 	Note the formula of Thompson work for Time=1 only!
+    # 	Thus the easiest way to cover times to maturity different
+    #     from unity can be achieved by scale the volatility and 
+    #     interest rate! - Just do it
+    
+    # FUNCTION:
+    
+    # Settings:
     TypeFlag = TypeFlag[1]
     sigma = sigma*sqrt(Time)
     r = r*Time
     Time = 1
-    
-    # FUNCTION:
     
     # Internal Functions:
     sqrtvt =  function(x, S, X, alpha, sigma) {

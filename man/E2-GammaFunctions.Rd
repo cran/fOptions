@@ -115,9 +115,7 @@ Weisstein E.W. (2004);
 
 
 \examples{
-## SOURCE("fBasics.A0-SPlusCompatibility")
 ## SOURCE("fOptions.E2-GammaFunctions")
-## SOURCE("fOptions.E3-HypergeometricFunctions")
 
 ## Calculate Error, Gamma and Related Functions
 

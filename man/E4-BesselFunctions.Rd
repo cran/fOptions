@@ -83,7 +83,6 @@ Weisstein E.W. (2004);
 
 
 \examples{
-## SOURCE("fBasics.A0-SPlusCompatibility")
 ## SOURCE("fOptions.E4-BesselFunctions")
 
 ## Bessel I0 and K0 - 

@@ -37,7 +37,7 @@
 #   PTTwoAssetBarrierOption       Partial Time TwoAsset Barrier Option
 #   LookBarrierOption             Look Barrier Option
 #   DiscreteBarrierOption         Discrete Adjusted Barrier Option
-#   SoftBarrierOption             Soft Barrier
+#   SoftBarrierOption             Soft Barrier Option
 ################################################################################
 
 

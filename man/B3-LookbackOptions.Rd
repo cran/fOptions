@@ -233,10 +233,40 @@ ExtremeSpreadOption(TypeFlag, S, SMin, SMax, time1, Time2, r, b,
 }
 
 
+\references{
+
+Bermin H.P. (1996b);
+    \emph{Exotic Lookback Options: The case of Extreme Spread
+        Options},
+    Department of Economics, Lund University, Sweden.
+
+Conze A., Viswanathan R. (1991);
+    \emph{Path Dependent Options: The Case of Lookback Options},
+    Journal of Finance 46, 1893--1907.
+
+Goldmann B.M., Sosin H.B., Gatto M.A. (1993);
+    \emph{Path Dependent Options: Buy at the Low, Sell at the High},
+    Journal of Finance 34, 1111.
+
+Haug E.G. (1997); 
+    \emph{The Complete Guide to Option Pricing Formulas}, 
+    McGraw-Hill, New York.
+    
+Heynen R.C., Kat H.M. (1994);
+    \emph{Selective Memory},
+    Risk Magazine 7, 1994.
+    
+}
+
+
+\author{
+
+    Diethelm Wuertz for the Rmetrics \R-port.
+
+}
+
 
 \examples{
-## SOURCE("fBasics.A0-SPlusCompatibility")
-## SOURCE("fOptions.A1-PlainVanillaOptions")
 ## SOURCE("fOptions.B3-LookbackOptions")
 
 ## Examples from Chapter 2.9 in E.G. Haug's Option Guide (1997)
@@ -273,37 +303,6 @@ ExtremeSpreadOption(TypeFlag, S, SMin, SMax, time1, Time2, r, b,
      SMax = NA, time1 = 0.5, Time2 = 1, r = 0.1, b = 0.1, 
      sigma = 0.30)
         
-}
-
-
-\references{
-Bermin H.P. (1996b);
-    \emph{Exotic Lookback Options: The case of Extreme Spread
-        Options},
-    Department of Economics, Lund University, Sweden.
-
-Conze A., Viswanathan R. (1991);
-    \emph{Path Dependent Options: The Case of Lookback Options},
-    Journal of Finance 46, 1893--1907.
-
-Goldmann B.M., Sosin H.B., Gatto M.A. (1993);
-    \emph{Path Dependent Options: Buy at the Low, Sell at the High},
-    Journal of Finance 34, 1111.
-
-Haug E.G. (1997); 
-    \emph{The Complete Guide to Option Pricing Formulas}, 
-    McGraw-Hill, New York.
-    
-Heynen R.C., Kat H.M. (1994);
-    \emph{Selective Memory},
-    Risk Magazine 7, 1994.
-}
-
-
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
-
 }
 
 

@@ -24,6 +24,12 @@
 
 \alias{derivative}
 
+\alias{dEBM}
+\alias{pEBM}
+\alias{d2EBM}
+\alias{dasymEBM}
+
+
 
 \title{Exponential Brownian Motion Distributions}
 
@@ -81,6 +87,11 @@ mjohnson(a, b, c, d)
 masian(Time = 1, r = 0.045, sigma = 0.30)
 
 derivative(x, y, deriv = c(1, 2))
+
+dEBM(u, t = 1)
+pEBM(u, t = 1)
+d2EBM(u, t = 1)
+dasymEBM(u, t = 1)
 }
 
 \arguments{
@@ -117,9 +128,15 @@ derivative(x, y, deriv = c(1, 2))
     \item{q}{
         a real numeric value or vector.
         } 
+    \item{t}{
+        ...
+        } 
     \item{Time, r, sigma}{
         the parameters of the Asian Option distribution.
         }
+    \item{u}{
+        ...
+        } 
     \item{x}{
         a real numeric value or vector.
         } 
@@ -159,7 +176,6 @@ derivative(x, y, deriv = c(1, 2))
 
 
 \examples{
-## SOURCE("fBasics.A0-SPlusCompatibility")
 ## SOURCE("fOptions.E1-EBMDistribution")
 
 ## Calculate Log-Normal Density and its Derivaties,

@@ -318,9 +318,40 @@ BinaryBarrierOption(TypeFlag, S, X, H, K, Time, r, b, sigma,
 }
 
 
+\references{
+
+Cox J.C., Rubinstein M. (1985);
+    \emph{Innovations in Option Markets},
+    Prentice-Hall, New Jersey.
+
+Hakkansson N.H. (1976);
+    \emph{The Purchasing Power Fund: A New Kind of Financial
+        Intermediary},
+    Financial Analysts Journal 32, 49--59.
+
+Haug E.G. (1997); 
+    \emph{The complete Guide to Option Pricing Formulas}, 
+    Chapter 2.11, McGraw-Hill, New York.
+    
+Heinen R.C., Kat H.M. (1996);
+    \emph{Brick by Brick},
+    Risk Magazine 9, 6.
+
+Reiner E., Rubinstein M. (1991);
+    \emph{Unscrambling the Binary Code};
+    Risk Magazine 4, 9.
+    
+}
+
+
+\author{
+
+    Diethelm Wuertz for the Rmetrics \R-port.
+
+}
+
+
 \examples{
-## SOURCE("fBasics.A0-SPlusCompatibility")
-## SOURCE("fOptions.A1-PlainVanillaOptions")
 ## SOURCE("fOptions.B5-BinaryOptions")
 
 ## Examples from Chapter 2.11 in E.G. Haug's Option Guide (1997)
@@ -371,37 +402,6 @@ BinaryBarrierOption(TypeFlag, S, X, H, K, Time, r, b, sigma,
    BinaryBarrierOption(TypeFlag = "12", S = 95, X = 98, H = 100, 
      K = 15, Time = 0.5, r = 0.1, b = 0.1, sigma = 0.20)
      
-}
-
-
-\references{
-Cox J.C., Rubinstein M. (1985);
-    \emph{Innovations in Option Markets},
-    Prentice-Hall, New Jersey.
-
-Hakkansson N.H. (1976);
-    \emph{The Purchasing Power Fund: A New Kind of Financial
-        Intermediary},
-    Financial Analysts Journal 32, 49--59.
-
-Haug E.G. (1997); 
-    \emph{The complete Guide to Option Pricing Formulas}, 
-    Chapter 2.11, McGraw-Hill, New York.
-    
-Heinen R.C., Kat H.M. (1996);
-    \emph{Brick by Brick},
-    Risk Magazine 9, 6.
-
-Reiner E., Rubinstein M. (1991);
-    \emph{Unscrambling the Binary Code};
-    Risk Magazine 4, 9.
-}
-
-
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
-
 }
 
 

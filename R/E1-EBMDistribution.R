@@ -42,8 +42,21 @@
 #  mlognorm            Moments of log-Normal density
 #  mrgam               Moments of reciprocal-Gamma density
 #  masian              Moments of Asian Option density
+#  .DufresneMoments     Internal Function called by 'masian'
 # FUNCTION:           NUMERICAL DERIVATIVES:
 #  derivative          First and second numerical derivative
+# FUNCTION:           ASIAN DENSITY BY DOUBLE INTEGRATION:
+#  .thetaEBM
+#  .psiEBM
+#  d2EBM
+# FUNCTION:           ASIAN DENSITY BY SINGLE INTEGRATION:
+#  .gxuEBM
+#  .gxt
+#  .gxtu
+#  dEBM
+#  pEBM
+# FUNCTION:           ASYMPTOTIC EXPANSION OF ASIAN DENSITY:
+#  dasymEBM
 ################################################################################
 
 
@@ -316,25 +329,25 @@ function(q, a = 0, b = 1, c = 0, d = 1)
     z = a + b * log( (x-c) / d )
     
     # Return Value:
-    pnorm(q=z, mean=0, sd=1)
+    pnorm(q = z, mean = 0, sd = 1)
 }
 
 
 # ******************************************************************************
 
 
-mlognorm = 
-function(meanlog = 0, sdlog = 1)
+mnorm = 
+function(mean = 0, sd = 1)
 {   # A function implemented by Diethelm Wuertz
-    
+
     # Description:
-    #   Computes the moments for the Log-Normal distribution.
+    #   Computes the moments for the Normal distribution.
     
     # FUNCTION:
     
     # Raw Moments:
-    n = 1:4
-    M = exp ( n * meanlog + n^2 * sdlog^2/2 )
+    M = c( 
+        mean, mean^2+sd^2, mean*(mean^2+3*sd*2), mean^4+6*mean^2*sd^2+3*sd^4 )
     
     # Centered Moments:
     m = M
@@ -355,18 +368,18 @@ function(meanlog = 0, sdlog = 1)
 # ------------------------------------------------------------------------------
 
 
-mnorm = 
-function(mean = 0, sd = 1)
+mlognorm = 
+function(meanlog = 0, sdlog = 1)
 {   # A function implemented by Diethelm Wuertz
-
+    
     # Description:
-    #   Computes the moments for the Normal distribution.
+    #   Computes the moments for the Log-Normal distribution.
     
     # FUNCTION:
     
     # Raw Moments:
-    M = c( 
-        mean, mean^2+sd^2, mean*(mean^2+3*sd*2), mean^4+6*mean^2*sd^2+3*sd^4 )
+    n = 1:4
+    M = exp ( n * meanlog + n^2 * sdlog^2/2 )
     
     # Centered Moments:
     m = M
@@ -550,3 +563,251 @@ function(x, y, deriv = c(1, 2))
 
 ################################################################################
 
+
+.thetaEBM =
+function(r, u) 
+{	# A function written by Diethelm Wuertz
+
+    # Description:
+    #   Calculate the integral "\theta_r(u)" given by equations 
+    #   2.22 and 2.23 in: R. Gould, "The Distribution of the 
+    #   Integral of Exponential Brownian Motion".
+    
+    # Arguments:
+    #	r - vector of numeric values
+    #   u - numeric value
+    
+    # FUNCTION:
+    
+    # Function to be integrated:  
+	f = function(x, rr, uu) {
+		fx = rep(0, length = length(x))
+		for (i in 1:length(x) ) 
+			fx[i] = exp(-x[i]^2/(2*uu)) * exp(-rr*cosh(x[i])) * 
+				sinh(x[i]) * sin(pi*x[i]/uu) 
+		fx }
+	
+    # Loop over r-Vector:
+	result = rep(0, length=length(r))
+	for ( i in 1: length(r) ) {
+		result[i] = integrate(f, lower = 0, upper = 30, rr = r[i], uu = u, 
+			subdivisions = 100, rel.tol = .Machine$double.eps^0.25, 
+			abs.tol = .Machine$double.eps^0.25)$value 
+		result[i] = result[i] * (r/sqrt((2*u*pi^3))) * exp(pi^2/(2*u)) }
+	
+	# Return Value:
+	result
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.psiEBM = 
+function(r, u)
+{	# A function written by Diethelm Wuertz
+
+    # Description:
+    #   Calculate the integral "\psi_r(u)" given by equations 
+    #   2.22 and 2.23 in: R. Gould, "The Distribution of the 
+    #   Integral of Exponential Brownian Motion".
+    
+    # Arguments:
+    #	r - vector of numeric values
+    #   u - numeric value
+    
+    # FUNCTION:
+    
+    # Calculate psi() from theta():
+	result = sqrt(2*u*pi^3) * exp(-pi^2/(2*u)) * .thetaEBM(r, u)
+	
+	# Return Value:
+	result
+	
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+d2EBM =
+function(u, t = 1) 
+{	# A function written by Diethelm Wuertz
+
+    # Description:
+    #   Calculate the density integral "f_A_t(u)" given by  
+    #   equation 4.36 in: R. Gould, "The Distribution of the 
+    #   Integral of Exponential Brownian Motion".
+    
+    # Arguments:
+    #	t - numeric value
+    #   u - numeric value
+    
+	# FUNCTION:
+	
+	# Function to be integrated:
+	f = function(x, tt, uu) {
+	    fx = rep(0, length=length(x))
+	    for (i in 1:length(x) )
+			fx[i] = (1/uu) * exp(-(1+exp(2*x[i]))/(2*uu)) *  
+				.thetaEBM(r=exp(x[i])/uu, u=tt) 
+		fx }
+	
+	# Integrate:
+	result = rep(0, length = length(u))
+	for (i in 1:length(u)) {
+	result[i] = integrate(f, lower = -16, upper = 4, tt = t, uu = u[i], 
+		subdivisions = 100, rel.tol=.Machine$double.eps^0.25, 
+		abs.tol=.Machine$double.eps^0.25)$value }
+	
+	# Return Value:
+	result
+}
+
+
+# ******************************************************************************
+# # A new much faster Approach - Reduced to a single integral!
+
+
+.gxuEBM =
+function(x, u)
+{	# A function written by Diethelm Wuertz
+
+    # Description:
+    #   Interchange the Integrals - and first integrate:
+    #   1/u^2 * sinh(x) * exp(-(1/(2*u))*(1+exp(2*x))) * exp(x) * 
+    #		exp(-exp(x)*cosh(y)/u)
+    
+	# FUNCTION:
+	
+	# Compute g(x, u): 
+	fx = rep(0, length = length(x)) 
+	if (u > 0) {
+	  	for ( i in 1:length(x) ) {
+	  		su = (u)^(-3/2) * sinh(x[i])
+      		cx = cosh(x[i])/sqrt(u)
+      		sx = sinh(x[i])/sqrt(u)
+      		Asymptotics = exp(x[i]) / sqrt(u) / 2
+      		if (Asymptotics <= 33.0) {
+    			fx[i] = su * pnorm(-cx) / dnorm(sx) }
+      		else {
+    			fx[i] = su * exp(-1/(2*u)) * (1-1/cx^2+3/cx^4) / cx  } } } 
+    			
+	# Return Value:
+	fx
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.gxtEBM = 
+function(x, t)
+{  	# A function written by Diethelm Wuertz
+
+    # Description:
+    
+    # FUNCTION:
+    
+    # Compute g(x, t):
+	fx = exp(pi^2/(2*t)) / sqrt(2*t*pi^3) * exp(-x^2/(2*t))
+
+	# Return Value:
+    fx
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.gxtuEBM =  
+function(x, t, u)
+{  	# A function written by Diethelm Wuertz
+
+    # FUNCTION:
+    
+    # Result:
+	fx = .gxtEBM(x = x, t = t) * .gxuEBM(x = x, u = u) * sin(pi*x/t) 
+
+	# Return Value:
+    fx
+}
+
+# ------------------------------------------------------------------------------
+
+
+dEBM =
+function(u, t = 1)
+{	# A function written by Diethelm Wuertz
+
+	# Arguments;
+	#   t - a numeric value
+	#   u - a vector of numeric values
+	
+	# FUNCTION:
+	
+	# Calculate Density:
+	result = rep(0, length = length(u))
+	for (i in 1:length(u) ) {
+		result[i] = integrate(.gxtuEBM, lower = 0, upper = 100, 
+			subdivisions = 100, rel.tol = .Machine$double.eps^0.25,
+			t = t, u = u[i])$value 
+		print(c(u[i], result[i]))
+	}
+		
+	# Return Value:
+	result
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+pEBM = 
+function(u, t = 1)
+{	# A function written by Diethelm Wuertz
+
+	# Arguments;
+	#   t - a numeric value
+	#   u - a vector of numeric value
+	
+	# FUNCTION:
+	
+	# Calculate Probability:
+	result = rep(0, length=length(u))
+	result[1] = integrate(fx, lower = 0, upper = u[1], t = t)$value
+	if (length(u) > 1) {
+		for (i in 2:length(u) ) {
+			result[i] = result[i-1] + 
+				integrate(dEBM, lower = u[i-1], upper = u[i], t = t)$value } }
+		
+	# Return Value:
+	result
+}
+
+
+# ******************************************************************************
+
+
+dasymEBM = 
+function(u, t = 1)
+{	# A function written by Diethelm Wuertz
+
+	# Description:
+	#   Calculates the asymptotic behavior of the density
+	#   function f of the exponential Brownian maotion
+	
+	# FUNCTION:
+	
+	# Asymptotic Density:
+	alpha = log ( 8*u*exp(-2*t) )
+	beta = exp (  -((log(alpha/(4*t)))^2)/(8*t)  )
+	f = sqrt(t) * exp(t/2) * exp(-alpha^2/(8*t)) * beta
+	f = f / ( u * sqrt(u) * alpha * gamma (alpha /(4*t)) )
+	
+	# Return Value:
+	f
+}
+
+
+################################################################################

@@ -196,10 +196,24 @@ TakeoverFXOption(V, B, E, X, Time, r, rf, sigmaV, sigmaE,
 }
 
 
+\references{
+
+Haug E.G. (1997); 
+    \emph{The Complete Guide to Option Pricing Formulas}, 
+    Chapter 2.13, McGraw-Hill, New York.
+    
+}
+
+
+\author{
+
+    Diethelm Wuertz for the Rmetrics \R-port.
+    
+}
+
+
 \examples{
-## SOURCE("fBasics.A0-SPlusCompatibility")
-## SOURCE("fOptions.A1-PlainVanillaOptions")
-## SOURCE("fOptions.B7-FXTransOptions")
+## SOURCE("fOptions.B7-CurrencyTranslatedOptions")
 
 ## Examples from Chapter 2.13 in E.G. Haug's Option Guide (1997)
 
@@ -226,22 +240,6 @@ TakeoverFXOption(V, B, E, X, Time, r, rf, sigmaV, sigmaE,
    TakeoverFXOption(V = 100, B = 100, E = 1.5, X = 1.55, Time = 1, 
      r = 0.08, rf = 0.06, sigmaV = 0.20, sigmaE = 0.25, rho = 0.1)
 
-}
-
-
-\references{
-
-Haug E.G. (1997); 
-    \emph{The Complete Guide to Option Pricing Formulas}, 
-    Chapter 2.13, McGraw-Hill, New York.
-    
-}
-
-
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
-    
 }
 
 

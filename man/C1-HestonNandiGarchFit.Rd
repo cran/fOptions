@@ -198,8 +198,23 @@ hngarchStats(model)
 }
 
 
+\references{
+
+Heston S.L., Nandi S. (1997);
+    \emph{A Closed-Form GARCH Option Pricing Model},
+    Federal Reserve Bank of Atlanta.
+    
+}
+
+
+\author{
+
+    Diethelm Wuertz for the Rmetrics \R-port.
+    
+}
+
+
 \examples{
-## SOURCE("fBasics.A0-SPlusCompatibility")
 ## SOURCE("fOptions.C1-HestonNandiGarchFit")
 
 ## hngarchSim -
@@ -230,22 +245,6 @@ hngarchStats(model)
    # HN-GARCH Moments:
    xmpOptions("\nNext: Compute Moments of a HN-GARCH(1,1) Process > ")
    hngarchStats(mle$model)     
-}
-
-
-\references{
-
-Heston S.L., Nandi S. (1997);
-    \emph{A Closed-Form GARCH Option Pricing Model},
-    Federal Reserve Bank of Atlanta.
-    
-}
-
-
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
-    
 }
 
 

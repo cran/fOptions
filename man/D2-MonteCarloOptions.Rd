@@ -218,10 +218,6 @@ Jaeckel P. (2002);
 
 
 \examples{
-## SOURCE("fBasics.A0-SPlusCompatibility")
-## SOURCE("fOptions.A1-PlainVanillaOptions")
-## SOURCE("fOptions.B6-AsianOptions")
-## SOURCE("fOptions.D1-LowDiscrepancy")
 ## SOURCE("fOptions.D2-MonteCarloOptions")
    
 ## How to perform a Monte Carlo Simulation?

@@ -142,7 +142,6 @@ C ------------------------------------------------------------------------------
       COMMON /PARAMS/ PI
       COMMON /ASIAN1/ SIGMAT, RRT, XM, Z, MODEL
       COMMON /ASIAN2/ SIGMA, TIME, RR, XS, SS, ETA, XL, XR
-      
 
 C FOR COMMON BLOCKS:
       SIGMA = SIGMA1
@@ -213,7 +212,7 @@ C ------------------------------------------------------------------------------
       COMMON /PARAMS/ PI
       COMMON /ASIAN1/ SIGMAT, RRT, XM, Z, MODEL
       COMMON /ASIAN2/ SIGMA, TIME, RR, XS, SS, ETA, XL, XR
-      
+	  
       IF (MODEL.EQ.1) THEN
          FR = (1.0D0-DEXP(-RR*T))/RRT     
 	     FVAL(1) = (0.5D0*SIGMAT*SIGMAT) * ((X+FR)**2) * UXX(1)
@@ -223,7 +222,7 @@ C ------------------------------------------------------------------------------
 	     RT = (1.0D0-DEXP(-RR*T))/RR
          PF = (X*SIGMA*SIGMA)/(4.0D0*DSQRT(PI*ETA)) 
 	     FVAL(1) = (0.5D0*SIGMA*SIGMA) * ((X+RT)**2) * UXX(1)
-	     FVAL(1) = FVAL(1) + PF * DEXP(-0.25D0*X*X/ETA) * (X+2.0D0*RT)
+	     FVAL(1) = FVAL(1) + PF*DEXP(-0.25D0*X*X/ETA)*(X+2.0D0*RT)
 	  ENDIF
       
       RETURN
@@ -239,7 +238,7 @@ C ------------------------------------------------------------------------------
       DIMENSION DBDU(NPDE,NPDE), DBDUX(NPDE,NPDE)
       COMMON /ASIAN1/ SIGMAT, RRT, XM, Z, MODEL
       COMMON /ASIAN2/ SIGMA, TIME, RR, XS, SS, ETA, XL, XR
- 
+
 C LEFT/RIGHT BOUNDARY MODEL 1:     
       IF (MODEL.EQ.1) THEN
          IF (X.LE.-XM) THEN
@@ -1911,7 +1910,8 @@ C-------------------------------------------------------------------------------
 C-----------------------------------------------------------------------
 C NOW X .LT. XT(IHI).  FIND LOWER BOUND.
 C-----------------------------------------------------------------------
-   30 ISTEP = 1
+CC   30 ISTEP = 1
+      ISTEP = 1
    31 IHI = ILO
       ILO = IHI - ISTEP
       IF (ILO .LE. 1) GO TO 35
@@ -2199,7 +2199,8 @@ C WITH THAT AS RIGHT-HAND SIDE AND PW AS COEFFICIENT MATRIX,
 C USING THE LU DECOMPOSITION OF PW.
 C-----------------------------------------------------------------------
   350 CALL SOLB (N0, N, ML, MU, PW, SAVE3, IPIV)
-  370 D = 0.0D0
+cc  370 D = 0.0D0
+      D = 0.0D0
       DO 380 I = 1,N
         ERROR(I) = ERROR(I) + SAVE3(I)
         D = D + (SAVE3(I)/YMAX(I))**2
@@ -2209,7 +2210,8 @@ C-----------------------------------------------------------------------
 C TEST FOR CONVERGENCE.  IF M.GT.0, AN ESTIMATE OF THE CONVERGENCE
 C RATE CONSTANT IS STORED IN CRATE, AND THIS IS USED IN THE TEST.
 C-----------------------------------------------------------------------
-  400 IF (M .NE. 0) CRATE = DMAX1(.9*CRATE,D/D1)
+CC 400 IF (M .NE. 0) CRATE = DMAX1(.9*CRATE,D/D1)
+      IF (M .NE. 0) CRATE = DMAX1(.9*CRATE,D/D1)
       IF ((D*DMIN1(1.D0,2.0D0*CRATE)) .LE. BND) GO TO 450
       D1 = D
       M = M + 1
@@ -2846,6 +2848,7 @@ C-----------------------------------------------------------------------
       COMMON /OPTION/ NOGAUS,MAXDER
       COMMON /GEAR1/ T,H,DUMMY(4),N,IDUMMY(2),JSTART
       DIMENSION Y0(NEQN),Y(NEQN,MAXDER+1)
+	  
       DO 10 I = 1,N
    10   Y0(I) = Y(I,1)
       L = JSTART + 1

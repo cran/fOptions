@@ -116,6 +116,8 @@
 	\code{ZhangTable} \tab Table from Zhang's paper, \cr
 	\code{ZhangLongTable} \tab Long Table from Zhang's paper, \cr
 	\code{ZhangShortTable} \tab Short Table from Zhang's paper. }
+	
+	Sorry - The Documentation is still Uncomplete.
 
 }
 
@@ -305,18 +307,18 @@ ZhangShortTable()
 }
 
 
-\details{
+%\details{
+%
+%	...
+%	
+%}
 
-	...
-	
-}
 
-
-\value{
-  
-    The functions ...
-    
-}
+%\value{
+%  
+%    The functions ...
+%    
+%}
 
 
 \author{
@@ -327,7 +329,6 @@ ZhangShortTable()
 
 
 \examples{
-## SOURCE("fBasics.A0-SPlusCompatibility")
 ## SOURCE("fOptions.E4-EBMAsianOptions")
 
 ## Examples:

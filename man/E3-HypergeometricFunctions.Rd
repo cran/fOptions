@@ -122,10 +122,7 @@ Weisstein E.W. (2004);
 
 
 \examples{
-## SOURCE("fBasics.A0-SPlusCompatibility")
-## SOURCE("fOptions.E2-GammaFunctions")
 ## SOURCE("fOptions.E3-HypergeometricFunctions")
-## SOURCE("fOptions.E4-BesselFunctions")
 
 ## kummerM - 
    # Abramowitz-Stegun: Formula 13.6.3/13.6.21

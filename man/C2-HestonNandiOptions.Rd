@@ -110,9 +110,21 @@ HNGCharacteristics(TypeFlag, model, S, X, Time.inDays, r.daily)
 }
 
 
+\references{
+Heston S.L., Nandi S. (1997);
+    \emph{A Closed-Form GARCH Option Pricing Model},
+    Federal Reserve Bank of Atlanta.
+}
+
+
+\author{
+
+    Diethelm Wuertz for the Rmetrics \R-port.
+    
+}
+
+
 \examples{
-## SOURCE("fBasics.A0-SPlusCompatibility")
-## SOURCE("fOptions.A1-PlainVanillaOptions")
 ## SOURCE("fOptions.C2-HestonNandiOptions")
 
 ## model -
@@ -153,20 +165,6 @@ HNGCharacteristics(TypeFlag, model, S, X, Time.inDays, r.daily)
    Greeks = cbind(HNG, GBS, Diff = round(100*(HNG-GBS)/GBS, digits = 2))
    row.names(Greeks) <- Selection
    data.frame(Greeks)
-}
-
-
-\references{
-Heston S.L., Nandi S. (1997);
-    \emph{A Closed-Form GARCH Option Pricing Model},
-    Federal Reserve Bank of Atlanta.
-}
-
-
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
-    
 }
 
 

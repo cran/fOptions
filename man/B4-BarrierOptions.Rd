@@ -363,10 +363,23 @@ SoftBarrierOption(TypeFlag, S, X, L, U, Time, r, b, sigma,
 }
 
 
+\references{
+
+Haug E.G. (1997); 
+    \emph{The complete Guide to Option Pricing Formulas}, 
+    Chapter 2.10, McGraw-Hill, New York.
+    
+}
+
+
+\author{
+
+    Diethelm Wuertz for the Rmetrics \R-port.
+ 
+}
+
 
 \examples{
-## SOURCE("fBasics.A0-SPlusCompatibility")
-## SOURCE("fOptions.A1-PlainVanillaOptions")
 ## SOURCE("fOptions.B4-BarrierOptions")
 
 ## Examples from Chapter 2.10 in E.G. Haug's Option Guide (1997)
@@ -417,20 +430,6 @@ SoftBarrierOption(TypeFlag, S, X, L, U, Time, r, b, sigma,
    SoftBarrierOption(TypeFlag = "cdo", S = 100, X = 100, L = 70, 
      U = 95, Time = 0.5, r = 0.1, b = 0.05, sigma = 0.20)
   
-}
-
-
-\references{
-Haug E.G. (1997); 
-    \emph{The complete Guide to Option Pricing Formulas}, 
-    Chapter 2.10, McGraw-Hill, New York.
-}
-
-
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
- 
 }
 
 

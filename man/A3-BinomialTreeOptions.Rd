@@ -159,8 +159,6 @@ BinomialTreePlot(BinomialTreeValues, dx = -0.025, dy = 0.4,
 
 
 \examples{
-## SOURCE("fBasics.A0-SPlusCompatibility")
-## SOURCE("fOptions.A1-PlainVanillaOptions")
 ## SOURCE("fOptions.A3-BinomialTreeOptions")
 
 ## Cox-Ross-Rubinstein Binomial Tree Option Model:

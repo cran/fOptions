@@ -29,7 +29,7 @@
 
 ################################################################################
 # FUNCTION:                  DESCRIPTION:
-#  fOPTION                    Class Representation
+#  fOPTION                    S4 Class Representation
 # FUNCTION:                  DESCRIPTION:
 #  NDF                        Normal distribution function
 #  CND                        Cumulative normal distribution function
@@ -55,7 +55,9 @@ setClass("fOPTION",
         parameters = "list",
         price = "numeric",     
         title = "character",
-        description = "character") )
+        description = "character"
+    ) 
+)
    
 
 ################################################################################

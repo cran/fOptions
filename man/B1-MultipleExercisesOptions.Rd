@@ -384,9 +384,7 @@ Rubinstein M. (1991);
 
 
 \examples{
-## SOURCE("fBasics.A0-SPlusCompatibility")
-## SOURCE("fOptions.A1-PlainVanillaOptions")
-## SOURCE("fOptions.B1-MultExercisesOptions")
+## SOURCE("fOptions.B1-MultipleExercisesOptions")
 
 ## Examples from Chapter 2.1 - 2.7 in E.G. Haug's Option Guide (1997)
 

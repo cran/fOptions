@@ -181,7 +181,7 @@ C     POINT WITH A POINT FAR IN THE TAILS.
       IF (P.GE.(1.0D0-EPS)) P = 1.0d0 - EPS
       IF (P.LE.EPS) P = EPS
       IF (P.NE.0.5D0) GOTO 150
- 50   HQNORM = 0.0D0
+      HQNORM = 0.0D0
       RETURN
 150   R = P 
       IF (P.GT.0.5D0) R = 1.0 - R
@@ -362,7 +362,7 @@ C     POINT WITH A POINT FAR IN THE TAILS.
       IF (P.GE.(1.0D0-EPS)) P=1.0D0-EPS
       IF (P.LE.EPS) P=EPS
       IF (P.NE.0.5D0) GOTO 150
- 50   SQNORM = 0.0D0
+      SQNORM = 0.0D0
       RETURN
 150   R = P 
       IF (P.GT.0.5D0) R = 1.0 - R
@@ -412,12 +412,13 @@ C       iSEED     - SCRAMBLING iSEED
       INTEGER SV(DIMEN,MAXBIT),V(DIMEN,MAXBIT)
       INTEGER I,J,K,L,M,NEWV,TAU(MAXDEG)
       INTEGER USM(31,31),USHIFT(31)
-      INTEGER TEMP1,TEMP2,TEMP4
+CC      INTEGER TEMP1,TEMP2,TEMP4
+      INTEGER TEMP1,TEMP2,TEMP3,TEMP4
       INTEGER SHIFT(1111),LSM(1111,31),TV(1111,31,31)
       REAL*8 QUASI(DIMEN),RECIPD
       INTEGER iSEED
       LOGICAL INCLUD(MAXDEG)
-      INTRINSIC MOD,XOR
+	  INTRINSIC MOD, IEOR
       
       DATA (POLY(I),I=2,211)/3,7,11,13,19,25,37,59,47,61,55,41,67,97,91,
      +     109,103,115,131,193,137,145,143,241,157,185,167,229,171,213,
@@ -1281,8 +1282,8 @@ C        IN BRATLEY AND FOX, SECTION 2
             L = 1
             DO K = 1, M
                L = 2*L
-               IF (INCLUD(K)) NEWV = XOR(NEWV, L*V(I, J-K))
-C              IF A FULL-WORD EXCLUSIVE-OR, SAY .XOR., IS AVAILABLE,
+               IF (INCLUD(K)) NEWV = IEOR(NEWV, L*V(I, J-K))
+C              IF A FULL-WORD EXCLUSIVE-OR, SAY .IEOR., IS AVAILABLE,
 C              THEN REPLACE THE PRECEDING STATEMENT BY
             ENDDO
             V(I, J) = NEWV
@@ -1317,8 +1318,8 @@ C>>> SCRAMBLING START
                DO P = MAX,1,-1
                   TEMP1 = 0
                   DO K = 1,MAXCOL
-                     TEMP1 = TEMP1 + 
-     +            IBITS(LSM(I,P),K-1,1)*IBITS(V(I,J),K-1,1)                                      
+                     TEMP01 = IBITS(LSM(I,P),K-1,1)*IBITS(V(I,J),K-1,1)
+                     TEMP1 = TEMP1 + TEMP01
                   ENDDO
                   TEMP1 = MOD(TEMP1, 2)
                   TEMP2 = TEMP2+TEMP1*L   
@@ -1364,7 +1365,7 @@ C>>> SCRAMBLING START
                      TEMP1 = MOD(TEMP1,2)
                      TEMP2 = TEMP2 + TEMP1*L
                      IF (PP .EQ. 1) THEN 
-                        TEMP3  = MOD(TEMP3,2)
+                        TEMP3 = MOD(TEMP3,2)
                         TEMP4 = TEMP4 + TEMP3*L
                      ENDIF  
                      L = 2*L
@@ -1372,7 +1373,7 @@ C>>> SCRAMBLING START
                   SV(I, PP) = TEMP2
                   IF (PP .EQ. 1) THEN
                      IF (IFLAG .EQ. 3) THEN
-                        SHIFT(I) = XOR(TEMP4, SHIFT(I))           
+                        SHIFT(I) = IEOR(TEMP4, SHIFT(I))           
                      ELSE
                         SHIFT(I) = TEMP4
                      ENDIF  
@@ -1509,7 +1510,7 @@ C       COUNT     - SEQUENCE NUMBER OF THE CALL
       PARAMETER (MAXBIT=30)
       INTEGER SV(DIMEN,MAXBIT)
       REAL*8 QUASI(DIMEN)
-      INTRINSIC MOD,XOR
+      INTRINSIC MOD, IEOR
       
       L = 0
       I = COUNT
@@ -1522,7 +1523,7 @@ C       COUNT     - SEQUENCE NUMBER OF THE CALL
 C     CALCULATE THE NEW COMPONENTS OF QUASI,
 C     FIRST THE NUMERATORS, THEN NORMALIZED
       DO I = 1, DIMEN
-         QUASI(I) = REAL(XOR(INT(QUASI(I)*LL), SV(I, L)))/LL
+         QUASI(I) = REAL(IEOR(INT(QUASI(I)*LL), SV(I, L)))/LL
       ENDDO
 
       COUNT = COUNT + 1

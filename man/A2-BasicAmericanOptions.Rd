@@ -135,9 +135,41 @@ BSAmericanApproxOption(TypeFlag, S, X, Time, r, b, sigma,
 }
 
 
+\references{
+
+Barone-Adesi G., Whaley R.E. (1987);
+    \emph{Efficient Analytic Approximation of American Option Values},
+    Journal of Finance 42, 301--320.
+    
+Bjerksund P., Stensland G. (1993);
+    \emph{Closed Form Approximation of American Options},
+    Scandinavian Journal of Management 9, 87--99.
+    
+Geske R. (1979);
+    \emph{A Note on an Analytical Formula for Unprotected
+    American Call Options on Stocks with known Dividends},
+    Journal of Financial Economics 7, 63--81.
+
+Haug E.G. (1997); 
+    \emph{The Complete Guide to Option Pricing Formulas}, 
+    Chapter 1, McGraw-Hill, New York.
+
+Roll R. (1977);
+    \emph{An Analytic Valuation Formula for Unprotected
+    American Call Options on Stocks with known Dividends},
+    Journal of Financial Economics 5, 251--258.
+    
+}
+
+
+\author{
+
+    Diethelm Wuertz for the Rmetrics \R-port.
+
+}
+
+
 \examples{
-## SOURCE("fBasics.A0-SPlusCompatibility")
-## SOURCE("fOptions.A1-PlainVanillaOptions")
 ## SOURCE("fOptions.A2-BasicAmericanOptions")
 
 ## All the examples are from Haug's Option Guide (1997)
@@ -162,38 +194,6 @@ BSAmericanApproxOption(TypeFlag, S, X, Time, r, b, sigma,
    xmpOptions("\nNext: BS Approximation > ")
    BSAmericanApproxOption(TypeFlag = "c", S = 42, X = 40, 
      Time = 0.75, r = 0.04, b = 0.04-0.08, sigma = 0.35)
-}
-
-
-\references{
-Barone-Adesi G., Whaley R.E. (1987);
-    \emph{Efficient Analytic Approximation of American Option Values},
-    Journal of Finance 42, 301--320.
-    
-Bjerksund P., Stensland G. (1993);
-    \emph{Closed Form Approximation of American Options},
-    Scandinavian Journal of Management 9, 87--99.
-    
-Geske R. (1979);
-    \emph{A Note on an Analytical Formula for Unprotected
-    American Call Options on Stocks with known Dividends},
-    Journal of Financial Economics 7, 63--81.
-
-Haug E.G. (1997); 
-    \emph{The Complete Guide to Option Pricing Formulas}, 
-    Chapter 1, McGraw-Hill, New York.
-
-Roll R. (1977);
-    \emph{An Analytic Valuation Formula for Unprotected
-    American Call Options on Stocks with known Dividends},
-    Journal of Financial Economics 5, 251--258.
-}
-
-
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
-
 }
 
 

@@ -29,7 +29,7 @@
 
 ################################################################################
 # FUNCTION:                       DESCRIPTION:
-#  Multiple Exercies Options:           
+#  Multiple Exercices Options:           
 #   ExecutiveStockOption            Executive Stock Option
 #   ForwardStartOption              Forward Start Option
 #   RatchetOption                   Ratchet [Compound] Option

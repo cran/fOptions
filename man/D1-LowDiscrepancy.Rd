@@ -148,7 +148,6 @@ Joe S., Kuo F.Y. (1998);
 
 
 \examples{
-## SOURCE("fBasics.A0-SPlusCompatibility")
 ## SOURCE("fOptions.D1-LowDiscrepancy")
 
 

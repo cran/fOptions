@@ -127,9 +127,21 @@ LevyAsianApproxOption(TypeFlag, S, SA, X, Time, time, r, b,
 }
 
 
+\references{
+Haug E.G. (1997); 
+    \emph{The complete Guide to Option Pricing Formulas}, 
+    Chapter 2.12, McGraw-Hill, New York.
+}
+
+
+\author{
+
+    Diethelm Wuertz for the Rmetrics \R-port.
+
+}
+
+
 \examples{
-## SOURCE("fBasics.A0-SPlusCompatibility")
-## SOURCE("fOptions.A1-PlainVanillaOptions")
 ## SOURCE("fOptions.B6-AsianOptions")
 
 ## Examples from Chapter 2.12 in E.G. Haug's Option Guide (1997)
@@ -150,20 +162,6 @@ LevyAsianApproxOption(TypeFlag, S, SA, X, Time, time, r, b,
    LevyAsianApproxOption(TypeFlag = "c", S = 100, SA = 100, X = 105, 
      Time = 0.75, time = 0.50, r = 0.10, b = 0.05, sigma = 0.15)
      
-}
-
-
-\references{
-Haug E.G. (1997); 
-    \emph{The complete Guide to Option Pricing Formulas}, 
-    Chapter 2.12, McGraw-Hill, New York.
-}
-
-
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
-
 }
 
 

@@ -65,7 +65,7 @@ xmpOptions(prompt = "")
 
 
 \examples{
-## SOURCE("fBasics.A0-SPlusCompatibility")
+## SOURCE("fOptions.Z1-OptionsTools")
 
 \dontrun{
 ## xmpfOptions -

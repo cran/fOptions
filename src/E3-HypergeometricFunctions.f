@@ -38,13 +38,13 @@ C     *                                                              *
 C     ****************************************************************  
                                                                         
       FUNCTION CONHYP (A,B,Z,LNCHF,IP)                          
+                                                             
+      INTEGER LNCHF,I,BITS,IP 
+      COMPLEX*16 CHGF,A,B,Z,CONHYP 
+      DOUBLE PRECISION NTERM,FX,TERM1,MAX,TERM2,ANG 
                                                                         
-      INTEGER LNCHF,I,BITS,IP
-      COMPLEX*16 CHGF,A,B,Z,CONHYP                                      
-      DOUBLE PRECISION NTERM,FX,TERM1,MAX,TERM2,ANG                               
-                                                                        
-      IF (CDABS(Z) .NE. 0.0D0) THEN                                     
-        ANG=DATAN2(DIMAG(Z),DBLE(Z))                                   
+      IF (CDABS(Z) .NE. 0.0D0) THEN 
+        ANG=DATAN2(DIMAG(Z),DBLE(Z)) 
       ELSE                                                              
         ANG=1.0D0                                                       
       ENDIF                                                             
@@ -292,7 +292,7 @@ C     ****************************************************************
       SUBROUTINE ARADD(A,B,C,L,RMAX)                                    
                                                                         
       INTEGER L
-      DOUBLE PRECISION A,B,C,Z,RMAX                                               
+      DOUBLE PRECISION A,B,C,Z,RMAX                             
       INTEGER EDIFF,I,J                                                 
       DIMENSION A(-1:*),B(-1:*),C(-1:*),Z(-1:777)                 
                                                                         
@@ -458,7 +458,7 @@ C     ****************************************************************
         Z(L+1)=0.0D0                                                    
         GOTO 300                                                        
       ENDIF                                                             
-292   DO 293 J=1,L+1-I                                                  
+      DO 293 J=1,L+1-I                                                  
         Z(J)=Z(J+I-1)                                                   
 293   CONTINUE                                                          
       DO 294 J=L+2-I,L                                                  
@@ -494,7 +494,7 @@ C     ****************************************************************
       SUBROUTINE ARSUB(A,B,C,L,RMAX)                                    
                                                                         
       INTEGER L,I
-      DOUBLE PRECISION A,B,C,B2,RMAX                                              
+      DOUBLE PRECISION A,B,C,B2,RMAX                               
       DIMENSION A(-1:*),B(-1:*),C(-1:*),B2(-1:777)                
                                                                         
       DO 100 I=-1,L+1                                                   
@@ -523,7 +523,7 @@ C     ****************************************************************
       SUBROUTINE ARMULT(A,B,C,L,RMAX)                                   
                                                                         
       INTEGER L
-      DOUBLE PRECISION A,B,C,Z,B2,CARRY,RMAX,RMAX2                                
+      DOUBLE PRECISION A,B,C,Z,B2,CARRY,RMAX,RMAX2               
       DIMENSION A(-1:*),C(-1:*),Z(-1:777)                           
       INTEGER I                                                         
                                                                         
@@ -585,7 +585,7 @@ C     ****************************************************************
       SUBROUTINE CMPADD(AR,AI,BR,BI,CR,CI,L,RMAX)                       
                                                                         
       INTEGER L
-      DOUBLE PRECISION AR,AI,BR,BI,CR,CI,RMAX                                     
+      DOUBLE PRECISION AR,AI,BR,BI,CR,CI,RMAX 
       DIMENSION AR(-1:*),AI(-1:*),BR(-1:*),BI(-1:*)             
       DIMENSION CR(-1:*),CI(-1:*)                                   
                                                                         
@@ -613,7 +613,7 @@ C     ****************************************************************
       SUBROUTINE CMPSUB(AR,AI,BR,BI,CR,CI,L,RMAX)                       
                                                                         
       INTEGER L
-      DOUBLE PRECISION AR,AI,BR,BI,CR,CI,RMAX                                     
+      DOUBLE PRECISION AR,AI,BR,BI,CR,CI,RMAX 
       DIMENSION AR(-1:*),AI(-1:*),BR(-1:*),BI(-1:*)             
       DIMENSION CR(-1:*),CI(-1:*)                                   
                                                                         
@@ -640,7 +640,7 @@ C     ****************************************************************
       SUBROUTINE CMPMUL(AR,AI,BR,BI,CR,CI,L,RMAX)                       
                                                                         
       INTEGER L
-      DOUBLE PRECISION AR,AI,BR,BI,CR,CI,D1,D2,RMAX                           
+      DOUBLE PRECISION AR,AI,BR,BI,CR,CI,D1,D2,RMAX           
       DIMENSION AR(-1:*),AI(-1:*),CR(-1:*),CI(-1:*)             
       DIMENSION D1(-1:777),D2(-1:777)                       
                                                                         
@@ -673,8 +673,8 @@ C     ****************************************************************
                                                                         
       INTEGER L,BIT,REXP,IR10,II10,LNCHF
       COMPLEX*16 C                                                      
-      DOUBLE PRECISION AR,AI,BR,BI,PHI,N1,N2,N3,E1,E2,E3,RR10,RI10,X              
-      DOUBLE PRECISION AE,BE,X1,X2,DUM1,DUM2,CE,RMAX                              
+      DOUBLE PRECISION AR,AI,BR,BI,PHI,N1,N2,N3,E1,E2,E3,RR10,RI10,X 
+      DOUBLE PRECISION AE,BE,X1,X2,DUM1,DUM2,CE,RMAX                   
       DIMENSION AR(-1:*),AI(-1:*),BR(-1:*),BI(-1:*)             
       DIMENSION AE(2,2),BE(2,2),CE(2,2)                                 
                                                                         
@@ -748,7 +748,7 @@ C     ****************************************************************
                                                                         
       SUBROUTINE EMULT(N1,E1,N2,E2,NF,EF)                               
                                                                         
-      DOUBLE PRECISION N1,E1,N2,E2,NF,EF                                          
+      DOUBLE PRECISION N1,E1,N2,E2,NF,EF                                
                                                                         
       NF=N1*N2                                                          
       EF=E1+E2                                                          
@@ -774,7 +774,7 @@ C     ****************************************************************
                                                                         
       SUBROUTINE EDIV(N1,E1,N2,E2,NF,EF)                                
                                                                         
-      DOUBLE PRECISION N1,E1,N2,E2,NF,EF                                          
+      DOUBLE PRECISION N1,E1,N2,E2,NF,EF                                
                                                                         
       NF=N1/N2                                                          
       EF=E1-E2                                                          
@@ -800,7 +800,7 @@ C     ****************************************************************
                                                                         
       SUBROUTINE EADD(N1,E1,N2,E2,NF,EF)                                
                                                                         
-      DOUBLE PRECISION N1,E1,N2,E2,NF,EF,EDIFF                                    
+      DOUBLE PRECISION N1,E1,N2,E2,NF,EF,EDIFF                        
                                                                         
       EDIFF=E1-E2                                                       
       IF (EDIFF .GT. 36.0D0) THEN                                       
@@ -839,7 +839,7 @@ C     ****************************************************************
                                                                         
       SUBROUTINE ESUB(N1,E1,N2,E2,NF,EF)                                
                                                                         
-      DOUBLE PRECISION N1,E1,N2,E2,NF,EF                                          
+      DOUBLE PRECISION N1,E1,N2,E2,NF,EF                                
                                                                         
       CALL EADD(N1,E1,N2*(-1.0D0),E2,NF,EF)                             
       RETURN                                                            
@@ -861,7 +861,7 @@ C     ****************************************************************
       SUBROUTINE CONV12(CN,CAE)                                         
                                                                         
       COMPLEX*16 CN                                                     
-      DOUBLE PRECISION CAE                                                        
+      DOUBLE PRECISION CAE           
       DIMENSION CAE(2,2)                                                
                                                                         
       CAE(1,1)=DBLE(CN)                                                
@@ -904,11 +904,11 @@ C     ****************************************************************
                                                                         
       SUBROUTINE CONV21(CAE,CN)                                         
                                                                         
-      DOUBLE PRECISION CAE                                                        
+      DOUBLE PRECISION CAE                                             
       COMPLEX*16 CN                                                     
       DIMENSION CAE(2,2)                                                
-      IF (CAE(1,2) .GT. 75 .OR. CAE(2,2) .GT. 75) THEN                  
-        CN=CMPLX(1.0D75,1.0D75)                                         
+      IF (CAE(1,2) .GT. 75 .OR. CAE(2,2) .GT. 75) THEN  
+        CN=DCMPLX(1.0D75,1.0D75)  
       ELSE IF (CAE(2,2) .LT. -75) THEN                                  
         CN=DCMPLX(CAE(1,1)*(10**CAE(1,2)),0D0)                          
       ELSE                                                              
@@ -933,7 +933,7 @@ C     ****************************************************************
                                                                         
       SUBROUTINE ECPMUL(A,B,C)                                          
                                                                         
-      DOUBLE PRECISION A,B,C,N1,E1,N2,E2,C2                                       
+      DOUBLE PRECISION A,B,C,N1,E1,N2,E2,C2                            
       DIMENSION A(2,2),B(2,2),C(2,2),C2(2,2)                            
                                                                         
       CALL EMULT(A(1,1),A(1,2),B(1,1),B(1,2),N1,E1)                     
@@ -962,7 +962,7 @@ C     ****************************************************************
                                                                         
       SUBROUTINE ECPDIV(A,B,C)                                          
                                                                         
-      DOUBLE PRECISION A,B,C,N1,E1,N2,E2,B2,N3,E3,C2                              
+      DOUBLE PRECISION A,B,C,N1,E1,N2,E2,B2,N3,E3,C2                   
       DIMENSION A(2,2),B(2,2),C(2,2),B2(2,2),C2(2,2)                    
                                                                         
       B2(1,1)=B(1,1)                                                    
@@ -978,7 +978,7 @@ C     ****************************************************************
       RETURN                                                            
       END                                                               
 
-C ******************************************************************************
+C *****************************************************************************
      
       SUBROUTINE CHFM(ZRE,ZIM,ARE,AIM,BRE,BIM,CRE,CIM,N,LNCHF,IP)
       
@@ -999,7 +999,7 @@ C ******************************************************************************
       END
             
 
-C ******************************************************************************
+C *****************************************************************************
 
 
 C      SUBROUTINE DRIVER_CHF()
@@ -1034,5 +1034,5 @@ c      STOP
 c      END
   
     
-C ------------------------------------------------------------------------------
+C -----------------------------------------------------------------------------
 

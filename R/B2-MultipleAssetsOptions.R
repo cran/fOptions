@@ -31,7 +31,7 @@
 # FUNCTION:                       DESCRIPTION:
 # Multiple Asset Options:
 #   TwoAssetCorrelationOption       Two Asset Correlation Option
-#    [ExchangeOneForAnotherOption]    [Exchane One For Another Option]  
+#    [ExchangeOneForAnotherOption]    [Exchange One For Another Option]  
 #   EuropeanExchangeOption          European Exchange Optionn
 #   AmericanExchangeOption          American Exchange Option
 #   ExchangeOnExchangeOption        Exchange Exchange Option
