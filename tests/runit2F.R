@@ -28,13 +28,10 @@
 
 
 ################################################################################
-# FUNCTION:                 DESCRIPTION:
-#  CRRBinomialTreeOption     Cox-Ross-Rubinstein Binomial Tree Option Model
-#  JRBinomialTreeOption      JR Modfication to the Binomial Tree Option
-#  TIANBinomialTreeOption    Tian's Modification to the Binomial Tree Option
-# FUNCTION:                 DESCRIPTION:
-#  BinomialTreeOption        CRR Binomial Tree Option with Cost of Carry Term
-#  BinomialTreePlot          Plots results from the CRR Option Pricing Model
+# FUNCTION:                         ASIAN OPTIONS:
+#  GeometricAverageRateOption        Geometric Average Rate Option
+#  TurnbullWakemanAsianApproxOption  Turnbull-Wakeman Approximated Asian Option
+#  LevyAsianApproxOption             Levy Approximated Asian Option
 ################################################################################
 
 
@@ -43,7 +40,7 @@ function()
 {
     # Help File:
     helpFile = function() { 
-        example(BinomialTreeOptions, ask = FALSE)
+        example(AsianOptions, ask = FALSE)
         return() 
     }
     checkIdentical(
@@ -58,41 +55,49 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.binomialTrees = 
+test.GeometricAverageRateOption = 
 function()
 {
-    #  CRRBinomialTreeOption     Cox-Ross-Rubinstein Binomial Tree Option Model
-    #  JRBinomialTreeOption      JR Modfication to the Binomial Tree Option
-    #  TIANBinomialTreeOption    Tian's Modification to the Binomial Tree Option
+    # Examples from Chapter 2.12 in E.G. Haug's Option Guide (1997)
     
-    # CRRBinomialTreeOption
-    
-    # JRBinomialTreeOption
-    
-    # TIANBinomialTreeOption
+    # Geometric Average Rate Option:
+    GeometricAverageRateOption(TypeFlag = "p", S = 80, X = 85, 
+        Time = 0.25, r = 0.05, b = 0.08, sigma = 0.20)
 
     # Return Value:
-    return()
+    return()    
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-test.binomialTreePlot = 
+test.TurnbullWakemanAsianApproxOption = 
 function()
-{
-    #  BinomialTreeOption        CRR Binomial Tree Option with Cost of Carry Term
-    #  BinomialTreePlot          Plots results from the CRR Option Pricing Model
+{    
+    # Turnbull Wakeman Approximation:
+    TurnbullWakemanAsianApproxOption(TypeFlag = "p", S = 90, SA = 88, 
+        X = 95, Time = 0.50, time = 0.25, tau = 0.0, r = 0.07, 
+        b = 0.02, sigma = 0.25)
 
-    #  BinomialTreeOption
-    
-    #  BinomialTreePlot
-    
     # Return Value:
-    return()
+    return()    
 }
 
+
+# ------------------------------------------------------------------------------
+
+
+test.LevyAsianApproxOption = 
+function()
+{    
+    # Levy Asian Approximation:   
+    LevyAsianApproxOption(TypeFlag = "c", S = 100, SA = 100, X = 105, 
+        Time = 0.75, time = 0.50, r = 0.10, b = 0.05, sigma = 0.15)
+ 
+    # Return Value:
+    return()    
+}
 
 
 # ------------------------------------------------------------------------------
@@ -100,7 +105,8 @@ function()
 
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fOptions/test/runit1C.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fOptions/tests/runit2F.R",
+        rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)
 }
 

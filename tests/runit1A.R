@@ -68,22 +68,43 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.distribution =
+test.NDF =
 function()
 {
-    #  NDF                        Normal distribution function
-    #  CND                        Cumulative normal distribution function
-    #  CBND                       Cumulative bivariate normal distribution  
+    # NDF:                        
+    #   Normal distribution function
+    
+    # Arguments:
+    #   NDF(x)
     
     # NDF:
     x = (-3):3
     NDF(x)
     dnorm(x)
     NDF(x)-dnorm(x)
+
+    # Return Value:
+    return()    
+}
+
+# ------------------------------------------------------------------------------
+
+
+test.CND =
+function()
+{
+    # CND:                        
+    #   Cumulative normal distribution function 
+    
+    # Arguments:
+    #   CND(x)
     
     # CND:
-    
-    # CBND:
+    # NDF:
+    x = (-3):3
+    CND(x)
+    pnorm(x)
+    CND(x)-pnorm(x)
 
     # Return Value:
     return()    
@@ -92,33 +113,38 @@ function()
 
 # ------------------------------------------------------------------------------
 
+
+test.CBND =
+function()
+{
+    # CBND:                   
+    #   Cumulative bivariate normal distribution  
+    
+    # Arguments:
+    #   CBND(x1, x2, rho)
+    
+    # CBND:
+    CBND(0, 0, 1/2)
+    
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
 
 test.GBSOption =
 function()
 {
-    #  GBSOption                  Computes Option Price from the GBS Formula
-    #  GBSCharacteristics         Computes Option Price and all Greeks of GBS Model
-    #  BlackScholesOption         Synonyme Function Call to GBSOption
-    #  GBSGreeks                  Computes one of the Greeks of the GBS formula
+    # GBSOption:                   
+    #   Computes Option Price from the GBS Formula
 
-    # GBSOption(TypeFlag = c("c", "p"), S, X, Time, r, b, sigma, 
+    # Arguments:
+    #   GBSOption(TypeFlag = c("c", "p"), S, X, Time, r, b, sigma, 
     #   title = NULL, description = NULL) 
+    
+    # GBSOption:
     GBSOption("c", 100, 100, 1, 0.10, 0.10, 0.30)
-    
-    # GBSCharacteristics(TypeFlag = c("c", "p"), S, X, Time, r, b, sigma) 
-    GBSCharacteristics("c", 100, 100, 1, 0.10, 0.10, 0.30)
-    
-    # BlackScholesOption(...)
-    
-    # GBSGreeks(Selection = c("Delta", "Theta", "Vega", "Rho", "Lambda", 
-    #   "Gamma", "CofC"), TypeFlag = c("c", "p"), S, X, Time, r, b, sigma) 
-    GBSGreeks("Delta", "c", 100, 100, 1, 0.10, 0.10, 0.30)
-    GBSGreeks("Theta", "c", 100, 100, 1, 0.10, 0.10, 0.30)
-    GBSGreeks("Vega", "c", 100, 100, 1, 0.10, 0.10, 0.30)
-    GBSGreeks("Rho", "c", 100, 100, 1, 0.10, 0.10, 0.30)
-    GBSGreeks("Lambda", "c", 100, 100, 1, 0.10, 0.10, 0.30)
-    GBSGreeks("Gamma", "c", 100, 100, 1, 0.10, 0.10, 0.30)
-    GBSGreeks("CofC", "c", 100, 100, 1, 0.10, 0.10, 0.30)
     
     # Return Value:
     return()    
@@ -128,21 +154,76 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.moreOptions =
+test.GBSCharacteristics =
+function()
+{
+    # GBSCharacteristics:          
+    #   Computes Option Price and all Greeks of GBS Model
+
+    # Arguments:
+    #   GBSCharacteristics(TypeFlag = c("c", "p"), S, X, Time, r, b, sigma) 
+    
+    # GBSCharacteristics:
+    GBSCharacteristics("c", 100, 100, 1, 0.10, 0.10, 0.30)
+    
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.BlackScholesOption =
+function()
+{
+    # BlackScholesOption:        
+    #   Synonyme Function Call to GBSOption
+   
+    # Arguments:
+    #   BlackScholesOption(...)
+  
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.Black76Option =
 function()
 { 
-    #  Black76Option              Computes Prices of Options on Futures
-    #  MiltersenSchwartzOption    Pricing a Miltersen Schwartz Option
-
-    # Black76Option:
-    # Black76Option = (TypeFlag = c("c", "p"), FT, X, Time, r, sigma, 
+    # Black76Option              
+    #   Computes Prices of Options on Futures
+    
+    # Arguments:
+    #   Black76Option = (TypeFlag = c("c", "p"), FT, X, Time, r, sigma, 
     #   title = NULL, description = NULL)
+    
+    # Black76Option:
     Black76Option(FT = 95, X = 80, Time = 1/2, r = 0.05, sigma = 0.266)
+        
+    # Return Value:
+    return()    
+}
 
-    # MiltersenSchwartzOption:
-    # MiltersenSchwartzOption(TypeFlag = c("c", "p"), Pt, FT, X, time, Time, 
+
+# ------------------------------------------------------------------------------
+
+
+test.MiltersenSchwartzOption =
+function()
+{ 
+    # MiltersenSchwartzOption    
+    #   Pricing a Miltersen Schwartz Option
+
+    # Arguments:
+    #   MiltersenSchwartzOption(TypeFlag = c("c", "p"), Pt, FT, X, time, Time, 
     #   sigmaS, sigmaE, sigmaF, rhoSE, rhoSF, rhoEF, KappaE, KappaF, 
     #   title = NULL, description = NULL)
+    
+    # MiltersenSchwartzOption:
     MiltersenSchwartzOption(TypeFlag = "c", Pt = exp(-0.05/4), FT = 95, 
         X = 80, time = 1/4, Time = 1/2, sigmaS = 0.2660, sigmaE = 0.2490, 
         sigmaF = 0.0096, rhoSE = 0.805, rhoSF = 0.0805, rhoEF = 0.1243, 
@@ -156,7 +237,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.Reporting =
+test.print =
 function()
 {
     # GBSOption(TypeFlag = c("c", "p"), S, X, Time, r, b, sigma, 
@@ -180,8 +261,7 @@ function()
     
 test.GBSOptionSlider = 
 function()
-{
-      
+{  
     .GBSOptionSlider = 
     function(TypeFlag = "c", S = 100, X = 100, Time = 1, r = 0.10, b = 0.10, 
     sigma = 0.25, span = 0.25, N = 40) 
@@ -200,7 +280,6 @@ function()
             phi   = .sliderMenu(no = 8)
             
             TypeFlagText = c(c = "Call:", p = "Put:")
-    
             
             if (r != rNow | b != bNow) {
                 for (j in 1:nY)
@@ -278,8 +357,7 @@ function()
     
     # Try:
     # .GBSOptionSlider("p")
-    
-    
+ 
     # Return Value:
     return()    
 }
@@ -290,8 +368,7 @@ function()
 
 test.GBSGreeksSlider = 
 function()
-{
-          
+{         
     .GBSGreeksSlider = 
     function(TypeFlag = "c", S = 100, X = 100, Time = 1, 
     r = 0.10, b = 0.10, sigma = 0.25, span = 0.25, N = 40) 
@@ -385,8 +462,7 @@ function()
            resolutions = c(Sres, Xres,   0.10,   0.005, 0.01, 0.01,     2,   2),
            starts =      c( Son,  Xon,   1.00,   0.250, 0.10, 0.10,   -40,  30))
     }
-    
-    
+        
     # Try
     # .GBSGreeksSlider("c")
 
@@ -401,7 +477,8 @@ function()
 
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fOptions/test/runit1A.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fOptions/tests/runit1A.R",
+        rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)
 }
 

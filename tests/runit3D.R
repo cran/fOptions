@@ -65,8 +65,8 @@ function()
 test.Bessel = 
 function()
 {
-    # BesselI                    Modified Bessel Function of first kind
-    # BesselK                    Modified Bessel Function of third kind
+    # BesselI - Modified Bessel Function of first kind
+    # BesselK - Modified Bessel Function of third kind
 
     # Modified Bessel Functions I and K, Abramowitz-Stegun, Chapter 9.6, p. 374
     
@@ -154,8 +154,8 @@ function()
 test.BesselD = 
 function()
 {
-    # BesselDI                   Derivative of BesselI
-    # BesselDK                   Derivative of BesselK
+    # BesselDI - Derivative of BesselI
+    # BesselDK - Derivative of BesselK
 
     # Check:
     # I0'(x) = I1(x)
@@ -177,7 +177,8 @@ function()
 
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fOptions/test/runit3D.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fOptions/tests/runit3D.R",
+        rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)
 }
 

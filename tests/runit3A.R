@@ -81,8 +81,8 @@ function()
 test.lognorm = 
 function()
 {
-    # dlognorm            log-Normal density an derivatives
-    # plognorm            log-Normal, synonyme for plnorm
+    # dlognorm - log-Normal density an derivatives
+    # plognorm - log-Normal, synonyme for plnorm
 
     # Calculate Log-Normal Density and its Derivatives:
     x = exp(seq(-2.8, 1.2, length = 100))
@@ -112,8 +112,8 @@ function()
 test.gam =
 function()
 {
-    #  dgam                Gamma density, synonyme for dgamma
-    #  pgam                Gamma probability, synonyme for pgamma
+    #  dgam - Gamma density, synonyme for dgamma
+    #  pgam - Gamma probability, synonyme for pgamma
 
     # Return Value:
     return()    
@@ -126,8 +126,8 @@ function()
 test.rgam = 
 function()
 {    
-    # drgam               Reciprocal-Gamma density
-    # prgam               Reciprocal-Gamma probability
+    # drgam - Reciprocal-Gamma density
+    # prgam - Reciprocal-Gamma probability
 
     # Calculate Reciprocal-Gamma Density and its Derivaties:
     alpha = 2; beta = 1
@@ -158,8 +158,8 @@ function()
 test.johnson = 
 function()
 {        
-    # djohnson            Johnson Type I density
-    # pjohnson            Johnson Type I probability
+    # djohnson - Johnson Type I density
+    # pjohnson - Johnson Type I probability
 
     # Calculate Johnson-Type-I Density and its Derivaties:
     a = 0.3; b = 1.2; c = -0.2; d = 0.8
@@ -190,11 +190,11 @@ function()
 test.moments = 
 function()
 {  
-    # mnorm               Moments of Normal density
-    # mlognorm            Moments of log-Normal density
-    # mrgam               Moments of reciprocal-Gamma density
-    # masian              Moments of Asian Option density
-    # .DufresneMoments     Internal Function used by masian()
+    # mnorm - Moments of Normal density
+    # mlognorm - Moments of log-Normal density
+    # mrgam - Moments of reciprocal-Gamma density
+    # masian - Moments of Asian Option density
+    # .DufresneMoments - Internal Function used by masian()
 
     # mnorm(mean = 0, sd = 1)
     mnorm()
@@ -203,11 +203,11 @@ function()
     mlognorm()
     
     # mrgam(alpha = 1/2, beta = 1)
-    mrgam()                                         # CHECK!                                    
+    mrgam()                                                              # CHECK                                   
     
     # mjohnson(a, b, c, d)
     a = 0.3; b = 1.2; c = -0.2; d = 0.8
-    mjohnson(a, b, c, d)                            # CHECK!
+    mjohnson(a, b, c, d)                                                 # CHECK
     
     # masian(Time = 1, r = 0.045, sigma = 0.3) 
     masian()
@@ -226,9 +226,9 @@ function()
 test.d2EBM = 
 function()
 {  
-    # d2EBM               Double Integrated EBM density
-    # .thetaEBM            Internal Function used to compute *2EBM()
-    # .psiEBM              Internal Function used to compute *2EBM()
+    # d2EBM - Double Integrated EBM density
+    # .thetaEBM - Internal Function used to compute *2EBM()
+    # .psiEBM - Internal Function used to compute *2EBM()
 
     #  d2EBM(u, t = 1) 
     x = c(0.1, 0.5, 1, 2)
@@ -255,11 +255,11 @@ function()
 test.dEBM = 
 function()
 {  
-    #  dEBM                Exponential Brownian motion density
-    #  pEBM                Exponential Brownian motion probability              
-    #  .gxuEBM              Internal Function used to compute *EBM()
-    #  .gxtEBM              Internal Function used to compute *EBM()
-    #  .gxtuEBM             Internal Function used to compute *EBM()
+    #  dEBM - Exponential Brownian motion density
+    #  pEBM - Exponential Brownian motion probability              
+    #  .gxuEBM - Internal Function used to compute *EBM()
+    #  .gxtEBM - Internal Function used to compute *EBM()
+    #  .gxtuEBM - Internal Function used to compute *EBM()
     
     # Density:
     x = c(
@@ -290,7 +290,7 @@ function()
 test.dasymEBM = 
 function()
 {  
-    #  dasymEBM            Exponential Brownian motion asymptotic density
+    # dasymEBM - Exponential Brownian motion asymptotic density
      
     # Density:
     x = c(
@@ -313,7 +313,8 @@ function()
 
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fOptions/test/runit3A.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fOptions/tests/runit3A.R",
+        rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)
 }
 

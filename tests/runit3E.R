@@ -104,10 +104,10 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.X = 
+test.MomentMatchedAsianOption = 
 function()
 {
-    # 
+    # MomentMatchedAsianOption
 
     # Return Value:
     return()    
@@ -117,9 +117,192 @@ function()
 # ------------------------------------------------------------------------------
 
 
+test.MomentMatchedAsianDensity = 
+function()
+{
+    # MomentMatchedAsianDensity  
+
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.GramCharlierAsianOption = 
+function()
+{
+    # GramCharlierAsianOption 
+
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.AsianOptionMoments = 
+function()
+{
+    # AsianOptionMoments  
+
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.StateSpaceAsianDensity = 
+function()
+{
+    # StateSpaceAsianDensity  
+
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.PDEAsianOption = 
+function()
+{
+    # PDEAsianOption 
+
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.GemanYorAsianOption = 
+function()
+{
+    # GemanYorAsianOption 
+
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.LinetzkyAsianOption = 
+function()
+{
+    # LinetzkyAsianOption  
+
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.BoundsOnAsianOption = 
+function()
+{    
+    # BoundsOnAsianOption 
+
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.CurranThompsonAsianOption = 
+function()
+{
+    # CurranThompsonAsianOption  
+
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.RogerShiThompsonAsianOption = 
+function()
+{
+    # RogerShiThompsonAsianOption 
+
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.ThompsonAsianOption = 
+function()
+{
+    # ThompsonAsianOption
+    
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.CallPutParityAsianOption = 
+function()
+{
+    # CallPutParityAsianOption  
+
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.WithDividendsAsianOption = 
+function()
+{
+    # WithDividendsAsianOption 
+
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.Table = 
+function()
+{ 
+    # Table 
+
+    # Return Value:
+    return()    
+}
+
+    
+# ------------------------------------------------------------------------------
+
+
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fOptions/test/runit3E.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fOptions/tests/runit3E.R",
+        rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)
 }
 
