@@ -109,71 +109,44 @@ NULL, description = NULL, ...)
     # FUNCTION:
     
     # Parameters:
-    rfr = model$rf; rfr <<- rfr
+    rfr = model$rf
     lambda = model$lambda
     omega = model$omega
     alpha = model$alpha
     beta = model$beta
-    gamma = model$gamma; gamma <<- gamma
+    gam = model$gamma
      
     # Continue:
-    x <<- x
-    trace <<- trace
-    symmetric <<- symmetric
-    opt = list()
     params = c(lambda = lambda, omega = omega, alpha = alpha,
-        beta = beta, gamma = gamma, rf = rfr)
-    
-    # Log-Likelihood Function:
-    .llhHNGarch <<- function(par) {
-        # h = sigma^2
-        h = Z = x
-        lambda = par[1]
-        # Transform - to keep them between 0 and 1:
-        omega = 1/(1+exp(-par[2]))
-        alpha = 1/(1+exp(-par[3]))
-        beta = 1/(1+exp(-par[4]))
-        # Add gamma if selected:
-        if (!symmetric) gamma = par[5]      
-        # HN Garch Filter:
-        h[1] = ( omega + alpha )/( 1 - alpha*gamma*gamma - beta)
-        Z[1] = ( x[1] - rfr - lambda*h[1] ) / sqrt(h[1])
-        for ( i in 2:length(Z) ) {
-            h[i] = omega + alpha * ( Z[i-1] - gamma * sqrt(h[i-1]) )^2 +
-                beta * h[i-1]
-            Z[i] = ( x[i] - rfr - lambda*h[i] ) / sqrt(h[i])  }     
-        # Calculate Log - Likelihood for Normal Distribution:       
-        llhHNGarch = -sum(log( dnorm(Z)/sqrt(h) ))
-        if (trace > 0) {
-            cat("Parameter Estimate\n")
-            print(c(lambda, omega, alpha, beta, gamma)) }
-        Z <<- Z
-        h <<- h
-        llhHNGarch
-    }
+        beta = beta, gamma = gam, rf = rfr)
     
     # Transform Parameters and Calculate Start Parameters:
     par.omega = -log((1-omega)/omega)  # for 2
     par.alpha = -log((1-alpha)/alpha)  # for 3
     par.beta = -log((1-beta)/beta)     # for 4
     par.start = c(lambda, par.omega, par.alpha, par.beta)
-    if(!symmetric) par.start = c(par.start, gamma)
+    if (!symmetric) par.start = c(par.start, gam)
     
     # Initial Log Likelihood:
-    opt$value = .llhHNGarch(par = par.start)
+    opt = list()
+    opt$value = .llhHNGarch(par = par.start, 
+        trace = trace, symmetric = symmetric, x = x)
     opt$estimate = par.start
     if (trace) {
-        print(c(lambda, omega, alpha, beta, gamma))
-        print(opt$value)}
+        print(c(lambda, omega, alpha, beta, gam))
+        print(opt$value)
+    }
      
     # Estimate parameters:
-    if (exists("nlm")) {
-        opt = nlm(.llhHNGarch, par.start, ...) 
-    } else {
-        opt = nlminb(par.start, .llhHNGarch, ...)
-        opt$minimum = opt$objective
-        opt$estimate = opt$parameters
-    }
+    # if (exists("nlm")) {
+        opt = nlm(.llhHNGarch, par.start, 
+            trace = trace, symmetric = symmetric, x = x, ...) 
+    #} else {
+    #    opt = nlminb(par.start, .llhHNGarch, 
+    #        trace = trace, symmetric = symmetric, x = x, ...)
+    #    opt$minimum = opt$objective
+    #    opt$estimate = opt$parameters
+    #}
     
     # Log-Likelihood:
     opt$minimum = -opt$minimum + length(x)*sqrt(2*pi)
@@ -186,32 +159,77 @@ NULL, description = NULL, ...)
     alpha = opt$estimate[3] = (1/(1+exp(-opt$estimate[3])))
     beta = opt$estimate[4] = (1/(1+exp(-opt$estimate[4])))
     if (symmetric) opt$estimate[5] = 0
-    gamma = opt$estimate[5] 
+    gam = opt$estimate[5] 
     names(opt$estimate) = c("lambda", "omega", "alpha", "beta", "gamma")
     
     # Add to Output:
     opt$model = list(lambda = lambda, omega = omega, alpha = alpha,
-        beta = beta, gamma = gamma, rf = rfr)
+        beta = beta, gamma = gam, rf = rfr)
+    opt$x = x
     opt$h = h
     opt$residuals = Z
     opt$call = match.call()
     
     # Statistics - Printing:
-    opt$persistence = beta + alpha*gamma*gamma
+    opt$persistence = beta + alpha*gam*gam
     opt$sigma2 = ( omega + alpha ) / ( 1 - opt$persistence )
     
     # Print Estimated Parameters:
     if (trace > 0) print(opt$estimate)
     
     # Add title and description:
-    if (is.null(title)) title = "Heston-Nandi Garch Parameter Estimation"
-    if (is.null(description)) description = as.character(date())
+    if (is.null(title)) 
+        title = "Heston-Nandi Garch Parameter Estimation"
     opt$title = title
+    if (is.null(description)) 
+        description = .description()     
     opt$description = description
                 
     # Return Value:
     class(opt) = "hngarch"
     opt
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.llhHNGarch = 
+function(par, trace, symmetric, x) 
+{
+    # h = sigma^2
+    h = Z = x
+    lambda = par[1]
+    
+    # Transform - to keep them between 0 and 1:
+    omega = 1/(1+exp(-par[2]))
+    alpha = 1/(1+exp(-par[3]))
+    beta = 1/(1+exp(-par[4]))
+    
+    # Add gamma if selected:
+    if (!symmetric) gam = par[5] else gam = 0
+      
+    # HN Garch Filter:
+    h[1] = ( omega + alpha )/( 1 - alpha*gam*gam - beta)
+    Z[1] = ( x[1] - rfr - lambda*h[1] ) / sqrt(h[1])
+    for ( i in 2:length(Z) ) {
+        h[i] = omega + alpha * ( Z[i-1] - gam * sqrt(h[i-1]) )^2 +
+            beta * h[i-1]
+        Z[i] = ( x[i] - rfr - lambda*h[i] ) / sqrt(h[i])  
+    }     
+    
+    # Calculate Log - Likelihood for Normal Distribution:       
+    llhHNGarch = -sum(log( dnorm(Z)/sqrt(h) ))
+    if (trace > 0) {
+        cat("Parameter Estimate\n")
+        print(c(lambda, omega, alpha, beta, gam)) 
+    }
+    
+    Z <<- Z
+    h <<- h
+    
+    # Return Value:
+    llhHNGarch
 }
 
 
@@ -237,11 +255,11 @@ function(x, ...)
         stop("method is only for garch objects")
     
     # Title:
-    cat("\nTitle:\n")
+    cat("\nTitle:\n ")
     cat(object$title, "\n")
     
     # Call:
-    cat("\nCall:\n", deparse(object$call), "\n", sep = "")
+    cat("\nCall:\n ", deparse(object$call), "\n", sep = "")
     
     # Parameters:
     cat("\nParameters:\n")
@@ -254,16 +272,16 @@ function(x, ...)
         quote = FALSE)
     
     # Likelihood:
-    cat("\nLog-Likelihood:\n")
+    cat("\nLog-Likelihood:\n ")
     cat(object$minimum, "\n")
     
     # Persisitence and Variance:
-    cat("\nPersistence and Variance:\n")
-    cat(object$persistence, "\n")
+    cat("\nPersistence and Variance:\n ")
+    cat(object$persistence, "\n ")
     cat(object$sigma2, "\n")
  
     # Description:
-    cat("\nDescription:\n")
+    cat("\nDescription:\n ")
     cat(object$description, "\n\n")
     
     # Return Value:
@@ -319,19 +337,19 @@ function(object, ...)
     cat(object$sigma2, "\n")
         
     # Create Graphs:
-    plot(x, type = "l", xlab = "Days", ylab = "log-Returns", 
-        main="Log-Returns", ...)
+    plot(x = object$x, type = "l", xlab = "Days", ylab = "log-Returns", 
+        main = "Log-Returns", ...)
     plot(sqrt(object$h), type = "l", xlab = "Days", ylab = "sqrt(h)", 
         main = "Conditional Standard Deviations", ...)
     plot(object$residuals, type = "l", xlab = "Days", ylab = "Z", 
-        main = "Innovations", ...)
+        main = "Residuals", ...)
     
     # Return Value:
     invisible()
 }
 
 
-# ******************************************************************************
+################################################################################
 
 
 hngarchStats =  
@@ -339,6 +357,8 @@ function(model)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
+    
+    # Details:
     #   Calculates the first 4 moments of the unconditional log
     #   return distribution for a stationary HN GARCH(1,1) process  
     #   with standard normally distributed innovations. The function   
@@ -476,11 +496,11 @@ function(model)
     
     # Return Value:             
     list(mean = uc.mean, variance = uc.variance, skewness = uc.skewness, 
-    kurtosis = uc.kurtosis, persistence = persistence, leverage = leverage,
+        kurtosis = uc.kurtosis, persistence = persistence, leverage = leverage,
         meansigma2 = meansigma2, meansigma4 = meansigma4, meansigma6 = 
         meansigma6, meansigma8 = meansigma8)
 }
 
 
-# ******************************************************************************
+################################################################################
 

@@ -21,7 +21,8 @@
 \alias{print.option}
 \alias{summary.option}
 
-\alias{print.fOPTION}
+\alias{show.fOPTION}
+\alias{show,fOPTION-method}
 \alias{summary.fOPTION}
 
 
@@ -70,7 +71,7 @@ NDF(x)
 CND(x)
 CBND(x1, x2, rho)
 
-\method{print}{fOPTION}(x, \dots)
+show.fOPTION(object)
 \method{summary}{fOPTION}(object, \dots)
 
 \method{print}{option}(x, \dots)
@@ -339,8 +340,6 @@ Miltersen K., Schwartz E.S. (1998);
 
 
 \examples{
-## SOURCE("fOptions.1A-PlainVanillaOptions")
-
 ## All the examples are from Haug's Option Guide (1997)
 
 ## CHAPTER 1.1: ANALYTICAL FORMULAS FOR EUROPEAN OPTIONS:
