@@ -39,7 +39,8 @@
 
 
 FloatingStrikeLookbackOption = 
-function(TypeFlag = c("c", "p"), S, SMinOrMax, Time, r, b, sigma)
+function(TypeFlag = c("c", "p"), S, SMinOrMax, Time, r, b, sigma,
+title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz           
     
     # Description:
@@ -69,12 +70,29 @@ function(TypeFlag = c("c", "p"), S, SMinOrMax, Time, r, b, sigma)
             sigma^2 / (2 * b) * S * (-(S / m)^(-2 * b / sigma^2) *
             CND(a1 - 2 * b / sigma * sqrt(Time)) + exp(b * Time) * CND(a1)) 
     
+    # Parameters:
+    # TypeFlag = c("c", "p"), S, SMinOrMax, Time, r, b, sigma
+    param = list()
+    param$TypeFlag = TypeFlag
+    param$S = S
+    param$SMinOrMax = SMinOrMax
+    param$Time = Time
+    param$r = r
+    param$b = b
+    param$sigma = sigma
+    
+    # Add title and description:
+    if (is.null(title)) title = "Floating Strike Lookback Option\n"
+    if (is.null(description)) description = as.character(date())
+    
     # Return Value:
-    option = list(
+    new("fOPTION", 
+        call = match.call(),
+        parameters = param,
         price = FloatingStrikeLookback, 
-        call = match.call() )
-    class(option) = "option"
-    option
+        title = title,
+        description = description
+        )        
 }
 
 
@@ -82,7 +100,8 @@ function(TypeFlag = c("c", "p"), S, SMinOrMax, Time, r, b, sigma)
 
 
 FixedStrikeLookbackOption = 
-function(TypeFlag = c("c", "p"), S, SMinOrMax, X, Time, r, b, sigma)
+function(TypeFlag = c("c", "p"), S, SMinOrMax, X, Time, r, b, sigma,
+title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz           
 
     # Description:
@@ -129,12 +148,30 @@ function(TypeFlag = c("c", "p"), S, SMinOrMax, X, Time, r, b, sigma)
             ((S / m)^(-2 * b / sigma^2) *
                 CND(-e1 + 2 * b / sigma * sqrt(Time)) - exp(b*Time) * CND(-e1))
     
+    # Parameters:
+    # TypeFlag = c("c", "p"), S, SMinOrMax, X, Time, r, b, sigma
+    param = list()
+    param$TypeFlag = TypeFlag
+    param$S = S
+    param$SMinOrMax = SMinOrMax
+    param$X = X
+    param$Time = Time
+    param$r = r
+    param$b = b
+    param$sigma = sigma
+    
+    # Add title and description:
+    if (is.null(title)) title = "Fixed Strike Lookback Option\n"
+    if (is.null(description)) description = as.character(date())
+    
     # Return Value:
-    option = list(
+    new("fOPTION", 
+        call = match.call(),
+        parameters = param,
         price = FixedStrikeLookback, 
-        call = match.call() )
-    class(option) = "option"
-    option
+        title = title,
+        description = description
+        )   
 }
 
 
@@ -143,7 +180,7 @@ function(TypeFlag = c("c", "p"), S, SMinOrMax, X, Time, r, b, sigma)
 
 PTFloatingStrikeLookbackOption = 
 function(TypeFlag = c("c", "p"), S, SMinOrMax, time1, Time2, r, b, 
-sigma, lambda)
+sigma, lambda, title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz           
 
     # Description:
@@ -196,12 +233,31 @@ sigma, lambda)
             lambda * S * CND(-e2 + g2) * CND(f1) }
     PartialFloatLookback = part1 + part2 + part3
     
+    # Parameters:
+    # TypeFlag = c("c", "p"), S, SMinOrMax, time1, Time2, r, b, sigma, lambda
+    param = list()
+    param$TypeFlag = TypeFlag
+    param$S = S
+    param$SMinOrMax
+    param$time1 = time1
+    param$Time2 = Time2
+    param$r = r
+    param$b = b
+    param$sigma = sigma
+    param$lambda = lambda
+    
+    # Add title and description:
+    if (is.null(title)) title = "Partial Time Floating Strike Lookback Option"
+    if (is.null(description)) description = as.character(date())
+    
     # Return Value:
-    option = list(
+    new("fOPTION", 
+        call = match.call(),
+        parameters = param,
         price = PartialFloatLookback, 
-        call = match.call() )
-    class(option) = "option"
-    option
+        title = title,
+        description = description
+        )      
 }
 
 
@@ -209,7 +265,8 @@ sigma, lambda)
 
 
 PTFixedStrikeLookbackOption = 
-function(TypeFlag = c("c", "p"), S, X, time1, Time2, r, b, sigma) 
+function(TypeFlag = c("c", "p"), S, X, time1, Time2, r, b, sigma, 
+title = NULL, description = NULL) 
 {   # A function implemented by Diethelm Wuertz           
 
     # Description:
@@ -261,12 +318,30 @@ function(TypeFlag = c("c", "p"), S, X, time1, Time2, r, b, sigma)
             CND(-f1) * 
             CND(e2) }
     
+    # Parameters:
+    # TypeFlag = c("c", "p"), S, X, time1, Time2, r, b, sigma
+    param = list()
+    param$TypeFlag = TypeFlag
+    param$S = S
+    param$X = X
+    param$time1 = time1
+    param$Time2 = Time2
+    param$r = r
+    param$b = b
+    param$sigma = sigma
+    
+    # Add title and description:
+    if (is.null(title)) title = "Partial Time Fixed Strike Lookback Option"
+    if (is.null(description)) description = as.character(date())
+    
     # Return Value:
-    option = list(
+    new("fOPTION", 
+        call = match.call(),
+        parameters = param,
         price = PartialFixedLB, 
-        call = match.call() )
-    class(option) = "option"
-    option
+        title = title,
+        description = description
+        )      
 }
 
 
@@ -275,7 +350,7 @@ function(TypeFlag = c("c", "p"), S, X, time1, Time2, r, b, sigma)
 
 ExtremeSpreadOption = 
 function(TypeFlag = c("c", "p", "cr", "pr"), S, SMin, SMax, time1, Time2, 
-r, b, sigma)
+r, b, sigma, title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz           
     
     # Description:
@@ -329,14 +404,34 @@ r, b, sigma)
             (1 - v^2 / (2 * b)) * 
         CND(eta * (mu1 * (Time - time1)) / (v*sqrt(Time - time1)))) }      
     
+    # Parameters:
+    # TypeFlag = c("c", "p", "cr", "pr"), S, SMin, SMax, time1, Time2, 
+	#	r, b, sigma
+    param = list()
+    param$TypeFlag = TypeFlag
+    param$S = S
+    param$SMin = SMin
+    param$SMax = SMax
+    param$time1 = time1
+    param$Time2 = Time2
+    param$r = r
+    param$b = b
+    param$sigma = sigma
+    
+    # Add title and description:
+    if (is.null(title)) title = "Extreme Spread Option"
+    if (is.null(description)) description = as.character(date())
+    
     # Return Value:
-    option = list(
+    new("fOPTION", 
+        call = match.call(),
+        parameters = param,
         price = ExtremeSpread, 
-        call = match.call() )
-    class(option) = "option"
-    option              
+        title = title,
+        description = description
+        )                  
 }
 
 
-# ******************************************************************************
+################################################################################
 

@@ -39,7 +39,8 @@
 
 
 CRRBinomialTreeOption = 
-function(TypeFlag = c("ce", "pe", "ca", "pa"), S, X, Time, r, b, sigma, n)
+function(TypeFlag = c("ce", "pe", "ca", "pa"), S, X, Time, r, b, sigma, n,
+title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz           
     
     # Description:
@@ -63,7 +64,7 @@ function(TypeFlag = c("ce", "pe", "ca", "pa"), S, X, Time, r, b, sigma, n)
     
     # Iteration:
     OptionValue = z*(S*u^(0:n)*d^(n:0) - X)
-    OptionValue = (abs(OptionValue)+OptionValue)/2
+    OptionValue = (abs(OptionValue) + OptionValue) / 2
     
     # European Option:
     if (TypeFlag == "ce" || TypeFlag == "pe") {
@@ -80,7 +81,32 @@ function(TypeFlag = c("ce", "pe", "ca", "pa"), S, X, Time, r, b, sigma, n)
                     (p*OptionValue[i+2] + (1-p)*OptionValue[i+1]) * Df) }
     
     # Return Value:
-    OptionValue[1]
+    
+    
+    # Parameters:
+    # TypeFlag = c("ce", "pe", "ca", "pa"), S, X, Time, r, b, sigma, n
+    param = list()
+    param$TypeFlag = TypeFlag
+    param$S = S
+    param$X = X
+    param$Time = Time
+    param$r = r
+    param$b = b
+    param$sigma = sigma
+    param$n = n
+    
+    # Add title and description:
+    if (is.null(title)) title = "CRR Binomial Tree Option"
+    if (is.null(description)) description = as.character(date())
+    
+    # Return Value:
+    new("fOPTION", 
+        call = match.call(),
+        parameters = param,
+        price = OptionValue[1], 
+        title = title,
+        description = description
+        )     
 }
 
 
@@ -88,7 +114,8 @@ function(TypeFlag = c("ce", "pe", "ca", "pa"), S, X, Time, r, b, sigma, n)
 
 
 JRBinomialTreeOption = 
-function(TypeFlag = c("ce", "pe", "ca", "pa"), S, X, Time, r, b, sigma, n)
+function(TypeFlag = c("ce", "pe", "ca", "pa"), S, X, Time, r, b, sigma, n,
+title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz           
     
     # Description:
@@ -110,7 +137,7 @@ function(TypeFlag = c("ce", "pe", "ca", "pa"), S, X, Time, r, b, sigma, n)
     
     # Iteration:
     OptionValue = z*(S*u^(0:n)*d^(n:0) - X)
-    OptionValue = (abs(OptionValue)+OptionValue)/2
+    OptionValue = (abs(OptionValue) + OptionValue) / 2
     
     # European Option:
     if (TypeFlag == "ce" || TypeFlag == "pe") {
@@ -128,6 +155,31 @@ function(TypeFlag = c("ce", "pe", "ca", "pa"), S, X, Time, r, b, sigma, n)
     
     # Return Value:
     OptionValue[1]
+    
+    # Parameters:
+    # TypeFlag = c("ce", "pe", "ca", "pa"), S, X, Time, r, b, sigma, n
+    param = list()
+    param$TypeFlag = TypeFlag
+    param$S = S
+    param$X = X
+    param$Time = Time
+    param$r = r
+    param$b = b
+    param$sigma = sigma
+    param$n = n
+    
+    # Add title and description:
+    if (is.null(title)) title = "JR Binomial Tree Option"
+    if (is.null(description)) description = as.character(date())
+    
+    # Return Value:
+    new("fOPTION", 
+        call = match.call(),
+        parameters = param,
+        price = OptionValue[1], 
+        title = title,
+        description = description
+        )     
 }
 
 
@@ -135,7 +187,8 @@ function(TypeFlag = c("ce", "pe", "ca", "pa"), S, X, Time, r, b, sigma, n)
 
 
 TIANBinomialTreeOption = 
-function(TypeFlag = c("ce", "pe", "ca", "pa"), S, X, Time, r, b, sigma, n)
+function(TypeFlag = c("ce", "pe", "ca", "pa"), S, X, Time, r, b, sigma, n,
+title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz           
     
     # Description:
@@ -159,7 +212,7 @@ function(TypeFlag = c("ce", "pe", "ca", "pa"), S, X, Time, r, b, sigma, n)
     
     # Iteration:
     OptionValue = z*(S*u^(0:n)*d^(n:0) - X)
-    OptionValue = (abs(OptionValue)+OptionValue)/2
+    OptionValue = (abs(OptionValue) + OptionValue) / 2
     
     # European Option:
     if (TypeFlag == "ce" || TypeFlag == "pe") {
@@ -177,6 +230,31 @@ function(TypeFlag = c("ce", "pe", "ca", "pa"), S, X, Time, r, b, sigma, n)
                     
     # Return Value:
     OptionValue[1]
+    
+    # Parameters:
+    # TypeFlag = c("ce", "pe", "ca", "pa"), S, X, Time, r, b, sigma, n
+    param = list()
+    param$TypeFlag = TypeFlag
+    param$S = S
+    param$X = X
+    param$Time = Time
+    param$r = r
+    param$b = b
+    param$sigma = sigma
+    param$n = n
+    
+    # Add title and description:
+    if (is.null(title)) title = "TIAN Binomial Tree Option"
+    if (is.null(description)) description = as.character(date())
+    
+    # Return Value:
+    new("fOPTION", 
+        call = match.call(),
+        parameters = param,
+        price = OptionValue[1], 
+        title = title,
+        description = description
+        )     
 }
 
 
@@ -184,7 +262,8 @@ function(TypeFlag = c("ce", "pe", "ca", "pa"), S, X, Time, r, b, sigma, n)
 
 
 BinomialTreeOption = 
-function(TypeFlag = c("ce", "pe", "ca", "pa"), S, X, Time, r, b, sigma, n)
+function(TypeFlag = c("ce", "pe", "ca", "pa"), S, X, Time, r, b, sigma, n,
+title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz           
     
     # Description:
@@ -258,8 +337,36 @@ function(TypeFlag = c("ce", "pe", "ca", "pa"), S, X, Time, r, b, sigma, n)
     # . . . x
     Tree = matrix(rev(Tree), byrow = FALSE, ncol = n+1)
     
+    # Tree Output:
+    # if (doprint) print(Tree)
+    
+    # Parameters:
+    # TypeFlag = c("ce", "pe", "ca", "pa"), S, X, Time, r, b, sigma, n
+    # param = list()
+    # param$TypeFlag = TypeFlag
+    # param$S = S
+    # param$X = X
+    # param$Time = Time
+    # param$r = r
+    # param$b = b
+    # param$sigma = sigma
+    # param$n = n
+    
+    # Add title and description:
+    # if (is.null(title)) title = "Binomial Tree Option"
+    # if (is.null(description)) description = as.character(date())
+    
     # Return Value:
-    Tree
+    # new("fOPTION", 
+    #    call = match.call(),
+    #    parameters = param,
+    #    price = Tree[1], 
+    #    title = title,
+    #    description = description
+    #    )
+    
+    # Return Value:
+    Tree     
 }
 
 
@@ -277,26 +384,26 @@ function(BinomialTreeValues, dx = -0.025, dy = 0.4, cex = 1, digits = 2, ...)
     # Example:
     #   par(mfrow=c(1,1))
     #   Tree = BinomialTree("a", "p", 100, 95, 0.5, 0.08, 0.08, 0.3, 5)
-    #   print(round(Tree, digits=3))
-    #   BinomialTreePlot(Tree, main="American Put Option")
+    #   print(round(Tree, digits = 3))
+    #   BinomialTreePlot(Tree, main = "American Put Option")
 
     # FUNCTION:
     
     # Tree:
-    Tree = round(BinomialTreeValues, digits=digits)
+    Tree = round(BinomialTreeValues, digits = digits)
     depth = ncol(Tree)
-    plot(x=c(1,depth), y=c(-depth+1, depth-1), type="n", col=0, ...)
-    points(x=1, y=0)
-    text(1+dx, 0+dy, deparse(Tree[1,1]), cex=cex)
+    plot(x = c(1,depth), y = c(-depth+1, depth-1), type = "n", col = 0, ...)
+    points(x = 1, y = 0)
+    text(1+dx, 0+dy, deparse(Tree[1, 1]), cex = cex)
     for (i in 1:(depth-1) ) {
-        y = seq(from=-i, by=2, length=i+1)
-        x = rep(i, times=length(y))+1
-        points(x, y, col=1) 
+        y = seq(from = -i, by = 2, length = i+1)
+        x = rep(i, times = length(y))+1
+        points(x, y, col = 1) 
         for (j in 1:length(x))
-            text(x[j]+dx, y[j]+dy, deparse(Tree[length(x)+1-j,i+1]), cex=cex)   
+            text(x[j]+dx, y[j]+dy, deparse(Tree[length(x)+1-j,i+1]), cex = cex)   
         y = (-i):i
-        x = rep(c(i+1,i), times=2*i)[1:length(y)]
-        lines(x, y, col=2)
+        x = rep(c(i+1,i), times = 2*i)[1:length(y)]
+        lines(x, y, col = 2)
     }
     
     # Return Value:

@@ -91,7 +91,7 @@ Pochhammer(x, n)
 
 \author{
 
-    Diethelm Wuertz for this R-Port.
+    Diethelm Wuertz for the Rmetrics \R-port.
     
 }
 
@@ -115,29 +115,33 @@ Weisstein E.W. (2004);
 
 
 \examples{
+## SOURCE("fBasics.A0-SPlusCompatibility")
+## SOURCE("fOptions.E2-GammaFunctions")
+## SOURCE("fOptions.E3-HypergeometricFunctions")
+
 ## Calculate Error, Gamma and Related Functions
 
 ## gamma -
-## Abramowitz-Stegun: Figure 6.1
+   # Abramowitz-Stegun: Figure 6.1
    x = seq(-4.01, 4.01, by = 0.011)
    plot(x, gamma(x), ylim = c(-5,5), type = "l", main = "Gamma Function")
    lines(x = c(-4, 4), y = c(0, 0))
      
 ## Psi -
-## Abramowitz-Stegun: Figure 6.1
+   # Abramowitz-Stegun: Figure 6.1
    x = seq(-4.01, 4.01, by = 0.011)
    plot(x, Psi(x), ylim = c(-5, 5), type = "l", main = "Psi Function")
    lines(x = c(-4, 4), y = c(0, 0))
    # Note: Is digamma defined for positive values only ?
 
 ## igamma -
-## Abramowitz-Stegun: Figure 6.3. 
+   # Abramowitz-Stegun: Figure 6.3. 
    gammaStar = function(x, a) { igamma(x,a)/x^a }
    # ... create Figure as an exercise.
   
 ## igamma -
-## Abramowitz-Stegun: Formula 6.5.12
-## Relation to Confluent Hypergeometric Functions
+   # Abramowitz-Stegun: Formula 6.5.12
+   # Relation to Confluent Hypergeometric Functions
    a = sqrt(2)
    x = pi
    Re ( (x^a/a) * kummerM(-x, a, 1+a) )
@@ -146,7 +150,7 @@ Weisstein E.W. (2004);
    igamma(x, a)
  
 ## cgamma -
-## Abramowitz-Stegun: Tables 6.7
+   # Abramowitz-Stegun: Tables 6.7
    x = 1
    y = seq(0, 5, by = 0.1); x = rep(x, length = length(y))
    z = complex(real = x, imag = y)
@@ -154,7 +158,7 @@ Weisstein E.W. (2004);
    cbind(y, Re(c), Im(c))
     
 ## cgamma -
-## Abramowitz-Stegun: Examples 4-8:
+   # Abramowitz-Stegun: Examples 4-8:
    options(digits = 10)
    gamma(6.38); lgamma(56.38)                            # 1/2
    Psi(6.38); Psi(56.38)                                 # 3/4

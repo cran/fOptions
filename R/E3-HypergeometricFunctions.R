@@ -60,9 +60,6 @@
 #
 #  These functions are required to valuate Asian Options based on
 #  the theory of Exponential Brownian Motion.    
-# 
-# AUTHOR:
-#   (C) 2003, Diethelm Wuertz, GPL
 ################################################################################ 
 
 

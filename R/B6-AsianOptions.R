@@ -29,20 +29,19 @@
 
 ################################################################################
 # FUNCTION:                         DESCRIPTION:
-# Asian Options:
-#   GeometricAverageRateOption        Geometric Average Rate Option
-# Arithmetic AverageRate Options:
-#   TurnbullWakemanAsianApproxOption  Turnbull-Wakeman Approximated Asian Option
-#   LevyAsianApproxOption             Levy Approximated Asian Option
+#  GeometricAverageRateOption        Geometric Average Rate Option
+#  TurnbullWakemanAsianApproxOption  Turnbull-Wakeman Approximated Asian Option
+#  LevyAsianApproxOption             Levy Approximated Asian Option
 ################################################################################
 
 
 GeometricAverageRateOption = 
-function(TypeFlag = c("c", "p"), S, X, Time, r, b, sigma)
+function(TypeFlag = c("c", "p"), S, X, Time, r, b, sigma,
+title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz           
 
     # Description:
-    #   Geometric Average Rate Options
+    #   Valuates geometric average rate options
      
     # References:
     #   Kemma and Vorst (1990)
@@ -56,14 +55,31 @@ function(TypeFlag = c("c", "p"), S, X, Time, r, b, sigma)
     sigma.A = sigma / sqrt (3)
     GeometricAverageRate = 
         GBSOption (TypeFlag = TypeFlag, S = S, X = X, Time = Time, 
-            r = r, b = b.A, sigma = sigma.A)$price
+            r = r, b = b.A, sigma = sigma.A)@price
+    
+    # Parameters:
+    # TypeFlag = c("c", "p"), S, X, Time, r, b, sigma
+    param = list()
+    param$TypeFlag = TypeFlag
+    param$S = S
+    param$X = X
+    param$Time = Time
+    param$r = r
+    param$b = b
+    param$sigma = sigma
+    
+    # Add title and description:
+    if (is.null(title)) title = "Geometric Average Rate Option"
+    if (is.null(description)) description = as.character(date())
     
     # Return Value:
-    option = list(
-        price = GeometricAverageRate,
-        call = match.call() )
-    class(option) = "option"
-    option 
+    new("fOPTION", 
+        call = match.call(),
+        parameters = param,
+        price = GeometricAverageRate, 
+        title = title,
+        description = description
+        )      
 }
 
 
@@ -71,11 +87,12 @@ function(TypeFlag = c("c", "p"), S, X, Time, r, b, sigma)
 
 
 TurnbullWakemanAsianApproxOption = 
-function(TypeFlag = c("c", "p"), S, SA, X, Time, time, tau, r, b, sigma)
+function(TypeFlag = c("c", "p"), S, SA, X, Time, time, tau, r, b, sigma,
+title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz           
 
     # Description:
-    #   Arithmetic average rate options
+    #   Valuates arithmetic average rate options by the 
     #   Turnbull-Wakeman's Approximation
  
     # References:
@@ -96,18 +113,38 @@ function(TypeFlag = c("c", "p"), S, SA, X, Time, time, tau, r, b, sigma)
     if (t1 > 0) { 
         X = Time/time * X - t1/time * SA
         TurnbullWakemanAsianApprox = 
-            GBSOption(TypeFlag, S, X, time, r, b.A, sigma.A)$price *
+            GBSOption(TypeFlag, S, X, time, r, b.A, sigma.A)@price *
             time/Time }
     else {
         TurnbullWakemanAsianApprox = 
-            GBSOption(TypeFlag, S, X, time, r, b.A, sigma.A)$price }
+            GBSOption(TypeFlag, S, X, time, r, b.A, sigma.A)@price }
+    
+    # Parameters:
+    # TypeFlag = c("c", "p"), S, SA, X, Time, time, tau, r, b, sigma
+    param = list()
+    param$TypeFlag = TypeFlag
+    param$S = S
+    param$SA = SA
+    param$X = X
+    param$Time = Time
+    param$time = time
+    param$tau = tau
+    param$r = r
+    param$b = b
+    param$sigma = sigma
+    
+    # Add title and description:
+    if (is.null(title)) title = "Turnbull Wakeman Asian Approximated Option"
+    if (is.null(description)) description = as.character(date())
     
     # Return Value:
-    option = list(
+    new("fOPTION", 
+        call = match.call(),
+        parameters = param,
         price = TurnbullWakemanAsianApprox, 
-        call = match.call() )
-    class(option) = "option"
-    option
+        title = title,
+        description = description
+        )      
 }
 
 
@@ -115,12 +152,13 @@ function(TypeFlag = c("c", "p"), S, SA, X, Time, time, tau, r, b, sigma)
 
 
 LevyAsianApproxOption = 
-function(TypeFlag = c("c", "p"), S, SA, X, Time, time, r, b, sigma)
+function(TypeFlag = c("c", "p"), S, SA, X, Time, time, r, b, sigma,
+title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz           
     
     # Description:
-    #   Arithmetic average rate options
-    #   Levy's Approximation
+    #   Valuates arithmetic average rate options by the
+    #   Levy Approximation
     
     # References:
     #   Haug, Chapter 2.12.2
@@ -144,13 +182,32 @@ function(TypeFlag = c("c", "p"), S, SA, X, Time, time, r, b, sigma)
     if (TypeFlag == "p") {
         LevyAsianApprox = (SE * CND(d1) - XStar * exp(-r*time) * 
             CND(d2)) - SE + XStar * exp (-r*time) }
+ 
+    # Parameters:
+    # TypeFlag = c("c", "p"), S, SA, X, Time, time, r, b, sigma
+    param = list()
+    param$TypeFlag = TypeFlag
+    param$S = S
+    param$SA = SA
+    param$X = X
+    param$Time = Time
+    param$time = time
+    param$r = r
+    param$b = b
+    param$sigma = sigma
+    
+    # Add title and description:
+    if (is.null(title)) title = "Levy Asian Approximated Option"
+    if (is.null(description)) description = as.character(date())
     
     # Return Value:
-    option = list(
+    new("fOPTION", 
+        call = match.call(),
+        parameters = param,
         price = LevyAsianApprox, 
-        call = match.call() )
-    class(option) = "option"
-    option
+        title = title,
+        description = description
+        )      
 }
 
 
@@ -178,5 +235,5 @@ function(TypeFlag = c("c", "p"), S, SA, X, Time, time, r, b, sigma)
 #}
 
 
-# ******************************************************************************
+################################################################################
 

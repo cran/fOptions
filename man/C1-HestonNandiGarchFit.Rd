@@ -35,7 +35,9 @@
 
 \usage{
 hngarchSim(model, n, innov, n.start, start.innov, rand.gen, \dots)
-hngarchFit(x, model, symmetric, trace, \dots)
+hngarchFit(x, model = list(lambda = -0.5, omega = var(x), alpha =
+	0.1 * var(x), beta = 0.1, gamma = 0, rf = 0), symmetric = TRUE, 
+	trace = FALSE, title = NULL, description = NULL, \dots)
 hngarchStats(model)
 
 \method{print}{hngarch}(x, \dots)
@@ -45,6 +47,9 @@ hngarchStats(model)
 
 \arguments{
 
+    \item{description}{
+    	a brief description of the porject of type character.
+    	}
     \item{innov}{
         [hngarchSim] - \cr
         is a univariate time series or vector of innovations to produce 
@@ -96,6 +101,9 @@ hngarchStats(model)
         a logical, if TRUE a symmetric model is estimated, otherwise 
         the parameters are estimated for an asymmetric HN Garch(1,1) model.
         }
+    \item{title}{
+    	a character string which allows for a project title.
+    	}
     \item{trace}{
         [hngarchFit] - \cr
         a logical value. Should the optimizarion be traced?
@@ -191,8 +199,11 @@ hngarchStats(model)
 
 
 \examples{
+## SOURCE("fBasics.A0-SPlusCompatibility")
+## SOURCE("fOptions.C1-HestonNandiGarchFit")
+
 ## hngarchSim -
-## Simulate a Heston Nandi Garch(1,1) Process:
+   # Simulate a Heston Nandi Garch(1,1) Process:
    xmpOptions("\nStart: Simulate a HN-GARCH(1,1) Process > ")
    # Symmetric Model - Parameters:
    model = list(lambda = 4, omega = 8e-5, alpha = 6e-5, 
@@ -203,20 +214,20 @@ hngarchStats(model)
    grid()
    
 ## hngarchFit - 
-## HN-GARCH log likelihood Parameter Estimation:
+   # HN-GARCH log likelihood Parameter Estimation:
    xmpOptions("\nNext: Estimate a HN-GARCH(1,1) Process > ")
    # To speed up, we start with the simulated model ...
    mle = hngarchFit(model = model, x = ts, symmetric = TRUE)
    mle
    
 ## summary.hngarch - 
-## HN-GARCH Diagnostic Analysis:
+   # HN-GARCH Diagnostic Analysis:
    xmpOptions("\nNext: Analyse a HN-GARCH(1,1) Process > ")
    par(mfrow = c(3, 1), cex = 0.75)
    summary(mle)    
 
 ## hngarchStats - 
-## HN-GARCH Moments:
+   # HN-GARCH Moments:
    xmpOptions("\nNext: Compute Moments of a HN-GARCH(1,1) Process > ")
    hngarchStats(mle$model)     
 }
@@ -233,7 +244,7 @@ Heston S.L., Nandi S. (1997);
 
 \author{
 
-    Diethelm Wuertz for this R-Port.
+    Diethelm Wuertz for the Rmetrics \R-port.
     
 }
 

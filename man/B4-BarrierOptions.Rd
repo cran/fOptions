@@ -54,16 +54,22 @@
 
 
 \usage{
-StandardBarrierOption(TypeFlag, S, X, H, K, Time, r, b, sigma)
-DoubleBarrierOption(TypeFlag, S, X, L, U, Time, r, b, sigma, delta1, delta2)
-PTSingleAssetBarrierOption(TypeFlag, S, X, H, time1, Time2, r, b, sigma)
-TwoAssetBarrierOption(TypeFlag, S1, S2, X, H, Time, r, b1, 
-    b2, sigma1, sigma2, rho)
-PTTwoAssetBarrierOption(TypeFlag, S1, S2, X, H, time1, Time2, r, b1, b2, 
-    sigma1, sigma2, rho)
-LookBarrierOption(TypeFlag, S, X, H, time1, Time2, r, b, sigma)
-DiscreteBarrierOption(S, H, sigma, dt)
-SoftBarrierOption(TypeFlag, S, X, L, U, Time, r, b, sigma)
+StandardBarrierOption(TypeFlag, S, X, H, K, Time, r, b, sigma,
+	title = NULL, description = NULL)
+DoubleBarrierOption(TypeFlag, S, X, L, U, Time, r, b, sigma, 
+	delta1, delta2, title = NULL, description = NULL)
+PTSingleAssetBarrierOption(TypeFlag, S, X, H, time1, Time2, r, 
+	b, sigma, title = NULL, description = NULL)
+TwoAssetBarrierOption(TypeFlag, S1, S2, X, H, Time, r, b1, b2,
+    sigma1, sigma2, rho, title = NULL, description = NULL)
+PTTwoAssetBarrierOption(TypeFlag, S1, S2, X, H, time1, Time2, r, 
+	b1, b2, sigma1, sigma2, rho, title = NULL, description = NULL)
+LookBarrierOption(TypeFlag, S, X, H, time1, Time2, r, b, sigma,
+	title = NULL, description = NULL)
+DiscreteBarrierOption(S, H, sigma, dt, title = NULL, 
+	description = NULL)
+SoftBarrierOption(TypeFlag, S, X, L, U, Time, r, b, sigma, 
+	title = NULL, description = NULL)
 }
 
 
@@ -89,6 +95,9 @@ SoftBarrierOption(TypeFlag, S, X, L, U, Time, r, b, sigma)
         \code{delta1>0>delta2} correponds to a convex downward lower 
         boundary and a convex upward upper boundary.
         }
+    \item{description}{
+    	a character string which allows for a brief description.
+    	}
     \item{dt}{
         [DiscreteBarrier*] - \cr
         time between monitoring instants, a numeric value.
@@ -155,6 +164,9 @@ SoftBarrierOption(TypeFlag, S, X, L, U, Time, r, b, sigma)
         the options starting date and ends at an arbitrary time 
         \code{time1} before expiration time \code{Time2}.
         }
+    \item{title}{
+    	a character string which allows for a project title.
+    	}
     \item{TypeFlag}{
         usually a character string either \code{"c"} for a call option 
         or a \code{"p"} for a put option.\cr\cr\code{ }
@@ -353,6 +365,10 @@ SoftBarrierOption(TypeFlag, S, X, L, U, Time, r, b, sigma)
 
 
 \examples{
+## SOURCE("fBasics.A0-SPlusCompatibility")
+## SOURCE("fOptions.A1-PlainVanillaOptions")
+## SOURCE("fOptions.B4-BarrierOptions")
+
 ## Examples from Chapter 2.10 in E.G. Haug's Option Guide (1997)
 
 ## Standard Barrier Option [2.10.1]:
@@ -413,7 +429,7 @@ Haug E.G. (1997);
 
 \author{
 
-    Diethelm Wuertz for this R-Port.
+    Diethelm Wuertz for the Rmetrics \R-port.
  
 }
 

@@ -32,7 +32,7 @@
 
     A collection and description of distributions and 
     related functions which are useful in the theory of 
-    exponential Brownian motion and Asian Option Valuation. 
+    exponential Brownian motion and Asian option valuation. 
     The functions compute densities and probabilities for 
     the log-Normal distribution, the Gamma distribution, 
     the Reciprocal-Gamma distribution, and the Johnson 
@@ -47,19 +47,19 @@
     The functions are:
 
     \tabular{ll}{
-	\code{dlognorm} \tab the log-Normal density and derivatives, \cr
-	\code{plognorm} \tab the log-Normal, a synonyme for R's plnorm, \cr
-	\code{dgam} \tab the Gamma density, a synonyme for R's dgamma, \cr
-	\code{pgam} \tab the Gamma probability, a synonyme for R's pgamma, \cr
-	\code{drgam} \tab the Reciprocal-Gamma density, \cr
-	\code{prgam} \tab the Reciprocal-Gamma probability, \cr
-	\code{djohnson} \tab the Johnson Type I density, \cr
-	\code{pjohnson} \tab the Johnson Type I probability, \cr
-	\code{mnorm} \tab the Moments of Normal density, \cr
-	\code{mlognorm} \tab the Moments of log-Normal density, \cr
-	\code{mrgam} \tab the Moments of reciprocal-Gamma density, \cr
-	\code{masian} \tab the Moments of Asian Option density, \cr
-	\code{derivative} \tab the First and second numerical derivative. }
+    \code{dlognorm} \tab the log-Normal density and derivatives, \cr
+    \code{plognorm} \tab the log-Normal, a synonyme for R's plnorm, \cr
+    \code{dgam} \tab the Gamma density, a synonyme for R's dgamma, \cr
+    \code{pgam} \tab the Gamma probability, a synonyme for R's pgamma, \cr
+    \code{drgam} \tab the Reciprocal-Gamma density, \cr
+    \code{prgam} \tab the Reciprocal-Gamma probability, \cr
+    \code{djohnson} \tab the Johnson Type I density, \cr
+    \code{pjohnson} \tab the Johnson Type I probability, \cr
+    \code{mnorm} \tab the Moments of Normal density, \cr
+    \code{mlognorm} \tab the Moments of log-Normal density, \cr
+    \code{mrgam} \tab the Moments of reciprocal-Gamma density, \cr
+    \code{masian} \tab the Moments of Asian Option density, \cr
+    \code{derivative} \tab the First and second numerical derivative. }
             
 }
 
@@ -67,10 +67,10 @@
 \usage{
 dlognorm(x, meanlog = 0, sdlog = 1, deriv = c(0, 1, 2))
 plognorm(q, meanlog = 0, sdlog = 1)
-dgam(x, alpha, beta, log = FALSE)
-pgam(q, alpha, beta, lower.tail = TRUE, log = FALSE)
+dgam(x, alpha, beta)
+pgam(q, alpha, beta, lower.tail = TRUE)
 drgam(x, alpha, beta, deriv = c(0, 1, 2))
-prgam(q, alpha, beta, lower.tail = TRUE, log = FALSE)
+prgam(q, alpha, beta, lower.tail = TRUE)
 djohnson(x, a = 0, b = 1, c = 0, d = 1, deriv = c(0, 1, 2))
 pjohnson(q, a = 0, b = 1, c = 0, d = 1)
 
@@ -97,10 +97,6 @@ derivative(x, y, deriv = c(1, 2))
     \item{deriv}{
         an integer value, the degree of differentiation, either 0, 1 
         or 2.
-        }
-    \item{log}{
-        a logical, if \code{TRUE}, densities and probabilities are given 
-        on a logarithmic scale.
         }
     \item{lower.tail}{
         a logical, if \code{TRUE}, the default, then the probabilities 
@@ -131,7 +127,7 @@ derivative(x, y, deriv = c(1, 2))
         [derivative] - \cr
         a real numeric value or vector, the function values from
         which to compute the first and second derivative.
-       	}
+        }
 }
 
 
@@ -157,15 +153,64 @@ derivative(x, y, deriv = c(1, 2))
 
 \author{
 
-    Diethelm Wuertz for this R-Port.
+    Diethelm Wuertz for the Rmetrics \R-port.
     
 }
 
 
 \examples{
-## Examples:
-   
-## none ...
+## SOURCE("fBasics.A0-SPlusCompatibility")
+## SOURCE("fOptions.E1-EBMDistribution")
+
+## Calculate Log-Normal Density and its Derivaties,
+   x = exp(seq(-2.8, 1.2, length = 100))
+   y0 = dlognorm(x, deriv = 0)
+   y1 = dlognorm(x, deriv = 1)
+   y2 = dlognorm(x, deriv = 2) 
+   # Compare with Numerical Differentiation:
+   par(mfrow = c(2, 2))
+   xa = exp(seq(-2.5, 1.5, length = 20))
+   plot(x, y0, type = "l", main = "Log-Normal Density")
+   plot(x, y1, type = "l", main = "1st Derivative")
+   z = derivative(xa, dlognorm(xa, deriv = 0), deriv = 1)
+   points(z$x, z$y, col = "steelblue4")
+   plot(x, y2, type = "l", main = "2nd Derivative")
+   z = derivative(xa, dlognorm(xa, deriv = 0), deriv = 2)
+   points(z$x, z$y, col = "steelblue4")
+
+## Calculate Reciprocal-Gamma Density and its Derivaties:
+   alpha = 2; beta = 1
+   x = exp(seq(-2.8, 1.2, length = 100))
+   y0 = drgam(x, alpha, beta, deriv = 0)
+   y1 = drgam(x, alpha, beta, deriv = 1)
+   y2 = drgam(x, alpha, beta, deriv = 2)
+   # Compare with Numerical Differentiation:
+   par(mfrow = c(2, 2))
+   xa = exp(seq(-2.5, 1.5, length = 20))
+   plot(x, y0, type = "l", main = "Rec-Gamma Density")
+   plot(x, y1, type = "l", main = "1st Derivative")
+   z = derivative(xa, drgam(xa, alpha, beta, deriv = 0), deriv = 1)
+   points(z$x, z$y, col = "steelblue4")
+   plot(x, y2, type = "l", main = "2nd Derivative")
+   z = derivative(xa, drgam(xa, alpha, beta, deriv = 0), deriv = 2)
+   points(z$x, z$y, col = "steelblue4")
+    
+## Calculate Johnson-Type-I Density and its Derivaties:
+   a = 0.3; b = 1.2; c = -0.2; d = 0.8
+   x = exp(seq(-2.8, 1.2, length = 100))
+   y0 = djohnson(x, a, b, c, d, deriv = 0)
+   y1 = djohnson(x, a, b, c, d, deriv = 1)
+   y2 = djohnson(x, a, b, c, d, deriv = 2)
+   # Compare with Numerical Differentiation:
+   par(mfrow = c(2, 2))
+   xa = exp(seq(-2.5, 1.5, length = 20))
+   plot(x, y0, type = "l", main = "Johnson Type I Density")
+   plot(x, y1, type = "l", main = "1st Derivative")
+   z = derivative(xa, djohnson(xa, a, b, c, d, deriv = 0), deriv = 1)
+   points(z$x, z$y, col = "steelblue4")
+   plot(x, y2, type = "l", main = "2nd Derivative")
+   z = derivative(xa, djohnson(xa, a, b, c, d, deriv = 0), deriv = 2)
+   points(z$x, z$y, col = "steelblue4")
 }
 
 

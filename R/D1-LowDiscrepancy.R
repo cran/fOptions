@@ -35,7 +35,16 @@
 #  rnorm.halton           Normal Halton low discrepancy sequence
 #  runif.sobol            Uniform Sobol low discrepancy sequence
 #  rnorm.sobol            Normal Sobol low discrepancy sequence
-###############################################################################
+################################################################################
+
+
+runif.halton.seed <<- list()
+rnorm.halton.seed <<- list()
+runif.sobol.seed <<- list()
+rnorm.sobol.seed <<- list()
+
+
+# ------------------------------------------------------------------------------
 
 
 runif.pseudo = 
@@ -93,9 +102,12 @@ function (n, dimension, init = TRUE)
     
     # Restart Settings:
     if (init) {
-        runif.halton.seed <<- list()
-        runif.halton.seed$base <<- rep(0, dimension)
-        runif.halton.seed$offset <<- 0 }
+        .warn = options()$warn
+        options(warn = -1)
+        rm("runif.halton.seed")
+        options(warn = .warn)
+        runif.halton.seed <<- list(base = rep(0, dimension), offset = 0)
+    }
     
     # Generate:
     qn = rep(0, n*dimension)
@@ -112,8 +124,11 @@ function (n, dimension, init = TRUE)
         PACKAGE = "fOptions")
     
     # For the next numbers save:    
-    runif.halton.seed$base <<- result[[4]]
-    runif.halton.seed$offset <<- result[[5]]
+    .warn = options()$warn
+    options(warn = -1)
+    rm("runif.halton.seed")
+    options(warn = .warn)
+    runif.halton.seed <<- list(base = result[[4]], offset = result[[5]])
     
     # Deviates:
     result = matrix(result[[1]], ncol = dimension)
@@ -141,9 +156,12 @@ function (n, dimension, init = TRUE)
     
     # Restart Settings:
     if (init) {
-        rnorm.halton.seed <<- list()
-        rnorm.halton.seed$base <<- rep(0, dimension)
-        rnorm.halton.seed$offset <<- 0 }
+        .warn = options()$warn
+        options(warn = -1)
+        rm("rnorm.halton.seed")
+        options(warn = .warn)
+        rnorm.halton.seed <<- list(base = rep(0, dimension), offset = 0)
+    }
     
     # Generate:
     qn = rep(0, n*dimension)
@@ -160,8 +178,11 @@ function (n, dimension, init = TRUE)
         PACKAGE = "fOptions")
         
     # For the next numbers save:    
-    rnorm.halton.seed$base <<- result[[4]]
-    rnorm.halton.seed$offset <<- result[[5]]
+    .warn = options()$warn
+    options(warn = -1)
+    rm("rnorm.halton.seed")
+    options(warn = .warn)
+    rnorm.halton.seed <<- list(base = result[[4]], offset = result[[5]])
     
     # Deviates:
     result = matrix(result[[1]], ncol = dimension)
@@ -191,12 +212,13 @@ function (n, dimension, init = TRUE, scrambling = 0, seed = 4711)
     
     # Restart Settings:
     if (init) {
-        runif.sobol.seed <<- list()
-        runif.sobol.seed$quasi <<- rep(0, dimension)
-        runif.sobol.seed$ll <<- 0
-        runif.sobol.seed$count <<- 0
-        runif.sobol.seed$sv <<- rep(0, dimension*30)
-        runif.sobol.seed$seed <<- seed }
+        .warn = options()$warn
+        options(warn = -1)
+        rm("runif.sobol.seed")
+        options(warn = .warn)
+        runif.sobol.seed <<- list(quasi = rep(0, dimension), ll = 0,
+            count = 0, sv = rep(0, dimension*30), seed = seed)
+    }
     
     # Generate:
     qn = rep(0.0, n*dimension)
@@ -217,11 +239,12 @@ function (n, dimension, init = TRUE, scrambling = 0, seed = 4711)
         PACKAGE = "fOptions")
         
     # For the next numbers save:    
-    runif.sobol.seed$quasi <<- result[[4]]
-    runif.sobol.seed$ll <<- result[[5]]
-    runif.sobol.seed$count <<- result[[6]]
-    runif.sobol.seed$sv <<- result[[7]]
-    runif.sobol.seed$seed <<- result[[9]]
+    .warn = options()$warn
+    options(warn = -1)
+    rm("runif.sobol.seed")
+    options(warn = .warn)
+    runif.sobol.seed <<- list(quasi = result[[4]], ll = result[[5]],
+        count = result[[6]], sv = result[[7]], seed = result[[9]])
     
     # Deviates:
     result = matrix(result[[1]], ncol = dimension)
@@ -250,12 +273,13 @@ function (n, dimension, init = TRUE, scrambling = 0, seed = 4711)
     
     # Restart Settings:
     if (init) {
-        rnorm.sobol.seed <<- list()
-        rnorm.sobol.seed$quasi <<- rep(0, dimension)
-        rnorm.sobol.seed$ll <<- 0
-        rnorm.sobol.seed$count <<- 0
-        rnorm.sobol.seed$sv <<- rep(0, dimension*30)
-        rnorm.sobol.seed$seed <<- seed  }
+        .warn = options()$warn
+        options(warn = -1)
+        rm("rnorm.sobol.seed")
+        options(warn = .warn)
+        rnorm.sobol.seed <<- list( quasi = rep(0, dimension), ll = 0,
+            count = 0, sv = rep(0, dimension*30), seed = seed)
+    }
 
     # Generate:
     qn = rep(0.0, n*dimension)      
@@ -276,11 +300,12 @@ function (n, dimension, init = TRUE, scrambling = 0, seed = 4711)
         PACKAGE = "fOptions")   
                 
     # For the next numbers save:    
-    rnorm.sobol.seed$quasi <<- result[[4]]
-    rnorm.sobol.seed$ll <<- result[[5]]
-    rnorm.sobol.seed$count <<- result[[6]]
-    rnorm.sobol.seed$sv <<- result[[7]]
-    rnorm.sobol.seed$seed <<- result[[9]]
+    .warn = options()$warn
+    options(warn = -1)
+    rm("rnorm.sobol.seed")
+    options(warn = .warn)
+    rnorm.sobol.seed <<- list(quasi = result[[4]], ll = result[[5]],
+        count = result[[6]], sv = result[[7]], seed = result[[9]])
     
     # Deviates:
     result = matrix(result[[1]], ncol = dimension) 
@@ -290,5 +315,5 @@ function (n, dimension, init = TRUE, scrambling = 0, seed = 4711)
 }
 
 
-# ******************************************************************************
+################################################################################
 

@@ -2,6 +2,9 @@
 
 \alias{PlainVanillaOptions}
 
+\alias{fOPTION}
+\alias{fOPTION-class}
+
 \alias{GBSOption}
 \alias{GBSCharacteristics}
 \alias{BlackScholesOption}
@@ -17,6 +20,9 @@
 
 \alias{print.option}
 \alias{summary.option}
+
+\alias{print.fOPTION}
+\alias{summary.fOPTION}
 
 
 \title{Valuation of Plain Vanilla Options}
@@ -46,20 +52,26 @@
 
 
 \usage{
-GBSOption(TypeFlag, S, X, Time, r, b, sigma)
+GBSOption(TypeFlag, S, X, Time, r, b, sigma, 
+	title = NULL, description = NULL)
 GBSGreeks(Selection, TypeFlag, S, X, Time, r, b, sigma)
 GBSCharacteristics(TypeFlag, S, X, Time, r, b, sigma)
 GBSVolatility(price, TypeFlag, S, X, Time, r, b, tol, maxiter)
 BlackScholesOption(\dots)
 
-Black76Option(TypeFlag, FT, X, Time, r, sigma)
+Black76Option(TypeFlag, FT, X, Time, r, sigma, 
+	title = NULL, description = NULL)
 
 MiltersenSchwartzOption(TypeFlag, Pt, FT, X, time, Time, 
-    sigmaS, sigmaE, sigmaF, rhoSE, rhoSF, rhoEF, KappaE, KappaF)
+    sigmaS, sigmaE, sigmaF, rhoSE, rhoSF, rhoEF, KappaE, KappaF, 
+	title = NULL, description = NULL)
 
 NDF(x)
 CND(x)
 CBND(x1, x2, rho)
+
+\method{print}{fOPTION}(x, \dots)
+\method{summary}{fOPTION}(object, \dots)
 
 \method{print}{option}(x, \dots)
 \method{summary}{option}(object, \dots)
@@ -72,6 +84,9 @@ CBND(x1, x2, rho)
         the annualized cost-of-carry rate, a numeric value; 
         e.g. 0.1 means 10\% pa.
         }
+    \item{description}{
+    	a character string which allows for a brief description.
+    	}
     \item{FT}
         {[Black76*][MiltersenSchwartz*] - \cr
         the futures price, a numeric value.
@@ -135,6 +150,9 @@ CBND(x1, x2, rho)
     \item{time, Time}{
         the time to maturity measured in years, a numeric value.
         }
+    \item{title}{
+    	a character string which allows for a project title.
+    	}
     \item{TypeFlag}{
         a character string either \code{"c"} for a call option or 
         a \code{"p"} for a put option.
@@ -164,7 +182,7 @@ CBND(x1, x2, rho)
     \code{GBSOption}\cr
     \code{BlackScholesOption}
     \cr
-    returns the option price, a numeric value. 
+    returns an object of class \code{"fOption"}. 
     \cr
 
     \code{GBSGreeks}
@@ -193,7 +211,28 @@ CBND(x1, x2, rho)
     \code{Black76Option},\cr 
     \code{MiltersenSchwartzOption}
     \cr
-    returns the option price, a numeric value.
+    return an object of class \code{"fOption"}. 
+    
+    
+    The option valuation programs return an object of class 
+    \code{"fOPTION"} with the following slots:
+
+    \item{@call}{
+        the function call.      
+        }
+    \item{@parameters}{
+        a list with the input parameters.
+        }
+    \item{@price}{
+        a numeric value with the value of the option.
+        }
+    \item{@title}{
+        a character string with the name of the test.
+        }
+    \item{@description}{
+        a character string with a brief description of the
+        test.
+        }
  
 }
 
@@ -254,7 +293,8 @@ CBND(x1, x2, rho)
     \bold{Print and Summary Method:}
     \cr\cr
     Thes are two methods to print and sumarize an object of class
-    \code{"option"}. 
+    \code{"fOPTION"} or of class{"option"}. The second is used 
+    for the older class representation.
   
 }
 
@@ -269,6 +309,9 @@ CBND(x1, x2, rho)
 
 
 \examples{
+## SOURCE("fBasics.A0-SPlusCompatibility")
+## SOURCE("fOptions.A1-PlainVanillaOptions")
+
 ## All the examples are from Haug's Option Guide (1997)
 
 ## CHAPTER 1.1: ANALYTICAL FORMULAS FOR EUROPEAN OPTIONS:
@@ -336,8 +379,7 @@ CBND(x1, x2, rho)
   
 ## CHAPTER 1.5: RECENT DEVELOPMENTS IN COMMODITY OPTIONS 
 
-## Miltersen Schwartz Option
-## vs. Black76 Option on Futures:
+## Miltersen Schwartz Option vs. Black76 Option on Futures:
    xmpOptions("\nNext: Miltersen Schwartz Option > ")
    MiltersenSchwartzOption(TypeFlag = "c", Pt = exp(-0.05/4), FT = 95, 
      X = 80, time = 1/4, Time = 1/2, sigmaS = 0.2660, sigmaE = 0.2490, 
@@ -374,7 +416,7 @@ Miltersen K., Schwartz E.S. (1998);
 
 \author{
 
-    Diethelm Wuertz for this R-Port.
+    Diethelm Wuertz for the Rmetrics \R-port.
 
 }
 

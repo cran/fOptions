@@ -86,7 +86,7 @@ start.innov = NULL, rand.gen = rnorm, ...)
         h[i] = omega + alpha*(Z[i-1] - gamma*sqrt(h[i-1]))^2 + beta*h[i-1]
         x[i] = rfr + lambda*h[i] + sqrt(h[i]) * Z[i] } 
              
-    # Time Series:
+    # Series:
     x = x[-(1:n.start)]
         
     # Return Value:
@@ -98,8 +98,9 @@ start.innov = NULL, rand.gen = rnorm, ...)
 
 
 hngarchFit = 
-function(x, model=list(lambda = -0.5, omega = var(x), alpha = 0.1*var(x), 
-beta = 0.1, gamma = 0, rf = 0), symmetric = TRUE, trace = FALSE, ...)
+function(x, model = list(lambda = -0.5, omega = var(x), alpha = 0.1*var(x), 
+beta = 0.1, gamma = 0, rf = 0), symmetric = TRUE, trace = FALSE, title =
+NULL, description = NULL, ...)
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
@@ -114,15 +115,17 @@ beta = 0.1, gamma = 0, rf = 0), symmetric = TRUE, trace = FALSE, ...)
     alpha = model$alpha
     beta = model$beta
     gamma = model$gamma; gamma <<- gamma
-    
+     
     # Continue:
     x <<- x
     trace <<- trace
     symmetric <<- symmetric
     opt = list()
+    params = c(lambda = lambda, omega = omega, alpha = alpha,
+    	beta = beta, gamma = gamma, rf = rfr)
     
     # Log-Likelihood Function:
-    llh = function(par) {
+    .llhHNGarch <<- function(par) {
         # h = sigma^2
         h = Z = x
         lambda = par[1]
@@ -140,13 +143,14 @@ beta = 0.1, gamma = 0, rf = 0), symmetric = TRUE, trace = FALSE, ...)
                 beta * h[i-1]
             Z[i] = ( x[i] - rfr - lambda*h[i] ) / sqrt(h[i])  }     
         # Calculate Log - Likelihood for Normal Distribution:       
-        llh = -sum(log( dnorm(Z)/sqrt(h) ))
+        llhHNGarch = -sum(log( dnorm(Z)/sqrt(h) ))
         if (trace > 0) {
             cat("Parameter Estimate\n")
             print(c(lambda, omega, alpha, beta, gamma)) }
         Z <<- Z
         h <<- h
-        llh}
+        llhHNGarch
+    }
     
     # Transform Parameters and Calculate Start Parameters:
     par.omega = -log((1-omega)/omega)  # for 2
@@ -156,17 +160,25 @@ beta = 0.1, gamma = 0, rf = 0), symmetric = TRUE, trace = FALSE, ...)
     if(!symmetric) par.start = c(par.start, gamma)
     
     # Initial Log Likelihood:
-    opt$value = llh(par = par.start)
+    opt$value = .llhHNGarch(par = par.start)
     opt$estimate = par.start
     if (trace) {
         print(c(lambda, omega, alpha, beta, gamma))
         print(opt$value)}
      
     # Estimate parameters:
-    opt = nlm(llh, par.start, ...)
+    if (exists("nlm")) {
+    	opt = nlm(.llhHNGarch, par.start, ...) 
+	} else {
+		opt = nlminb(par.start, .llhHNGarch, ...)
+		opt$minimum = opt$objective
+		opt$estimate = opt$parameters
+	}
     
-   # Log-Likelihood:
+   	# Log-Likelihood:
     opt$minimum = -opt$minimum + length(x)*sqrt(2*pi)
+    opt$params = params
+    opt$symmetric = symmetric
         
     # Backtransform estimated parameters:
     lambda = opt$estimate[1]
@@ -175,6 +187,7 @@ beta = 0.1, gamma = 0, rf = 0), symmetric = TRUE, trace = FALSE, ...)
     beta = opt$estimate[4] = (1/(1+exp(-opt$estimate[4])))
     if (symmetric) opt$estimate[5] = 0
     gamma = opt$estimate[5] 
+    names(opt$estimate) = c("lambda", "omega", "alpha", "beta", "gamma")
     
     # Add to Output:
     opt$model = list(lambda = lambda, omega = omega, alpha = alpha,
@@ -189,6 +202,12 @@ beta = 0.1, gamma = 0, rf = 0), symmetric = TRUE, trace = FALSE, ...)
     
     # Print Estimated Parameters:
     if (trace > 0) print(opt$estimate)
+    
+    # Add title and description:
+    if (is.null(title)) title = "Heston-Nandi Garch Parameter Estimation"
+    if (is.null(description)) description = as.character(date())
+    opt$title = title
+    opt$description = description
                 
     # Return Value:
     class(opt) = "hngarch"
@@ -206,6 +225,10 @@ function(x, ...)
     # Description:
     #   Print method for the  HN-GARCH time series model. 
     
+    # Arguments:
+    #	x - an object of class "hngarch" as returned by the 
+    #	function "hngarchFit"
+    
     # FUNCTION:
 
     # Print:
@@ -213,20 +236,38 @@ function(x, ...)
     if (!inherits(object, "hngarch")) 
         stop("method is only for garch objects")
     
+    # Title:
+    cat("\nTitle:\n")
+    cat(object$title, "\n")
+    
+    # Call:
     cat("\nCall:\n", deparse(object$call), "\n", sep = "")
     
+    # Parameters:
+    cat("\nParameters:\n")
+    print(format(object$params, digits = 4, ...), print.gap = 2, 
+    	quote = FALSE)
+    
+    # Coefficients:
     cat("\nCoefficients: lambda, omega, alpha, beta, gamma\n")
-    print.default(format(object$estimate, ...), print.gap = 2, 
-        quote = FALSE)
+    print(format(object$estimate, digits = 4, ...), print.gap = 2, 
+    	quote = FALSE)
     
+    # Likelihood:
     cat("\nLog-Likelihood:\n")
-    print.default(object$minimum)
+    cat(object$minimum, "\n")
     
+    # Persisitence and Variance:
     cat("\nPersistence and Variance:\n")
-    print.default(c(object$persistence, object$sigma2))
+    cat(object$persistence, "\n")
+    cat(object$sigma2, "\n")
+ 
+    # Description:
+    cat("\nDescription:\n")
+    cat(object$description, "\n\n")
     
-    # Return value:
-    invisible(object)
+    # Return Value:
+    invisible()
 }
 
 
@@ -241,10 +282,41 @@ function(object, ...)
     #   Summary method,
     #   Computes diagnostics for a HN-GARCH time series model. 
 
+    # Arguments:
+    #	object - an object of class "hngarch" as returned by the 
+    #	function "hngarchFit"
+    
     # FUNCTION:
     
-    # Print Object:
-    print(object)
+    # Print:
+    if (!inherits(object, "hngarch")) 
+        stop("method is only for garch objects")
+    
+    # Title:
+    cat("\nTitle:\n")
+    cat(object$title, "\n")
+    
+    # Call:
+    cat("\nCall:\n", deparse(object$call), "\n", sep = "")
+    
+    # Parameters:
+    cat("\nParameters:\n")
+    print(format(object$params, digits = 4, ...), print.gap = 2, 
+    	quote = FALSE)
+    
+    # Coefficients:
+    cat("\nCoefficients: lambda, omega, alpha, beta, gamma\n")
+    print(format(object$estimate, digits = 4, ...), print.gap = 2, 
+    	quote = FALSE)
+    
+    # Likelihood:
+    cat("\nLog-Likelihood:\n")
+    cat(object$minimum, "\n")
+    
+    # Persisitence and Variance:
+    cat("\nPersistence and Variance:\n")
+    cat(object$persistence, "\n")
+    cat(object$sigma2, "\n")
         
     # Create Graphs:
     plot(x, type = "l", xlab = "Days", ylab = "log-Returns", 
@@ -284,6 +356,10 @@ function(model)
     # Reference:
     #   A function originally written by Reto Angliker
     #   License: GPL
+    
+    # Arguments:
+    #	model - a moel specification for a Heston-Nandi Garch
+    #		process.
 
     # FUNCTION:
     

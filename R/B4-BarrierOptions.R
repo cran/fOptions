@@ -43,7 +43,7 @@
 
 StandardBarrierOption = 
 function(TypeFlag = c("cdi", "cui", "pdi", "pui", "cdo", "cuo", "pdo", "puo"), 
-S, X, H, K, Time, r, b, sigma)
+S, X, H, K, Time, r, b, sigma, title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz           
 
     # Description:
@@ -102,12 +102,32 @@ S, X, H, K, Time, r, b, sigma)
         if (TypeFlag == "pdo") StandardBarrier = f6
         if (TypeFlag == "puo") StandardBarrier = f1 - f3 + f6 }
     
+    # Parameters:
+    # TypeFlag = c("cdi", "cui", "pdi", "pui", "cdo", "cuo", "pdo", "puo"), 
+	#	S, X, H, K, Time, r, b, sigma
+    param = list()
+    param$TypeFlag = TypeFlag
+    param$S = S
+    param$X = X
+    param$H = H
+    param$K = K
+    param$Time = Time
+    param$r = r
+    param$b = b
+    param$sigma = sigma
+    
+    # Add title and description:
+    if (is.null(title)) title = "Standard Barrier Option"
+    if (is.null(description)) description = as.character(date())
+    
     # Return Value:
-    option = list(
+    new("fOPTION", 
+        call = match.call(),
+        parameters = param,
         price = StandardBarrier, 
-        call = match.call() )
-    class(option) = "option"
-    option
+        title = title,
+        description = description
+        )      
 }
 
 
@@ -116,7 +136,7 @@ S, X, H, K, Time, r, b, sigma)
 
 DoubleBarrierOption = 
 function(TypeFlag = c("co", "ci", "po", "pi"), S, X, L, U, Time, r, b, 
-sigma, delta1, delta2)
+sigma, delta1, delta2, title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz           
 
     # Description:
@@ -186,17 +206,39 @@ sigma, delta1, delta2)
         DoubleBarrier = OutValue
     if (TypeFlag == "ci") 
         DoubleBarrier = 
-            GBlackScholes("c", S, X, Time, r, b, sigma)$price - OutValue
+            GBlackScholes("c", S, X, Time, r, b, sigma)@price - OutValue
     if (TypeFlag == "pi") 
         DoubleBarrier = 
-            GBlackScholes("p", S, X, Time, r, b, sigma)$price - OutValue
+            GBlackScholes("p", S, X, Time, r, b, sigma)@price - OutValue
+    
+    # Parameters:
+    # TypeFlag = c("co", "ci", "po", "pi"), S, X, L, U, Time, r, b, 
+	#	sigma, delta1, delta2
+    param = list()
+    param$TypeFlag = TypeFlag
+    param$S = S
+    param$X = X
+    param$L = L
+    param$U = U
+    param$Time = Time
+    param$r = r
+    param$b = b
+    param$sigma = sigma
+    param$delta1 = delta1
+    param$delta2 = delta2
+    
+    # Add title and description:
+    if (is.null(title)) title = "Double Barrier Option"
+    if (is.null(description)) description = as.character(date())
     
     # Return Value:
-    option = list(
+    new("fOPTION", 
+        call = match.call(),
+        parameters = param,
         price = DoubleBarrier, 
-        call = match.call() )
-    class(option) = "option"
-    option
+        title = title,
+        description = description
+        )      
 }
 
 
@@ -206,7 +248,8 @@ sigma, delta1, delta2)
 
 PTSingleAssetBarrierOption = 
 function(TypeFlag = c("cdoA", "cuoA", "pdoA", "puoA", "coB1", "poB1", 
-"cdoB2", "cuoB2"), S, X, H, time1, Time2, r, b, sigma)
+"cdoB2", "cuoB2"), S, X, H, time1, Time2, r, b, sigma, title = NULL, 
+description = NULL)
 {   # A function implemented by Diethelm Wuertz           
     
     # Description:
@@ -268,7 +311,7 @@ function(TypeFlag = c("cdoA", "cuoA", "pdoA", "puoA", "coB1", "poB1",
     if (TypeFlag == "cdoB2" && X > H) {
         PartialTimeBarrier = 
             PTSingleAssetBarrierOption("coB1", 
-                S, X, H, t1, T2, r, b, sigma)$price }
+                S, X, H, t1, T2, r, b, sigma)@price }
     
     if (TypeFlag == "cuoB2" && X < H) {  
         # call up-and-out type B2
@@ -309,20 +352,20 @@ function(TypeFlag = c("cdoA", "cuoA", "pdoA", "puoA", "coB1", "poB1",
         # put down-and out and up-and-out type A
         PartialTimeBarrier = 
             PTSingleAssetBarrierOption("cdoA", 
-                S, X, H, t1, T2, r, b, sigma)$price - 
+                S, X, H, t1, T2, r, b, sigma)@price - 
                 S * exp((b - r) * T2) * z5 + X * exp(-r * T2) * z1 }
                 
     if (TypeFlag == "puoA") {
         PartialTimeBarrier = 
             PTSingleAssetBarrierOption("cuoA", 
-                S, X, H, t1, T2, r, b, sigma)$price -
+                S, X, H, t1, T2, r, b, sigma)@price -
                 S * exp((b - r) * T2) * z6 + X * exp(-r * T2) * z2 }
                 
     if (TypeFlag == "poB1") {  
         # put out type B1
         PartialTimeBarrier = 
             PTSingleAssetBarrierOption("coB1", 
-                S, X, H, t1, T2, r, b, sigma)$price -
+                S, X, H, t1, T2, r, b, sigma)@price -
                 S * exp((b - r) * T2) * z8 + X * exp(-r * T2) * z4 -
                 S * exp((b - r) * T2) * z7 + X * exp(-r * T2) * z3 }
                 
@@ -330,22 +373,42 @@ function(TypeFlag = c("cdoA", "cuoA", "pdoA", "puoA", "coB1", "poB1",
         # put down-and-out type B2
         PartialTimeBarrier = 
             PTSingleAssetBarrierOption("cdoB2", 
-                S, X, H, t1, T2, r, b, sigma)$price - 
+                S, X, H, t1, T2, r, b, sigma)@price - 
                 S * exp((b - r) * T2) * z7 + X * exp(-r * T2) * z3 }
                 
     if (TypeFlag == "puoB2") {  
         # put up-and-out type B2
         PartialTimeBarrier = 
             PTSingleAssetBarrierOption("cuoB2", 
-                S, X, H, t1, T2, r, b, sigma)$price - 
+                S, X, H, t1, T2, r, b, sigma)@price - 
                 S * exp((b - r) * T2) * z8 + X * exp(-r * T2) * z4 }
     
+    # Parameters:
+    # TypeFlag = c("cdoA", "cuoA", "pdoA", "puoA", "coB1", "poB1", 
+	#	"cdoB2", "cuoB2"), S, X, H, time1, Time2, r, b, sigma
+    param = list()
+    param$TypeFlag = TypeFlag
+    param$S = S
+    param$X = X
+    param$H = H
+    param$time1 = time1
+    param$Time2 = Time2
+    param$r = r
+    param$b = b
+    param$sigma = sigma
+    
+    # Add title and description:
+    if (is.null(title)) title = "Partial Time Single Asset Barrier Option"
+    if (is.null(description)) description = as.character(date())
+    
     # Return Value:
-    option = list(
+    new("fOPTION", 
+        call = match.call(),
+        parameters = param,
         price = PartialTimeBarrier, 
-        call = match.call() )
-    class(option) = "option"
-    option
+        title = title,
+        description = description
+        )      
 }
 
 
@@ -354,7 +417,8 @@ function(TypeFlag = c("cdoA", "cuoA", "pdoA", "puoA", "coB1", "poB1",
 
 TwoAssetBarrierOption = 
 function(TypeFlag = c("cuo", "cui", "cdo", "cdi", "puo", "pui", "pdo", "pdi"), 
-S1, S2, X, H, Time, r, b1, b2, sigma1, sigma2, rho)
+S1, S2, X, H, Time, r, b1, b2, sigma1, sigma2, rho, title = NULL, 
+description = NULL)
 {   # A function implemented by Diethelm Wuertz           
 
     # Description:
@@ -413,26 +477,50 @@ S1, S2, X, H, Time, r, b1, b2, sigma1, sigma2, rho)
             KnockOutValue           
     if (TypeFlag == "cui" || TypeFlag == "cdi")
         TwoAssetBarrier = 
-            GBlackScholes("c", S1, X, Time, r, b1, v1)$price - KnockOutValue        
+            GBlackScholes("c", S1, X, Time, r, b1, v1)@price - KnockOutValue        
     if (TypeFlag == "pui" || TypeFlag == "pdi")
         TwoAssetBarrier = 
-            GBlackScholes("p", S1, X, Time, r, b1, v1)$price - KnockOutValue
+            GBlackScholes("p", S1, X, Time, r, b1, v1)@price - KnockOutValue
+
+    # Parameters:
+    # TypeFlag = c("cuo", "cui", "cdo", "cdi", "puo", "pui", "pdo", "pdi"), 
+	#	S1, S2, X, H, Time, r, b1, b2, sigma1, sigma2, rho
+    param = list()
+    param$TypeFlag = TypeFlag
+    param$S1 = S1
+    param$S2 = S2
+    param$X = X
+    param$H = H
+    param$Time = Time
+    param$r = r
+    param$b1 = b1
+    param$b2 = b2
+    param$sigma1 = sigma1
+    param$sigma2 = sigma2
+    param$rho = rho
+    
+    # Add title and description:
+    if (is.null(title)) title = "Two Asset Barrier Option"
+    if (is.null(description)) description = as.character(date())
     
     # Return Value:
-    option = list(
+    new("fOPTION", 
+        call = match.call(),
+        parameters = param,
         price = TwoAssetBarrier, 
-        call = match.call() )
-    class(option) = "option"
-    option
+        title = title,
+        description = description
+        )      
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-"PTTwoAssetBarrierOption" = 
+PTTwoAssetBarrierOption = 
 function(TypeFlag = c("cdo", "pdo", "cdi", "pdi", "cuo", "puo", "cui", "pui"), 
-S1, S2, X, H, time1, Time2, r, b1, b2, sigma1, sigma2, rho)
+S1, S2, X, H, time1, Time2, r, b1, b2, sigma1, sigma2, rho, title = NULL, 
+description = NULL)
 {   # A function implemented by Diethelm Wuertz           
     
     # Description:
@@ -487,17 +575,41 @@ S1, S2, X, H, time1, Time2, r, b1, b2, sigma1, sigma2, rho)
             OutBarrierValue
     if (TypeFlag == "cui" || TypeFlag == "cdi") 
         PartialTimeTwoAssetBarrier = 
-            GBlackScholes("c", S1, X, T2, r, b1, v1)$price - OutBarrierValue
+            GBlackScholes("c", S1, X, T2, r, b1, v1)@price - OutBarrierValue
     if (TypeFlag == "pui" || TypeFlag == "pdi") 
         PartialTimeTwoAssetBarrier = 
-            GBlackScholes("p", S1, X, T2, r, b1, v1)$price - OutBarrierValue
+            GBlackScholes("p", S1, X, T2, r, b1, v1)@price - OutBarrierValue
+    
+    # Parameters:
+    # TypeFlag = c("cdo", "pdo", "cdi", "pdi", "cuo", "puo", "cui", "pui"), 
+	#	S1, S2, X, H, time1, Time2, r, b1, b2, sigma1, sigma2, rho
+    param = list()
+    param$TypeFlag = TypeFlag
+    param$S1 = S1
+    param$S2 = S2
+    param$X = X
+    param$H = H
+    param$time1 = time1
+    param$Time2 = Time2
+    param$r = r
+    param$b1 = b1
+    param$b2 = b2
+    param$sigma1 = sigma1
+    param$sigma2 = sigma2
+    param$rho
+    
+    # Add title and description:
+    if (is.null(title)) title = "Partial Time Two Asset Barrier Option"
+    if (is.null(description)) description = as.character(date())
     
     # Return Value:
-    option = list(
+    new("fOPTION", 
+        call = match.call(),
+        parameters = param,
         price = PartialTimeTwoAssetBarrier, 
-        call = match.call() )
-    class(option) = "option"
-    option
+        title = title,
+        description = description
+        )      
 }
 
 
@@ -506,7 +618,7 @@ S1, S2, X, H, time1, Time2, r, b1, b2, sigma1, sigma2, rho)
 
 LookBarrierOption = 
 function(TypeFlag = c("cuo", "cui", "pdo", "pdi"), S, X, H, time1, Time2, 
-r, b, sigma)
+r, b, sigma, title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz           
     
     # Description:
@@ -597,17 +709,37 @@ r, b, sigma)
             OutValue
     if (TypeFlag == "cui") 
         LookBarrier = PTFixedStrikeLookbackOption("c", S, X, t1, T2, 
-            r, b, sigma) - OutValue
+            r, b, sigma)@price - OutValue
     if (TypeFlag == "pdi") 
         LookBarrier = PTFixedStrikeLookbackOption("p", S, X, t1, T2, 
-            r, b, sigma) - OutValue
+            r, b, sigma)@price - OutValue
+    
+    # Parameters:
+    # TypeFlag = c("cuo", "cui", "pdo", "pdi"), S, X, H, time1, Time2, 
+	#	r, b, sigma
+	param = list()
+    param$TypeFlag = TypeFlag
+    param$S = S
+    param$X = X
+    param$H = H
+    param$time1 = time1
+    param$Time2 = Time2
+    param$r = r
+    param$b = b
+    param$sigma = sigma
+    
+    # Add title and description:
+    if (is.null(title)) title = "Look Barrier Option"
+    if (is.null(description)) description = as.character(date())
     
     # Return Value:
-    option = list(
+    new("fOPTION", 
+        call = match.call(),
+        parameters = param,
         price = LookBarrier, 
-        call = match.call() )
-    class(option) = "option"
-    option 
+        title = title,
+        description = description
+        )       
 }
 
 
@@ -615,7 +747,7 @@ r, b, sigma)
 
 
 DiscreteBarrierOption = 
-function(S, H, sigma, dt) 
+function(S, H, sigma, dt, title = NULL, description = NULL) 
 {   # A function implemented by Diethelm Wuertz           
     
     # Description:
@@ -633,12 +765,26 @@ function(S, H, sigma, dt)
     if (H < S) {
         DiscreteBarrier = H * exp(-0.5826 * sigma * sqrt(dt)) }
     
+    # Parameters:
+    # S, H, sigma, dt
+    param = list()
+    param$S = S
+    param$H = H
+    param$sigma = sigma
+    param$dt = dt
+    
+    # Add title and description:
+    if (is.null(title)) title = "Discrete Barrier Option"
+    if (is.null(description)) description = as.character(date())
+    
     # Return Value:
-    option = list(
+    new("fOPTION", 
+        call = match.call(),
+        parameters = param,
         price = DiscreteBarrier, 
-        call = match.call() )
-    class(option) = "option"
-    option
+        title = title,
+        description = description
+        )      
 }
 
 
@@ -647,7 +793,7 @@ function(S, H, sigma, dt)
 
 SoftBarrierOption = 
 function(TypeFlag = c("cdi", "cdo", "pdi", "pdo"), S, X, L, U, Time , 
-r, b, sigma)
+r, b, sigma, title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz           
 
     # Description:
@@ -701,19 +847,39 @@ r, b, sigma)
             Value }
     if (TypeFlag == "cdo") {
         SoftBarrier = 
-            GBSOption("c", S, X, Time, r, b, v)$price - Value }
+            GBSOption("c", S, X, Time, r, b, v)@price - Value }
     if (TypeFlag == "puo") {
         SoftBarrier = 
-            GBSOption("p", S, X, Tome, r, b, v)$price - Value }
+            GBSOption("p", S, X, Tome, r, b, v)@price - Value }
+    
+    # Parameters:
+    # TypeFlag = c("cdi", "cdo", "pdi", "pdo"), S, X, L, U, Time , 
+	#	r, b, sigma
+	param = list()
+    param$TypeFlag = TypeFlag
+    param$S = S
+    param$X = X
+    param$L = L
+    param$U = U
+    param$Time = Time
+    param$r = r
+    param$b = b
+    param$sigma = sigma
+    
+    # Add title and description:
+    if (is.null(title)) title = "Soft Barrier Option"
+    if (is.null(description)) description = as.character(date())
     
     # Return Value:
-    option = list(
+    new("fOPTION", 
+        call = match.call(),
+        parameters = param,
         price = SoftBarrier, 
-        call = match.call() )
-    class(option) = "option"
-    option
+        title = title,
+        description = description
+        )      
 }
 
 
-# ******************************************************************************
+################################################################################
 

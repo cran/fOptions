@@ -111,8 +111,12 @@ HNGCharacteristics(TypeFlag, model, S, X, Time.inDays, r.daily)
 
 
 \examples{
+## SOURCE("fBasics.A0-SPlusCompatibility")
+## SOURCE("fOptions.A1-PlainVanillaOptions")
+## SOURCE("fOptions.C2-HestonNandiOptions")
+
 ## model -
-## Define the Model Parameters for a Heston-Nandi Option:
+   # Define the Model Parameters for a Heston-Nandi Option:
    xmpOptions("\nStart: Parameter Settings > ")
    model = list(lambda = -0.5, omega = 2.3e-6, alpha = 2.9e-6, 
      beta = 0.85, gamma = 184.25) 
@@ -124,7 +128,7 @@ HNGCharacteristics(TypeFlag, model, S, X, Time.inDays, r.daily)
    data.frame(S, X, r.daily, sigma.daily)
 
 ## HNGOption -
-## Compute HNG Call-Put and compare with GBS Call-Put:
+   # Compute HNG Call-Put and compare with GBS Call-Put:
    xmpOptions("\nNext: HNG Option Prices > ")
    HNG = GBS = Diff = NULL
    for (TypeFlag in c("c", "p")) {
@@ -137,7 +141,7 @@ HNGCharacteristics(TypeFlag, model, S, X, Time.inDays, r.daily)
    data.frame(Options)
      
 ## HNGGreeks -
-## Compute HNG Greeks and compare with GBS Greeks:
+   # Compute HNG Greeks and compare with GBS Greeks:
    xmpOptions("\nNext: HNG Delta and Gamma Sensitivities > ")
    Selection = c("Delta", "Gamma")
    HNG = GBS = NULL
@@ -161,7 +165,7 @@ Heston S.L., Nandi S. (1997);
 
 \author{
 
-    Diethelm Wuertz for this R-port.
+    Diethelm Wuertz for the Rmetrics \R-port.
     
 }
 

@@ -1,6 +1,6 @@
-\name{FXTransOptions}
+\name{CurrencyTranslatedOptions}
 
-\alias{FXTransOptions}
+\alias{CurrencyTranslatedOptions}
 
 \alias{FEInDomesticFXOption}
 \alias{QuantoOption}
@@ -35,13 +35,14 @@
 
 
 \usage{
-FEInDomesticFXOption(TypeFlag, S, E, X, Time, r, q, 
-    sigmaS, sigmaE, rho)
+FEInDomesticFXOption(TypeFlag, S, E, X, Time, r, q, sigmaS, 
+	sigmaE, rho, title = NULL, description = NULL)
 QuantoOption(TypeFlag, S, Ep, X, Time, r, rf, q, sigmaS, 
-    sigmaE, rho) 
+    sigmaE, rho, title = NULL, description = NULL) 
 EquityLinkedFXOption(TypeFlag, E, S, X, Time, r, rf, q, 
-    sigmaS, sigmaE,rho)
-TakeoverFXOption(V, B, E, X, Time, r, rf, sigmaV, sigmaE, rho)
+    sigmaS, sigmaE,rho, title = NULL, description = NULL)
+TakeoverFXOption(V, B, E, X, Time, r, rf, sigmaV, sigmaE, 
+	rho, title = NULL, description = NULL)
 }
 
 
@@ -52,6 +53,9 @@ TakeoverFXOption(V, B, E, X, Time, r, rf, sigmaV, sigmaE, rho)
         the value of the foreign firm in the foreign currency at 
         the option expiration, a numeric value.
         }
+    \item{description}{
+    	a character string which allows for a brief description.
+    	}
     \item{E}{
         [FEInDomesticFX*] - \cr
         the spot exchange rate specified in units of the domestic
@@ -110,6 +114,9 @@ TakeoverFXOption(V, B, E, X, Time, r, rf, sigmaV, sigmaE, rho)
     \item{Time}{
         the time to maturity, a numeric value.
         }
+    \item{title}{
+    	a character string which allows for a project title.
+    	}
     \item{TypeFlag}{
         a character string either "c" for a call option or a "p" 
         for a put option.
@@ -190,6 +197,10 @@ TakeoverFXOption(V, B, E, X, Time, r, rf, sigmaV, sigmaE, rho)
 
 
 \examples{
+## SOURCE("fBasics.A0-SPlusCompatibility")
+## SOURCE("fOptions.A1-PlainVanillaOptions")
+## SOURCE("fOptions.B7-FXTransOptions")
+
 ## Examples from Chapter 2.13 in E.G. Haug's Option Guide (1997)
 
 ## Foreign Equity Options Struck in Domestic Currency [2.13.1]:
@@ -229,7 +240,7 @@ Haug E.G. (1997);
 
 \author{
 
-    Diethelm Wuertz for this R-Port.
+    Diethelm Wuertz for the Rmetrics \R-port.
     
 }
 

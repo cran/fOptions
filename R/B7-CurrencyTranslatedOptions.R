@@ -30,7 +30,7 @@
 ################################################################################
 # FUNCTION:                     DESCRIPTION:
 #  Currency Translated Options:
-#   FEInDomesticFXOption          Foreign Exchang In Domestic Currency
+#   FEInDomesticFXOption          FX In Domestic Currency
 #   QuantoOption                  Quanto Option
 #   EquityLinkedFXOption          EquityLinked FX Option
 #   TakeoverFXOption              Takeover FX Option
@@ -38,7 +38,8 @@
 
 
 FEInDomesticFXOption = 
-function(TypeFlag = c("c", "p"), S, E, X, Time, r, q, sigmaS, sigmaE, rho)
+function(TypeFlag = c("c", "p"), S, E, X, Time, r, q, sigmaS, sigmaE, rho,
+title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz           
     
     # Description:
@@ -63,12 +64,32 @@ function(TypeFlag = c("c", "p"), S, E, X, Time, r, q, sigmaS, sigmaE, rho)
         ForeignEquityInDomesticFX = 
             X * exp(-r*Time)*CND(-d2) - E * S * exp(-q*Time)*CND(-d1) }
     
+    # Parameters:
+    # TypeFlag = c("c", "p"), S, E, X, Time, r, q, sigmaS, sigmaE, rho
+    param = list()
+    param$TypeFlag = TypeFlag
+    param$S = S
+    param$E = E
+    param$X = X
+    param$Time = Time
+    param$r = r
+    param$q = q
+    param$sigmaS = sigmaS
+    param$sigmaE = sigmaE
+    param$rho = rho
+    
+    # Add title and description:
+    if (is.null(title)) title = "FE In Domestic FX Option"
+    if (is.null(description)) description = as.character(date())
+    
     # Return Value:
-    option = list(
+    new("fOPTION", 
+        call = match.call(),
+        parameters = param,
         price = ForeignEquityInDomesticFX, 
-        call = match.call() )
-    class(option) = "option"
-    option
+        title = title,
+        description = description
+        )      
 }
 
 
@@ -77,7 +98,7 @@ function(TypeFlag = c("c", "p"), S, E, X, Time, r, q, sigmaS, sigmaE, rho)
 
 QuantoOption = 
 function(TypeFlag = c("c", "p"), S, Ep, X, Time, r, rf, q, sigmaS, 
-sigmaE, rho)
+sigmaE, rho, title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz           
 
     # Description:
@@ -102,12 +123,33 @@ sigmaE, rho)
         Quanto = Ep*(X*exp(-r*Time)*CND(-d2) - 
             S*exp((rf-r-q-rho*sigmaS*sigmaE)* Time)*CND(-d1)) }
     
+    # Parameters:
+    # TypeFlag = c("c", "p"), S, Ep, X, Time, r, rf, q, sigmaS, sigmaE, rho
+    param = list()
+    param$TypeFlag = TypeFlag
+    param$S = S
+    param$Ep = Ep
+    param$X = X
+    param$Time = Time
+    param$r = r
+    param$rf = rf
+    param$q = q
+    param$sigmaS = sigmaS
+    param$sigmaE = sigmaE
+    param$rho = rho
+    
+    # Add title and description:
+    if (is.null(title)) title = "Quanto Option"
+    if (is.null(description)) description = as.character(date())
+    
     # Return Value:
-    option = list(
+    new("fOPTION", 
+        call = match.call(),
+        parameters = param,
         price = Quanto, 
-        call = match.call() )
-    class(option) = "option"
-    option
+        title = title,
+        description = description
+        )      
 }
 
 
@@ -116,7 +158,7 @@ sigmaE, rho)
 
 EquityLinkedFXOption = 
 function(TypeFlag = c("c", "p"), E, S, X, Time, r, rf, q, sigmaS, 
-sigmaE, rho)
+sigmaE, rho, title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz           
     
     # Description:
@@ -143,12 +185,33 @@ sigmaE, rho)
         EquityLinkedFXO = X * S * exp((rf - r - q - rho * vS * vE) * Time) * 
             CND(-d2) - E * S * exp(-q * Time) * CND(-d1) }
     
+    # Parameters:
+    # TypeFlag = c("c", "p"), E, S, X, Time, r, rf, q, sigmaS, sigmaE, rho
+	param = list()
+    param$TypeFlag = TypeFlag
+    param$E = E
+    param$S = S
+    param$X = X
+    param$Time = Time
+    param$r = r
+    param$rf = rf
+    param$q = q
+    param$sigmaS = sigmaS
+    param$sigmaE = sigmaE
+    param$rho = rho
+    
+    # Add title and description:
+    if (is.null(title)) title = "Equity Linked FX Option"
+    if (is.null(description)) description = as.character(date())
+    
     # Return Value:
-    option = list(
+    new("fOPTION", 
+        call = match.call(),
+        parameters = param,
         price = EquityLinkedFXO, 
-        call = match.call() )
-    class(option) = "option"
-    option
+        title = title,
+        description = description
+        )      
 }
 
 
@@ -156,7 +219,8 @@ sigmaE, rho)
 
 
 TakeoverFXOption = 
-function(V, B, E, X, Time, r, rf, sigmaV, sigmaE, rho)
+function(V, B, E, X, Time, r, rf, sigmaV, sigmaE, rho,
+title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz           
 
     # Description:
@@ -182,14 +246,35 @@ function(V, B, E, X, Time, r, rf, sigmaV, sigmaE, rho)
         CBND(a2 + vE * sqrt(Time), -a1 - rho * vE * sqrt(Time), -rho) - 
             X * exp(-r * Time) * CBND(-a1, a2, -rho))           
     
+    # Parameters:
+    # V, B, E, X, Time, r, rf, sigmaV, sigmaE, rho
+    param = list()
+    param$V = V
+    param$B = B
+    param$E = E
+    param$X = X
+    param$Time = Time
+    param$r = r
+    param$rf = rf
+    param$q = q
+    param$sigmaV = sigmaV
+    param$sigmaE = sigmaE
+    param$rho = rho
+    
+    # Add title and description:
+    if (is.null(title)) title = "Takeover FX Option"
+    if (is.null(description)) description = as.character(date())
+    
     # Return Value:
-    option = list(
+    new("fOPTION", 
+        call = match.call(),
+        parameters = param,
         price = TakeoverFX, 
-        call = match.call() )
-    class(option) = "option"
-    option
+        title = title,
+        description = description
+        )      
 }
 
 
-# ******************************************************************************
+################################################################################
 

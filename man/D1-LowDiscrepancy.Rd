@@ -128,7 +128,7 @@ rnorm.pseudo(n, dimension, init)
     
     P. Bratley and B.L. Fox for the Fortran Sobol Algorithm 659,\cr
     S. Joe for the Fortran extension to 1111 dimensions,\cr
-    Diethelm Wuertz for this R-port.
+    Diethelm Wuertz for the Rmetrics \R-port.
     
 }
 
@@ -148,6 +148,10 @@ Joe S., Kuo F.Y. (1998);
 
 
 \examples{
+## SOURCE("fBasics.A0-SPlusCompatibility")
+## SOURCE("fOptions.D1-LowDiscrepancy")
+
+
 ## *.halton - 
    xmpOptions("\nStart: Uniform Holton Numbers > ")
    par(mfrow = c(2, 2), cex = 0.75)

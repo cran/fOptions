@@ -48,13 +48,18 @@
 
 
 \usage{
-GapOption(TypeFlag, S, X1, X2, Time, r, b, sigma)
-CashOrNothingOption(TypeFlag, S, X, K, Time, r, b, sigma) 
-TwoAssetCashOrNothingOption(TypeFlag, S1, S2, X1, X2, K, Time, 
-    r, b1, b2, sigma1, sigma2, rho)
-AssetOrNothingOption(TypeFlag, S, X, Time, r, b, sigma)
-SuperShareOption(S, XL, XH, Time, r, b, sigma)
-BinaryBarrierOption(TypeFlag, S, X, H, K, Time, r, b, sigma, eta, phi)
+GapOption(TypeFlag, S, X1, X2, Time, r, b, sigma, title = NULL, 
+	description = NULL)
+CashOrNothingOption(TypeFlag, S, X, K, Time, r, b, sigma,
+	title = NULL, description = NULL) 
+TwoAssetCashOrNothingOption(TypeFlag, S1, S2, X1, X2, K, Time, r, 
+    b1, b2, sigma1, sigma2, rho, title = NULL, description = NULL)
+AssetOrNothingOption(TypeFlag, S, X, Time, r, b, sigma,
+	title = NULL, description = NULL)
+SuperShareOption(S, XL, XH, Time, r, b, sigma, title = NULL, 
+	description = NULL)
+BinaryBarrierOption(TypeFlag, S, X, H, K, Time, r, b, sigma, 
+	eta, phi, title = NULL, description = NULL)
 }
 
 
@@ -69,6 +74,9 @@ BinaryBarrierOption(TypeFlag, S, X, H, K, Time, r, b, sigma, eta, phi)
         the annualized cost-of-carry rate for the first and second
         asset, a numeric value.
         }
+    \item{description}{
+    	a character string which allows for a brief description.
+    	}
     \item{eta, phi}{
         [BinaryBarrier*] - \cr
         a set of parameters to price 28 different types of Binary 
@@ -158,6 +166,9 @@ BinaryBarrierOption(TypeFlag, S, X, H, K, Time, r, b, sigma, eta, phi)
         the time to maturity measured in years, a numeric value; 
         e.g. 0.5 means 6 months.
         }
+    \item{title}{
+    	a character string which allows for a project title.
+    	}
     \item{TypeFlag}{
         a character string either \code{"c"} for a call option or 
         a \code{"p"} for a put option. \cr
@@ -308,46 +319,50 @@ BinaryBarrierOption(TypeFlag, S, X, H, K, Time, r, b, sigma, eta, phi)
 
 
 \examples{
+## SOURCE("fBasics.A0-SPlusCompatibility")
+## SOURCE("fOptions.A1-PlainVanillaOptions")
+## SOURCE("fOptions.B5-BinaryOptions")
+
 ## Examples from Chapter 2.11 in E.G. Haug's Option Guide (1997)
 
 ## Gap Option [2.11.1]:
    xmpOptions("\nStart: Gap Option > ")
-   GapOption(TypeFlag  =  "c", S  =  50, X1  =  50, X2  =  57, Time  =  0.5, 
-     r  =  0.09, b  =  0.09, sigma  =  0.20)
+   GapOption(TypeFlag = "c", S = 50, X1 = 50, X2 = 57, Time = 0.5, 
+     r = 0.09, b = 0.09, sigma = 0.20)
 
 ## Cash Or Nothing Option [2.11.2]:
    xmpOptions("\nNext: Cash or Nothing Option > ")
-   CashOrNothingOption(TypeFlag  =  "p", S  =  100, X  =  80, K  =  10, 
-     Time  =  9/12, r  =  0.06, b  =  0, sigma  =  0.35) 
+   CashOrNothingOption(TypeFlag = "p", S = 100, X = 80, K = 10, 
+     Time = 9/12, r = 0.06, b = 0, sigma = 0.35) 
 
 ## Two Asset Cash Or Nothing Option [2.11.3]:
    xmpOptions("\nNext: Two Asset Cash Or Nothing Option > ")
    # Type 1 - call:
-   TwoAssetCashOrNothingOption(TypeFlag  =  "c", S1  =  100, S2  =  100, 
-     X1  =  110, X2  =  90, K  =  10, Time  =  0.5, r  =  0.10, b1  =  0.05, 
-     b2  =  0.06, sigma1  =  0.20, sigma2  =  0.25, rho  =  0.5)
+   TwoAssetCashOrNothingOption(TypeFlag = "c", S1 = 100, S2 = 100, 
+     X1 = 110, X2 = 90, K = 10, Time = 0.5, r = 0.10, b1 = 0.05, 
+     b2 = 0.06, sigma1 = 0.20, sigma2 = 0.25, rho = 0.5)
    # Type 2 - put:
-   TwoAssetCashOrNothingOption(TypeFlag  =  "p", S1  =  100, S2  =  100, 
-     X1  =  110, X2  =  90, K  =  10, Time  =  0.5, r  =  0.10, b1  =  0.05, 
-     b2  =  0.06, sigma1  =  0.20, sigma2  =  0.25, rho  =  -0.5)
+   TwoAssetCashOrNothingOption(TypeFlag = "p", S1 = 100, S2 = 100, 
+     X1 = 110, X2 = 90, K = 10, Time = 0.5, r = 0.10, b1 = 0.05, 
+     b2 = 0.06, sigma1 = 0.20, sigma2 = 0.25, rho = -0.5)
    # Type 3 - down-up:
-   TwoAssetCashOrNothingOption(TypeFlag  =  "ud", S1  =  100, S2  =  100, 
-     X1  =  110, X2  =  90, K  =  10, Time  =  1, r  =  0.10, b1  =  0.05, 
-     b2  =  0.06, sigma1  =  0.20, sigma2  =  0.25, rho  =  0)
+   TwoAssetCashOrNothingOption(TypeFlag = "ud", S1 = 100, S2 = 100, 
+     X1 = 110, X2 = 90, K = 10, Time = 1, r = 0.10, b1 = 0.05, 
+     b2 = 0.06, sigma1 = 0.20, sigma2 = 0.25, rho = 0)
    # Type 4 - up-down:
-   TwoAssetCashOrNothingOption(TypeFlag  =  "du", S1  =  100, S2  =  100, 
-     X1  =  110, X2  =  90, K  =  10, Time  =  1, r  =  0.10, b1  =  0.05, 
-     b2  =  0.06, sigma1  =  0.20, sigma2  =  0.25, rho  =  0)
+   TwoAssetCashOrNothingOption(TypeFlag = "du", S1 = 100, S2 = 100, 
+     X1 = 110, X2 = 90, K = 10, Time = 1, r = 0.10, b1 = 0.05, 
+     b2 = 0.06, sigma1 = 0.20, sigma2 = 0.25, rho = 0)
 
 ## Asset Or Nothing Option [2.11.4]: 
    xmpOptions("\nNext: Asset Or Nothing Option > ")
-   AssetOrNothingOption(TypeFlag  =  "p", S  =  70, X  =  65, Time  =  0.5, 
-     r  =  0.07, b  =  0.07 - 0.05, sigma  =  0.27)
+   AssetOrNothingOption(TypeFlag = "p", S = 70, X = 65, Time = 0.5, 
+     r = 0.07, b = 0.07 - 0.05, sigma = 0.27)
 
 ## Super Share Option [2.11.5]:  
    xmpOptions("\nNext: Super Share Option > ")
-   SuperShareOption(S  =  100, XL  =  90, XH  =  110, Time  =  0.25, r  =  0.10, 
-     b  =  0, sigma  =  0.20)
+   SuperShareOption(S = 100, XL = 90, XH = 110, Time = 0.25, r = 0.10, 
+     b = 0, sigma = 0.20)
 
 ## Binary Barrier Option [2.11.6]: 
    xmpOptions("\nNext: Binary Barrier Option > ")
@@ -385,7 +400,7 @@ Reiner E., Rubinstein M. (1991);
 
 \author{
 
-    Diethelm Wuertz for this R-Port.
+    Diethelm Wuertz for the Rmetrics \R-port.
 
 }
 

@@ -1,6 +1,6 @@
-\name{MultExercisesOptions}
+\name{MultipleExercisesOptions}
 
-\alias{MultExercisesOptions}
+\alias{MultipleExercisesOptions}
 
 \alias{ExecutiveStockOption}
 \alias{ForwardStartOption}
@@ -41,15 +41,24 @@
 
 
 \usage{
-ExecutiveStockOption(TypeFlag, S, X, Time, r, b, sigma, lambda)
-ForwardStartOption(TypeFlag, S, alpha, time1, Time2, r, b, sigma) 
-RatchetOption(TypeFlag, S, alpha, time1, Time2, r, b, sigma)
-TimeSwitchOption(TypeFlag, S, X, Time, r, b, sigma, A, m, dt)
-SimpleChooserOption(S, X, time1, Time2, r, b, sigma) 
-ComplexChooserOption(S, Xc, Xp, Time, Timec, Timep, r, b, sigma, doprint = FALSE)
-OptionOnOption(TypeFlag, S, X1, X2, time1, Time2, r, b, sigma, doprint = FALSE)
-WriterExtendibleOption(TypeFlag, S, X1, X2, time1, Time2, r, b, sigma)
-HolderExtendibleOption(TypeFlag, S, X1, X2, time1, Time2, r, b, sigma, A)
+ExecutiveStockOption(TypeFlag, S, X, Time, r, b, sigma, lambda,
+	title = NULL, description = NULL)
+ForwardStartOption(TypeFlag, S, alpha, time1, Time2, r, b, sigma,
+	title = NULL, description = NULL) 
+RatchetOption(TypeFlag, S, alpha, time1, Time2, r, b, sigma,
+	title = NULL, description = NULL)
+TimeSwitchOption(TypeFlag, S, X, Time, r, b, sigma, A, m, dt,
+	title = NULL, description = NULL)
+SimpleChooserOption(S, X, time1, Time2, r, b, sigma,
+	title = NULL, description = NULL) 
+ComplexChooserOption(S, Xc, Xp, Time, Timec, Timep, r, b, sigma, 
+	doprint = FALSE, title = NULL, description = NULL)
+OptionOnOption(TypeFlag, S, X1, X2, time1, Time2, r, b, sigma, 
+	doprint = FALSE, title = NULL, description = NULL)
+WriterExtendibleOption(TypeFlag, S, X1, X2, time1, Time2, r, b, sigma,
+	title = NULL, description = NULL)
+HolderExtendibleOption(TypeFlag, S, X1, X2, time1, Time2, r, b, sigma, A,
+	title = NULL, description = NULL)
 }
 
 
@@ -81,6 +90,9 @@ HolderExtendibleOption(TypeFlag, S, X1, X2, time1, Time2, r, b, sigma, A)
         the annualized cost-of-carry rate, a numeric value; 
         e.g. 0.1 means 10\% pa.
         }
+    \item{description}{
+    	a character string which allows for a brief description.
+    	}
     \item{doprint}{
         a logical. Should the critical value \code{I} be printed?
         By defaut \code{FALSE}.
@@ -127,6 +139,9 @@ HolderExtendibleOption(TypeFlag, S, X1, X2, time1, Time2, r, b, sigma, A)
         proportinally in-the-money or out-of-the-money after this
         elapsed time \code{Time2} in the future.
         }
+    \item{title}{
+    	a character string which allows for a project title.
+    	}
     \item{TypeFlag}{
         usually a character string either \code{"c"} for a call option 
         or a \code{"p"} for a put option;\cr
@@ -292,7 +307,25 @@ HolderExtendibleOption(TypeFlag, S, X1, X2, time1, Time2, r, b, sigma, A)
 
 \value{
 
-    The option price, a numeric value.
+    The option valuation programs return an object of class 
+    \code{"fOPTION"} with the following slots:
+
+    \item{@call}{
+        the function call.      
+        }
+    \item{@parameters}{
+        a list with the input parameters.
+        }
+    \item{@price}{
+        a numeric value with the value of the option.
+        }
+    \item{@title}{
+        a character string with the name of the test.
+        }
+    \item{@description}{
+        a character string with a brief description of the
+        test.
+        }
     
 }
 
@@ -345,12 +378,16 @@ Rubinstein M. (1991);
 
 \author{
 
-    Diethelm Wuertz for this R-Port.
+    Diethelm Wuertz for the Rmetrics \R-port.
     
 }
 
 
 \examples{
+## SOURCE("fBasics.A0-SPlusCompatibility")
+## SOURCE("fOptions.A1-PlainVanillaOptions")
+## SOURCE("fOptions.B1-MultExercisesOptions")
+
 ## Examples from Chapter 2.1 - 2.7 in E.G. Haug's Option Guide (1997)
 
 ## ExecutiveStockOption [2.1]:

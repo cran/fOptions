@@ -29,6 +29,8 @@
 
 ################################################################################
 # FUNCTION:                  DESCRIPTION:
+#  fOPTION                    Class Representation
+# FUNCTION:                  DESCRIPTION:
 #  NDF                        Normal distribution function
 #  CND                        Cumulative normal distribution function
 #  CBND                       Cumulative bivariate normal distribution  
@@ -44,6 +46,18 @@
 # S3 METHODS:                DESCRIPTION:
 #  print.option               Print Method
 #  summary.otion              Summary Method
+################################################################################
+
+
+setClass("fOPTION", 
+    representation(
+        call = "call",
+        parameters = "list",
+        price = "numeric",     
+        title = "character",
+        description = "character") )
+   
+
 ################################################################################
 
 
@@ -150,7 +164,8 @@ function(x1, x2, rho)
 
 
 GBSOption = 
-function(TypeFlag = c("c", "p"), S, X, Time, r, b, sigma)
+function(TypeFlag = c("c", "p"), S, X, Time, r, b, sigma, title = NULL,
+description = NULL)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -170,13 +185,29 @@ function(TypeFlag = c("c", "p"), S, X, Time, r, b, sigma)
         result = S*exp((b-r)*Time)*CND(d1) - X*exp(-r*Time)*CND(d2) 
     if (TypeFlag == "p")
         result = X*exp(-r*Time)*CND(-d2) - S*exp((b-r)*Time)*CND(-d1) 
+        
+    # Parameters:
+    param = list()
+    param$TypeFlag = TypeFlag
+    param$S = S
+    param$X = X
+    param$Time = Time
+    param$r = r
+    param$b = b
+    param$sigma = sigma
+    
+    # Add title and description:
+    if (is.null(title)) title = "Black Scholes Option Valuation"
+    if (is.null(description)) description = as.character(date())
     
     # Return Value:
-    option = list(
+    new("fOPTION", 
+        call = match.call(),
+        parameters = param,
         price = result, 
-        call = match.call() )
-    class(option) = "option"
-    option 
+        title = title,
+        description = description
+        )        
 }
 
 
@@ -199,13 +230,14 @@ function(TypeFlag = c("c", "p"), S, X, Time, r, b, sigma)
     
     # Premium and Function Call to all Greeks
     TypeFlag = TypeFlag[1]
-    premium = GBSOption(TypeFlag, S, X, Time, r, b, sigma)$price  
+    premium = GBSOption(TypeFlag, S, X, Time, r, b, sigma)@price  
     delta = GBSGreeks("Delta", TypeFlag, S, X, Time, r, b, sigma)  
     theta = GBSGreeks("Theta", TypeFlag, S, X, Time, r, b, sigma)
     vega = GBSGreeks("Vega", TypeFlag, S, X, Time, r, b, sigma)
     rho = GBSGreeks("Rho", TypeFlag, S, X, Time, r, b, sigma)
     lambda = GBSGreeks("Lambda", TypeFlag, S, X, Time, r, b, sigma)  
     gamma = GBSGreeks("Gamma", TypeFlag, S, X, Time, r, b, sigma)  
+    
     # Return Value:
     list(premium = premium, delta = delta, theta = theta, 
         vega = vega, rho = rho, lambda = lambda, gamma = gamma) 
@@ -253,12 +285,12 @@ function(Selection = c("Delta", "Theta", "Vega", "Rho", "Lambda", "Gamma",
     Selection = Selection[1]
     
     # Internal Functions:
-    GBSDelta = function(TypeFlag, S, X, Time, r, b, sigma) {
+    GBSDelta <<- function(TypeFlag, S, X, Time, r, b, sigma) {
         d1 = ( log(S/X) + (b+sigma*sigma/2)*Time ) / (sigma*sqrt(Time))
         if (TypeFlag == "c") result = exp((b-r)*Time)*CND(d1)
         if (TypeFlag == "p") result = exp((b-r)*Time)*(CND(d1)-1)
         result }
-    GBSTheta = function(TypeFlag, S, X, Time, r, b, sigma) {
+    GBSTheta <<- function(TypeFlag, S, X, Time, r, b, sigma) {
         d1 = ( log(S/X) + (b+sigma*sigma/2)*Time ) / (sigma*sqrt(Time))
         d2 = d1 - sigma*sqrt(Time)
         Theta1 = -(S*exp((b-r)*Time)*NDF(d1)*sigma)/(2*sqrt(Time))  
@@ -267,14 +299,14 @@ function(Selection = c("Delta", "Theta", "Vega", "Rho", "Lambda", "Gamma",
         if (TypeFlag == "p") result = Theta1 + 
             (b-r)*S*exp((b-r)*Time)*CND(-d1) + r*X*exp(-r*Time)*CND(-d2) 
         result }
-    GBSVega = function(TypeFlag, S, X, Time, r, b, sigma) {
+    GBSVega <<- function(TypeFlag, S, X, Time, r, b, sigma) {
         d1 = ( log(S/X) + (b+sigma*sigma/2)*Time ) / (sigma*sqrt(Time))
         result = S*exp((b-r)*Time)*NDF(d1)*sqrt(Time) # Call,Put
         result }
-    GBSRho = function(TypeFlag, S, X, Time, r, b, sigma) {
+    GBSRho <<- function(TypeFlag, S, X, Time, r, b, sigma) {
         d1 = ( log(S/X) + (b+sigma*sigma/2)*Time ) / (sigma*sqrt(Time))
         d2 = d1 - sigma*sqrt(Time)
-        CallPut = GBSOption(TypeFlag, S, X, Time, r, b , sigma)$price
+        CallPut = GBSOption(TypeFlag, S, X, Time, r, b , sigma)@price
         if (TypeFlag == "c") {
             if (b != 0) {result =  Time * X * exp(-r*Time)*CND( d2)} 
             else {result = -Time * CallPut } }
@@ -282,17 +314,17 @@ function(Selection = c("Delta", "Theta", "Vega", "Rho", "Lambda", "Gamma",
             if (b != 0) {result = -Time * X * exp(-r*Time)*CND(-d2)}
             else { result = -Time * CallPut } }
         result }
-    GBSLambda = function(TypeFlag, S, X, Time, r, b, sigma) {
+    GBSLambda <<- function(TypeFlag, S, X, Time, r, b, sigma) {
         d1 = ( log(S/X) + (b+sigma*sigma/2)*Time ) / (sigma*sqrt(Time))
-        CallPut = GBSOption(TypeFlag,S,X,Time,r,b,sigma)$price
+        CallPut = GBSOption(TypeFlag,S,X,Time,r,b,sigma)@price
         if (TypeFlag == "c") result = exp((b-r)*Time)* CND(d1)*S / CallPut
         if (TypeFlag == "p") result = exp((b-r)*Time)*(CND(d1)-1)*S / CallPut
         result }        
-    GBSGamma = function(TypeFlag, S, X, Time, r, b, sigma) {
+    GBSGamma <<- function(TypeFlag, S, X, Time, r, b, sigma) {
         d1 = ( log(S/X) + (b+sigma*sigma/2)*Time ) / (sigma*sqrt(Time))
         result = exp((b-r)*Time)*NDF(d1)/(S*sigma*sqrt(Time)) # Call,Put
         result }
-    GBSCofC = function(TypeFlag, S, X, Time, r, b, sigma) {
+    GBSCofC <<- function(TypeFlag, S, X, Time, r, b, sigma) {
         d1 = ( log(S/X) + (b+sigma*sigma/2)*Time ) / (sigma*sqrt(Time))
         if (TypeFlag == "c") result = Time*S*exp((b-r)*Time)*CND(d1)
         if (TypeFlag == "p") result = -Time*S*exp((b-r)*Time)*CND(-d1)
@@ -324,7 +356,8 @@ function(Selection = c("Delta", "Theta", "Vega", "Rho", "Lambda", "Gamma",
 
 
 Black76Option = 
-function(TypeFlag = c("c", "p"), FT, X, Time, r, sigma)
+function(TypeFlag = c("c", "p"), FT, X, Time, r, sigma, title = NULL,
+description = NULL)
 {   # A function implemented by Diethelm Wuertz
  
     # Description:
@@ -339,8 +372,31 @@ function(TypeFlag = c("c", "p"), FT, X, Time, r, sigma)
     # Settings:
     TypeFlag = TypeFlag[1]
     
+    # Result:
+    result = GBSOption(TypeFlag = TypeFlag, S = FT, X = X, Time = Time, 
+    	r = r, b = 0, sigma = sigma)@price
+    
+    # Parameters:
+    param = list()
+    param$TypeFlag = TypeFlag
+    param$FT = FT
+    param$X = X
+    param$Time = Time
+    param$r = r
+    param$sigma = sigma
+    
+    # Add title and description:
+    if (is.null(title)) title = "Black 76 Option Valuation"
+    if (is.null(description)) description = as.character(date())
+    
     # Return Value:
-    GBSOption(TypeFlag, S = FT, X = X, Time = Time, r = r, b = 0, sigma = sigma)
+    new("fOPTION", 
+        call = match.call(),
+        parameters = param,
+        price = result, 
+        title = title,
+        description = description
+        )            
 }
 
 
@@ -349,7 +405,8 @@ function(TypeFlag = c("c", "p"), FT, X, Time, r, sigma)
 
 MiltersenSchwartzOption = 
 function (TypeFlag = c("c", "p"), Pt, FT, X, time, Time, sigmaS, sigmaE, 
-sigmaF, rhoSE, rhoSF, rhoEF, KappaE, KappaF) 
+sigmaF, rhoSE, rhoSF, rhoEF, KappaE, KappaF, title = NULL,
+description = NULL) 
 {   # A function implemented by Diethelm Wuertz           
 
     # Description:
@@ -392,8 +449,35 @@ sigmaF, rhoSE, rhoSF, rhoEF, KappaE, KappaF)
     if (TypeFlag == "p") {
         result = Pt*(X*CND(-d2)-FT*exp(-vxz)*CND(-d1)) }
     
+    # Parameters:
+    param = list()
+    param$TypeFlag = TypeFlag
+    param$Pt = Pt
+    param$FT = FT
+    param$X = X
+    param$time = time
+    param$Time = Time
+    param$sigmaS = sigmaS
+    param$sigmaE = sigmaE
+    param$sigmaF = sigmaF
+    param$rhoSE = rhoSE
+    param$rhoSF = rhoSF
+    param$rhoEF = rhoEF
+    param$KappaE = KappaE
+    param$KappaF = KappaF
+    
+    # Add title and description:
+    if (is.null(title)) title = "Miltersen Schwartz Option Valuation"
+    if (is.null(description)) description = as.character(date())
+    
     # Return Value:
-    result
+    new("fOPTION", 
+        call = match.call(),
+        parameters = param,
+        price = result, 
+        title = title,
+        description = description
+        )        
 }  
 
 
@@ -410,7 +494,7 @@ tol = .Machine$double.eps, maxiter = 10000)
     # Example:
     #   sigma = GBSVolatility(price=10.2, "c", S=100, X=90, Time=1/12, r=0, b=0)
     #   sigma
-    #   GBSOption("c", S=100, X=90, Time=1/12, r=0, b=0, sigma=sigma)$price
+    #   GBSOption("c", S=100, X=90, Time=1/12, r=0, b=0, sigma=sigma)@price
     
     # FUNCTION:
     
@@ -418,13 +502,13 @@ tol = .Machine$double.eps, maxiter = 10000)
     TypeFlag = TypeFlag[1]
     
     # Internal Function:
-    f = function(x, price, TypeFlag, S, X, Time, r, b, ...) {
+    .f <<- function(x, price, TypeFlag, S, X, Time, r, b, ...) {
         GBS = GBSOption(TypeFlag = TypeFlag, S = S, X = X, Time = Time, 
-            r = r, b = b, sigma = x)$price 
+            r = r, b = b, sigma = x)@price 
         price - GBS}
     
     # Search for Root:
-    volatility = uniroot(f, interval = c(-10,10), price = price, 
+    volatility = uniroot(.f, interval = c(-10,10), price = price, 
         TypeFlag = TypeFlag, S = S, X = X, Time = Time, r = r, b = b, 
         tol = tol, maxiter = maxiter)$root
         
@@ -471,4 +555,65 @@ function(object, ...)
 
 
 # ******************************************************************************
+
+
+print.fOPTION = 
+function(x, ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Print method for objects of class "fOPTION".
+    
+    # FUNCTION:
+    
+    # Print Method:
+    object = x
+    Parameter = unlist(x@parameters)
+    Names = names(Parameter)
+    Parameter = cbind(as.character(Parameter))
+    rownames(Parameter) = Names
+    colnames(Parameter) = "Value:"
+    
+    # Title:
+    cat("\nTitle:\n")
+    cat(x@title, "\n")
+    
+    # Call:
+    cat("\nCall:", deparse(x@call), "", sep = "\n")
+    
+    # Parameters:
+    cat("Parameters:\n")
+    print(Parameter, quote = FALSE)
+    
+    # Price:
+    cat("\nOption Price:\n")
+    cat(x@price, "\n")
+    
+    # Description:
+    cat("\nDescription:\n")
+    cat(x@description, "\n")  
+    
+    # Return Value:
+    invisible()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+summary.fOPTION = 
+function(object, ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Summary method for objects of class "option".
+    
+    # FUNCTION:
+    
+    # Summary Method:
+    print(object, ...)
+}
+
+
+################################################################################
 

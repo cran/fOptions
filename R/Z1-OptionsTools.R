@@ -42,6 +42,7 @@ function(prompt = "")
     #   Sets the prompt
     
     # FUNCTION:
+    
 	# Return Value:
 	invisible(prompt)
 }
@@ -60,7 +61,7 @@ function()
     
     # Popup:    
     path = paste(.Library,"/fOptions", sep = "") 
-    entries = .read.fOptionsIndex (file.path(path, "demoIndex")) 
+    entries = .read.fOptions.00Index (file.path(path, "demoIndex")) 
     example = select.list(entries[,1])
     selected = 0
     for (i in 1:length(entries[,1])) {

@@ -40,7 +40,8 @@
 
 
 GapOption = 
-function(TypeFlag = c("c", "p"), S, X1, X2, Time, r, b, sigma)
+function(TypeFlag = c("c", "p"), S, X1, X2, Time, r, b, sigma, 
+title = NULL, description = NULL)
 {   # A function imlemented by Diethelm Wuertz           
     
     # Description:
@@ -62,12 +63,30 @@ function(TypeFlag = c("c", "p"), S, X1, X2, Time, r, b, sigma)
         GapOption =  
             X2*exp(-r*Time)*CND(-d2) - S*exp((b-r)*Time)*CND(-d1) 
     
+    # Parameters:
+    # TypeFlag = c("c", "p"), S, X1, X2, Time, r, b, sigma
+    param = list()
+    param$TypeFlag = TypeFlag
+    param$S = S
+    param$X1 = X1
+    param$X2 = X2
+    param$Time = Time
+    param$r = r
+    param$b = b
+    param$sigma = sigma
+    
+    # Add title and description:
+    if (is.null(title)) title = "Gap Option"
+    if (is.null(description)) description = as.character(date())
+    
     # Return Value:
-    option = list(
+    new("fOPTION", 
+        call = match.call(),
+        parameters = param,
         price = GapOption, 
-        call = match.call() )
-    class(option) = "option"
-    option
+        title = title,
+        description = description
+        )      
 }
 
 
@@ -75,7 +94,8 @@ function(TypeFlag = c("c", "p"), S, X1, X2, Time, r, b, sigma)
 
 
 CashOrNothingOption = 
-function(TypeFlag = c("c", "p"), S, X, K, Time, r, b, sigma)
+function(TypeFlag = c("c", "p"), S, X, K, Time, r, b, sigma,
+title = NULL, description = NULL)
 {   # A function imlemented by Diethelm Wuertz           
 
     # Description:
@@ -94,12 +114,30 @@ function(TypeFlag = c("c", "p"), S, X, K, Time, r, b, sigma)
     if (TypeFlag == "p") 
         CashOrNothing = K * exp (-r * Time) * CND(-d)
     
+    # Parameters:
+    # TypeFlag = c("c", "p"), S, X, K, Time, r, b, sigma
+    param = list()
+    param$TypeFlag = TypeFlag
+    param$S = S
+    param$X = X
+    param$K = K
+    param$Time = Time
+    param$r = r
+    param$b = b
+    param$sigma = sigma
+    
+    # Add title and description:
+    if (is.null(title)) title = "Cash Or Nothing Option"
+    if (is.null(description)) description = as.character(date())
+    
     # Return Value:
-    option = list(
+    new("fOPTION", 
+        call = match.call(),
+        parameters = param,
         price = CashOrNothing, 
-        call = match.call() )
-    class(option) = "option"
-    option
+        title = title,
+        description = description
+        )      
 }
 
 
@@ -108,7 +146,7 @@ function(TypeFlag = c("c", "p"), S, X, K, Time, r, b, sigma)
 
 TwoAssetCashOrNothingOption = 
 function(TypeFlag = c("c", "p", "ud", "du"), S1, S2, X1, X2, K, Time, r, 
-b1, b2, sigma1, sigma2, rho)
+b1, b2, sigma1, sigma2, rho, title = NULL, description = NULL)
 {   # A function imlemented by Diethelm Wuertz           
 
     # Description:
@@ -154,12 +192,36 @@ b1, b2, sigma1, sigma2, rho)
         TwoAssetCashOrNothing = K * exp (-r * Time) * 
             CBND(-d11,  d22, -rho)
     
+    # Parameters:
+    # TypeFlag = c("c", "p", "ud", "du"), S1, S2, X1, X2, K, Time, r, 
+	#	b1, b2, sigma1, sigma2, rho
+    param = list()
+    param$TypeFlag = TypeFlag
+    param$S1 = S1
+    param$S2 = S2
+    param$X1 = X1
+    param$X2 = X2
+    param$K = K
+    param$Time = Time
+    param$r = r
+    param$b1 = b1
+    param$b2 = b2
+    param$sigma1 = sigma1
+    param$sigma2 = sigma2
+    param$rho = rho
+    
+    # Add title and description:
+    if (is.null(title)) title = "Two Asset Cash Or Nothing Option"
+    if (is.null(description)) description = as.character(date())
+    
     # Return Value:
-    option = list(
+    new("fOPTION", 
+        call = match.call(),
+        parameters = param,
         price = TwoAssetCashOrNothing, 
-        call = match.call() )
-    class(option) = "option"
-    option 
+        title = title,
+        description = description
+        )      
 }
 
 
@@ -167,7 +229,8 @@ b1, b2, sigma1, sigma2, rho)
 
 
 AssetOrNothingOption = 
-function(TypeFlag = c("c", "p"), S, X, Time, r, b, sigma)
+function(TypeFlag = c("c", "p"), S, X, Time, r, b, sigma,
+title = NULL, description = NULL)
 {   # A function imlemented by Diethelm Wuertz           
 
     # Description:
@@ -175,8 +238,7 @@ function(TypeFlag = c("c", "p"), S, X, Time, r, b, sigma)
 
     # Reference:
     #   Cox Rubinstein (1985)
-    #   Haug, Chapter 2.11.4
-    
+    #   Haug, Chapter 2.11.4  
     
     # FUNCTION:
     
@@ -187,13 +249,30 @@ function(TypeFlag = c("c", "p"), S, X, Time, r, b, sigma)
             AssetOrNothing = S * exp ((b - r) * Time) * CND( d)
     if (TypeFlag == "p") 
             AssetOrNothing = S * exp ((b - r) * Time) * CND(-d)
+ 
+    # Parameters:
+    # # TypeFlag = c("c", "p"), S, X, Time, r, b, sigma
+    param = list()
+    param$TypeFlag = TypeFlag
+    param$S = S
+    param$X = X
+    param$Time = Time
+    param$r = r
+    param$b = b
+    param$sigma = sigma
+    
+    # Add title and description:
+    if (is.null(title)) title = "Asset Or Nothing Option"
+    if (is.null(description)) description = as.character(date())
     
     # Return Value:
-    option = list(
+    new("fOPTION", 
+        call = match.call(),
+        parameters = param,
         price = AssetOrNothing, 
-        call = match.call() )
-    class(option) = "option"
-    option 
+        title = title,
+        description = description
+        )      
 }
 
 
@@ -201,7 +280,7 @@ function(TypeFlag = c("c", "p"), S, X, Time, r, b, sigma)
 
 
 SuperShareOption = 
-function(S, XL, XH, Time, r, b, sigma)
+function(S, XL, XH, Time, r, b, sigma, title = NULL, description = NULL)
 {   # A function imlemented by Diethelm Wuertz           
 
     # Description:
@@ -218,12 +297,29 @@ function(S, XL, XH, Time, r, b, sigma)
     d2 = (log(S/XH) + (b + sigma^2 / 2) * Time) / (sigma * sqrt(Time))
     SuperShare = (S * exp((b-r)*Time) / XL) * (CND(d1) - CND(d2))
     
+    # Parameters:
+    # S, XL, XH, Time, r, b, sigma
+    param = list()
+    param$S = S
+    param$XL = XL
+    param$XH = XH
+    param$Time = Time
+    param$r = r
+    param$b = b
+    param$sigma = sigma
+    
+    # Add title and description:
+    if (is.null(title)) title = "Super Share Option"
+    if (is.null(description)) description = as.character(date())
+    
     # Return Value:
-    option = list(
+    new("fOPTION", 
+        call = match.call(),
+        parameters = param,
         price = SuperShare, 
-        call = match.call() )
-    class(option) = "option"
-    option
+        title = title,
+        description = description
+        )      
 }
 
 
@@ -232,7 +328,7 @@ function(S, XL, XH, Time, r, b, sigma)
 
 BinaryBarrierOption = 
 function(TypeFlag = as.character(1:28), S, X, H, K, Time, r, b, sigma, 
-eta, phi)
+eta, phi, title = NULL, description = NULL)
 {   # A function imlemented by Diethelm Wuertz           
     
     # Description:
@@ -338,14 +434,35 @@ eta, phi)
         if (TypeFlag == 27) BinaryBarrier = 0
         if (TypeFlag == 28) BinaryBarrier = a1 - a3 }
     
+    # Parameters:
+    # TypeFlag = as.character(1:28), S, X, H, K, Time, r, b, sigma, eta, phi
+	param = list()
+    param$TypeFlag = TypeFlag
+    param$S = S
+    param$X = X
+    param$H = H
+    param$K = K
+    param$Time = Time
+    param$r = r
+    param$b = b
+    param$sigma = sigma
+    param$eta = eta
+    param$phi = phi
+    
+    # Add title and description:
+    if (is.null(title)) title = "Binary Barrier Option"
+    if (is.null(description)) description = as.character(date())
+    
     # Return Value:
-    option = list(
+    new("fOPTION", 
+        call = match.call(),
+        parameters = param,
         price = BinaryBarrier, 
-        call = match.call() )
-    class(option) = "option"
-    option
+        title = title,
+        description = description
+        )      
 }
 
 
-# ******************************************************************************
+################################################################################
 

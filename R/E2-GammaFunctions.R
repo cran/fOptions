@@ -28,23 +28,6 @@
 
 
 ################################################################################
-#
-# Title:
-#   Error, Gamma and Related Functions
-# Description:
-#   Several functions are already availalble to compute the Gamma and
-#   related functions in R. We have added some missing functionality
-#   including R functions to compute the Error Function, the Psi
-#   Function, the Incomplete Gamma Function, the Gamma function for
-#   complex arguments, and the Pochhommer Symbol.
-#   These functions are required to valuate Asian Options based on
-#   the theory of Exponential Brownian Motion.  
-# Author:
-#   (C) 2003, Diethelm Wuertz, GPL
-# Requirement:
-#   fOptions.S2-HypergeometricFunctions
-#
-################################################################################
 # FUNCTION:       DESCRIPTION:
 #  erf             Error function
 #  [gamma]         Gamma function 
@@ -57,12 +40,27 @@
 #  [lbeta]*        LogBeta function, returns log(Beta)
 #  Psi             Psi(x) (Digamma) function
 #  igamma          P(a,x) Incomplete Gamma Function
-#  cgamma          Gamma function for complex argument
+#  cgamma          Gamma function for complex arguments
 #  Pochhammer      Pochhammer symbol
 # NOTES:
 #  Functions in [] paranthesis are part of the R's and SPlus' base distribution
 #  Functions in {} paranthesis are only availalble in R
 #  Function marked by []* are compute through the gamma function in SPlus
+################################################################################
+
+
+################################################################################  
+# DESCRIPTION:
+#  Error, Gamma and Related Functions -
+#   Several functions are already availalble to compute the Gamma and
+#   related functions in R. We have added some missing functionality
+#   including R functions to compute the Error Function, the Psi
+#   Function, the Incomplete Gamma Function, the Gamma function for
+#   complex arguments, and the Pochhommer Symbol.
+#   These functions are required to valuate Asian Options based on
+#   the theory of Exponential Brownian Motion.  
+#  Requirements -
+#   fOptions.S2-HypergeometricFunctions
 ################################################################################
 
 
@@ -203,15 +201,16 @@ function(x, a)
     # igamma:
     if (!is.complex(x) && !is.complex(a)) {
         # Use R's pgamma() function:
-        result = pgamma(x, a) 
+        # if (a < 0) Not suppported ...
+        result = pgamma(x, a)  
     } else {
         # Why not derive the result from KummersM ?
         log = FALSE
         if (log) {
             # Not yet supported:
-            result = kummerM(a, a + 1, -x, lnchf = 1) + a*log(z) - log(a) 
+            result = kummerM(a, a + 1, -x, lnchf = 1) + a*log(x) - log(a) 
         } else {
-            result = kummerM(a, a + 1, -x, lnchf = 0) * z^a / a 
+            result = kummerM(a, a + 1, -x, lnchf = 0) * x^a / a 
         } 
     }
         

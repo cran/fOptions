@@ -31,7 +31,7 @@
 # FUNCTION:                       DESCRIPTION:
 # Multiple Asset Options:
 #   TwoAssetCorrelationOption       Two Asset Correlation Option
-#   [ExchangeOneForAnotherOption     Exchane One For Another Option]  
+#    [ExchangeOneForAnotherOption]    [Exchane One For Another Option]  
 #   EuropeanExchangeOption          European Exchange Optionn
 #   AmericanExchangeOption          American Exchange Option
 #   ExchangeOnExchangeOption        Exchange Exchange Option
@@ -42,7 +42,7 @@
 
 TwoAssetCorrelationOption = 
 function(TypeFlag = c("c", "p"), S1, S2, X1, X2, Time, r, b1, b2, 
-sigma1, sigma2, rho)
+sigma1, sigma2, rho, title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz           
 
     # Description:
@@ -68,12 +68,35 @@ sigma1, sigma2, rho)
         S2 * exp ((b2 - r) * Time) *
         CBND(-y2 - sigma2 * sqrt(Time), -y1 - rho * sigma2 * sqrt(Time), rho)
     
+    # Parameters:
+    # TypeFlag = c("c", "p"), S1, S2, X1, X2, Time, r, b1, b2, sigma1, 
+    #	sigma2, rho
+    param = list()
+    param$TypeFlag = TypeFlag
+    param$S1 = S1
+    param$S2 = S2
+    param$X1 = X1
+    param$X2 = X2
+    param$Time = Time
+    param$r = r
+    param$b1 = b1
+    param$b2 = b2
+    param$sigma1 = sigma1
+    param$sigma2 = sigma2
+    param$rho = rho
+    
+    # Add title and description:
+    if (is.null(title)) title = "Two Asset Correlation Option"
+    if (is.null(description)) description = as.character(date())
+    
     # Return Value:
-    option = list(
+    new("fOPTION", 
+        call = match.call(),
+        parameters = param,
         price = TwoAssetCorrelation, 
-        call = match.call() )
-    class(option) = "option"
-    option
+        title = title,
+        description = description
+        )      
 }
 
 
@@ -81,7 +104,8 @@ sigma1, sigma2, rho)
 
 
 EuropeanExchangeOption = 
-function(S1, S2, Q1, Q2, Time, r, b1, b2, sigma1, sigma2, rho)
+function(S1, S2, Q1, Q2, Time, r, b1, b2, sigma1, sigma2, rho,
+title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz           
      
     # Description:
@@ -102,12 +126,33 @@ function(S1, S2, Q1, Q2, Time, r, b1, b2, sigma1, sigma2, rho)
     EuropeanExchange = Q1 * S1 * exp ((b1 - r) * Time) * CND(d1) -
         Q2 * S2 * exp((b2 - r) * Time) * CND(d2)
     
+    # Parameters:
+    # S1, S2, Q1, Q2, Time, r, b1, b2, sigma1, sigma2, rho
+    param = list()
+    param$S1 = S1
+    param$S2 = S2
+    param$Q1 = Q1
+    param$Q2 = Q2
+    param$Time = Time
+    param$r = r
+    param$b1 = b1
+    param$b2 = b2
+    param$sigma1 = sigma1
+    param$sigma2 = sigma2
+    param$rho = rho
+    
+    # Add title and description:
+    if (is.null(title)) title = "European Exchange Option"
+    if (is.null(description)) description = as.character(date())
+    
     # Return Value:
-    option = list(
+    new("fOPTION", 
+        call = match.call(),
+        parameters = param,
         price = EuropeanExchange, 
-        call = match.call() )
-    class(option) = "option"
-    option
+        title = title,
+        description = description
+        )      
 }
 
 
@@ -115,7 +160,8 @@ function(S1, S2, Q1, Q2, Time, r, b1, b2, sigma1, sigma2, rho)
 
 
 AmericanExchangeOption = 
-function(S1, S2, Q1, Q2, Time, r, b1, b2, sigma1, sigma2, rho, doprint = FALSE)
+function(S1, S2, Q1, Q2, Time, r, b1, b2, sigma1, sigma2, rho, 
+title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz           
 
     # Description:
@@ -133,16 +179,34 @@ function(S1, S2, Q1, Q2, Time, r, b1, b2, sigma1, sigma2, rho, doprint = FALSE)
     # Calculate Price:
     AmericanExchange = BSAmericanApproxOption("c", Q1*S1, Q2*S2, 
         Time, r-b2, b1-b2, sigma)
-        
-    # Print Trigger Price:
-    if (doprint) {cat("\nTriggerPrice: ", AmericanExchange$TriggerPrice, "\n")}
+
+    # Parameters:
+    # S1, S2, Q1, Q2, Time, r, b1, b2, sigma1, sigma2, rho
+    param = list()
+    param$S1 = S1
+    param$s2 = S2
+    param$Q1 = Q2
+    param$Time = Time
+    param$r = r
+    param$b1 = b1
+    param$b2 = b2
+    param$sigma1 = sigma1
+    param$sigma2 = sigma2
+    param$rho = rho
+    param$TriggerPrice = AmericanExchange@parameters$TriggerPrice
+    
+    # Add title and description:
+    if (is.null(title)) title = "American Exchange Option"
+    if (is.null(description)) description = as.character(date())
     
     # Return Value:
-    option = list(
-        price = AmericanExchange$Premium, 
-        call = match.call() )
-    class(option) = "option"
-    option 
+    new("fOPTION", 
+        call = match.call(),
+        parameters = param,
+        price = AmericanExchange@price, 
+        title = title,
+        description = description
+        )      
 }
 
 
@@ -151,7 +215,7 @@ function(S1, S2, Q1, Q2, Time, r, b1, b2, sigma1, sigma2, rho, doprint = FALSE)
 
 ExchangeOnExchangeOption = 
 function(TypeFlag = c("1", "2", "3", "4"), S1, S2, Q, time1, Time2, r, 
-b1, b2, sigma1, sigma2, rho)
+b1, b2, sigma1, sigma2, rho, title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz           
   
     # Description:
@@ -250,12 +314,35 @@ b1, b2, sigma1, sigma2, rho)
             CBND(d1, y4, -sqrt(time1/Time2)) + q * S2 * exp((b2-r) * time1) * 
             CND(d2)   
     
+    # Parameters:
+    # TypeFlag = c("1", "2", "3", "4"), S1, S2, Q, time1, Time2, r, 
+    #	b1, b2, sigma1, sigma2, rho
+    param = list()
+    param$TypeFlag = TypeFlag
+    param$S1 = S1
+    param$S2 = S2
+    param$Q = Q
+    param$time1 = time1
+    param$Time2 = Time2
+    param$r = r
+    param$b1 = b1
+    param$b2 = b2
+    param$sigma1 = sigma1
+    param$sigma2 = sigma2
+    param$rho = rho
+    
+    # Add title and description:
+    if (is.null(title)) title = "Exchange On Exchange Option"
+    if (is.null(description)) description = as.character(date())
+    
     # Return Value:
-    option = list(
+    new("fOPTION", 
+        call = match.call(),
+        parameters = param,
         price = ExchangeOnExchange, 
-        call = match.call() )
-    class(option) = "option"
-    option  
+        title = title,
+        description = description
+        )      
 }
 
 
@@ -264,7 +351,7 @@ b1, b2, sigma1, sigma2, rho)
 
 TwoRiskyAssetsOption = 
 function(TypeFlag = c("cmin", "cmax", "pmin", "pmax"), S1, S2, X, Time, 
-r, b1, b2, sigma1, sigma2, rho)
+r, b1, b2, sigma1, sigma2, rho, title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz           
     
     # Description:
@@ -299,22 +386,44 @@ r, b1, b2, sigma1, sigma2, rho)
     if (TypeFlag == "pmin")
         OnTheMaxMin = X * exp(-r * Time) - S1 * exp((b1 - r) * Time) + 
             EuropeanExchangeOption(S1, S2, 1, 1, Time, r, b1, b2, 
-                sigma1, sigma2, rho)$price + 
+                sigma1, sigma2, rho)@price + 
             TwoRiskyAssetsOption("cmin", S1, S2, X, Time, r, b1, b2, 
-                sigma1, sigma2, rho)$price
+                sigma1, sigma2, rho)@price
     if (TypeFlag == "pmax")
         OnTheMaxMin = X * exp(-r * Time) - S2 * exp((b2 - r) * Time) - 
             EuropeanExchangeOption(S1, S2, 1, 1, Time, r, b1, b2, 
-                sigma1, sigma2, rho)$price + 
+                sigma1, sigma2, rho)@price + 
             TwoRiskyAssetsOption("cmax", S1, S2, X, Time, r, b1, b2, 
-                sigma1, sigma2, rho)$price   
+                sigma1, sigma2, rho)@price   
+   
+    # Parameters:
+    # TypeFlag = c("cmin", "cmax", "pmin", "pmax"), S1, S2, X, Time, r, 
+    #	b1, b2, sigma1, sigma2, rho
+    param = list()
+    param$TypeFlag = TypeFlag
+    param$S1 = S1
+    param$S2 = S2
+    param$X = X
+    param$Time = Time
+    param$r = r
+    param$b1 = b1
+    param$b2 = b2
+    param$sigma1 = sigma1
+    param$sigma2 = sigma2
+    param$rho = rho
+    
+    # Add title and description:
+    if (is.null(title)) title = "Two Risky Assets Option"
+    if (is.null(description)) description = as.character(date())
     
     # Return Value:
-    option = list(
+    new("fOPTION", 
+        call = match.call(),
+        parameters = param,
         price = OnTheMaxMin, 
-        call = match.call() )
-    class(option) = "option"
-    option    
+        title = title,
+        description = description
+        )        
 }
 
 
@@ -322,7 +431,8 @@ r, b1, b2, sigma1, sigma2, rho)
 
 
 SpreadApproxOption = 
-function(TypeFlag = c("c", "p"), S1, S2, X, Time, r, sigma1, sigma2, rho)
+function(TypeFlag = c("c", "p"), S1, S2, X, Time, r, sigma1, sigma2, rho,
+title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz           
 
     # Description:
@@ -343,16 +453,35 @@ function(TypeFlag = c("c", "p"), S1, S2, X, Time, r, sigma1, sigma2, rho)
     
     # Calculate Price
     SpreadApproximation = 
-        GBSOption(TypeFlag, FF, 1, Time, r, 0, sigma)$price * (F2 + X)   
+        GBSOption(TypeFlag, FF, 1, Time, r, 0, sigma)@price * (F2 + X)   
+    
+    # Parameters:
+    # TypeFlag = c("c", "p"), S1, S2, X, Time, r, sigma1, sigma2, rho
+    param = list()
+    param$TypeFlag = TypeFlag
+    param$S1 = S1
+    param$S2 = S2
+    param$X = X
+    param$Time = Time
+    param$r = r
+    param$sigma1 = sigma1
+    param$sigma2 = sigma2
+    param$rho = rho
+    
+    # Add title and description:
+    if (is.null(title)) title = "Spread Approx Option"
+    if (is.null(description)) description = as.character(date())
     
     # Return Value:
-    option = list(
+    new("fOPTION", 
+        call = match.call(),
+        parameters = param,
         price = SpreadApproximation, 
-        call = match.call() )
-    class(option) = "option"
-    option
+        title = title,
+        description = description
+        )      
 }
 
 
-# ******************************************************************************
+################################################################################
 

@@ -24,7 +24,7 @@
 #   see R's copyright and license files
 # for the code accessed (or partly included) from contributed R-ports
 # and other sources
-#   see Rmetrics's copyright file
+#   see Rmetrics's copyright file 
 
 
 ################################################################################
@@ -45,6 +45,9 @@
 # FUNCTION:           NUMERICAL DERIVATIVES:
 #  derivative          First and second numerical derivative
 ################################################################################
+
+
+################################################################################
 # DESCRIPTION:
 #  Adds some distributions and related functions which are useful in the 
 #  theory of exponential Brownian motion.
@@ -55,8 +58,6 @@
 #  Reciprocal-Gamma, and the Asian-Option Density. In addition a function 
 #  is given to compute numerically first and second derivatives of a given 
 #  function.
-# AUTHOR:
-#  (C) 2003, Diethelm Wuertz, GPL
 ################################################################################
 
 
@@ -84,21 +85,22 @@ function(x, meanlog = 0, sdlog = 1, deriv = c(0, 1, 2))
     
     # Settings:
     deriv = deriv[1]
-    log = FALSE
     
     # Function:
-    result = dlnorm(x, meanlog = meanlog, sdlog = sdlog, log = log) 
+    result = dlnorm(x, meanlog = meanlog, sdlog = sdlog) 
     
     # First derivative, if desired:
     if (deriv == 1) {
         h1 = -(1/x + (log(x)-meanlog)/(sdlog^2*x))
-        result = result * h1 }
+        result = result * h1 
+    }
         
     # Second derivative, if desired:    
     if (deriv == 2) {
         h1 = -(1/x + (log(x)-meanlog)/(sdlog^2*x))
         h2 = -(-1/x^2 + (-1/x^2)*(log(x)-meanlog)/sdlog^2 + 1/(sdlog^2*x^2))
-        result = result * (h1^2 + h2) }
+        result = result * (h1^2 + h2) 
+    }
         
     # Return Value:
     result
@@ -126,22 +128,19 @@ function(q, meanlog = 0, sdlog = 1)
     
     # FUNCTION:
     
-    # Settings:
-    log = FALSE
-    
-    # Function:
-    result = plnorm(q = q, meanlog = meanlog, sdlog = sdlog, log.p = log) 
+    # Resul:
+    result = plnorm(q = q, meanlog = meanlog, sdlog = sdlog) 
 
     # Return Value:
     result
 }
     
 
-# ------------------------------------------------------------------------------
+# ******************************************************************************
 
 
 dgam = 
-function(x, alpha, beta, log = FALSE)
+function(x, alpha, beta)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -159,7 +158,7 @@ function(x, alpha, beta, log = FALSE)
     # FUNCTION:
     
     # Return Value:
-    dgamma(x = x, shape = alpha, scale = beta, log = log)
+    dgamma(x = x, shape = alpha, scale = beta)
 }
 
 
@@ -167,7 +166,7 @@ function(x, alpha, beta, log = FALSE)
 
 
 pgam = 
-function(q, alpha, beta, lower.tail = TRUE, log = FALSE)
+function(q, alpha, beta, lower.tail = TRUE)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -185,8 +184,7 @@ function(q, alpha, beta, lower.tail = TRUE, log = FALSE)
     # FUNCTION:
     
     # Return Value:
-    pgamma(q = q, shape = alpha, scale = beta, lower.tail = lower.tail, 
-    	log.p = log)
+    pgamma(q = q, shape = alpha, scale = beta, lower.tail = lower.tail)
 }
 
 
@@ -194,7 +192,7 @@ function(q, alpha, beta, lower.tail = TRUE, log = FALSE)
 
 
 drgam = 
-function(x, alpha = 1, beta = 1, deriv = c(0, 1,2))
+function(x, alpha = 1, beta = 1, deriv = c(0, 1, 2))
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -210,20 +208,29 @@ function(x, alpha = 1, beta = 1, deriv = c(0, 1,2))
     
     # Function Value:
     deriv = deriv[1]
-    gr = dgamma(x = 1/x, shape = alpha, scale = beta, log = FALSE) / (x^2)
+    gr = dgamma(x = 1/x, shape = alpha, scale = beta) / (x^2)
     result = gr
     
     # First Derivative:
     if (deriv == 1) {
-        "h" = function(x, alpha, beta) { -(alpha+1)/x + 1/(beta*x^2) }
+        h = function(x, alpha, beta) { 
+            -(alpha+1)/x + 1/(beta*x^2) 
+        }
         gr1 = gr*h(x, alpha, beta)
-        result = gr1 }
+        result = gr1 
+    }
     
     # Second Derivative:
     if (deriv == 2) {
-        "h1" = function(x, alpha, beta) { +(alpha+1)/x^2 - 2/(beta*x^3) }
+        h = function(x, alpha, beta) { 
+            -(alpha+1)/x + 1/(beta*x^2)
+        }
+        h1 = function(x, alpha, beta) { 
+            +(alpha+1)/x^2 - 2/(beta*x^3) 
+        }
         gr2 = gr*(h(x, alpha, beta)^2 + h1(x, alpha, beta))
-        result = gr2 }
+        result = gr2 
+    }
     
     # Return Value:
     result
@@ -234,7 +241,7 @@ function(x, alpha = 1, beta = 1, deriv = c(0, 1,2))
 
 
 prgam = 
-function(q, alpha = 1, beta = 1, lower.tail = TRUE, log = FALSE)
+function(q, alpha = 1, beta = 1, lower.tail = TRUE)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -249,8 +256,7 @@ function(q, alpha = 1, beta = 1, lower.tail = TRUE, log = FALSE)
     # FUNCTION:
     
     # Return Value:
-    1 - pgamma(q = 1/q, shape = alpha, scale = beta, lower.tail = lower.tail, 
-    	log.p = log)
+    1 - pgamma(q = 1/q, shape = alpha, scale = beta, lower.tail = lower.tail)
 }
 
 
@@ -278,13 +284,16 @@ function(x, a = 0, b = 1, c = 0, d = 1, deriv = c(0, 1, 2))
     if (deriv == 1) {
         z2 = -b / (x-c)^2
         johnson1 = phi * ( z2 - z*z1^2 )
-        result = johnson1 }
+        result = johnson1 
+    }
     
     # Second Derivative:
     if (deriv == 2) {
+        z2 = -b / (x-c)^2
         z3 = 2 * b / (x-c)^3
         johnson2 = phi * ( - z*z1*z2 + z^2*z1^3 + z3 -z1^3 - 2*z*z1*z2 )
-        result = johnson2 }
+        result = johnson2 
+    }
     
     # Return Value:
     result
@@ -444,6 +453,36 @@ function(a, b, c, d)
 # ------------------------------------------------------------------------------
 
 
+.DufresneMoments = 
+function (M = 4, Time = 1, r = 0.045, sigma = 0.30) 
+{   
+    # Internal Function:
+    moments = 
+    function (M, tau, nu) { 
+        d = function(j, n, beta) {
+            d = 2^n
+            for (i in 0:n) if (i != j) d = d  / ( (beta+j)^2 - (beta+i)^2 )
+            d 
+        }     
+        moments = rep(0, length = M)
+        for (n in 1:M) {    
+            moments[n] = 0
+            for (j in 0:n) moments[n] = moments[n] + 
+                d(j, n, nu/2)*exp(2*(j^2+j*nu)*tau)
+            moments[n] = prod(1:n) * moments[n] / (2^(2*n)) 
+        }
+        moments 
+    }
+    
+    # Compute:
+    tau = sigma^2*Time/4
+    nu = 2*r/sigma^2-1
+    
+    # Return Value:
+    (4/sigma^2)^(1:M) * moments(M, tau, nu) 
+}
+        
+
 masian = 
 function(Time = 1, r = 0.045, sigma = 0.30)
 {   # A function implemented by Diethelm Wuertz
@@ -454,25 +493,7 @@ function(Time = 1, r = 0.045, sigma = 0.30)
     # FUNCTION:
     
     # Raw Moments:
-    # M = DufresneAsianOptionMoments(M = 4, Time = Time, r = r, sigma = sigma)   
-    .DufresneAsianOptionMoments = 
-	function (M = 4, Time = 1, r = 0.045, sigma = 0.30) {   
-	    moments = function (M, tau, nu) { 
-	        d = function(j, n, beta) {
-	            d = 2^n
-	            for (i in 0:n) if (i != j) d = d  / ( (beta+j)^2 - (beta+i)^2 )
-	            d }     
-	        moments = rep(0, length = M)
-	        for (n in 1:M) {    
-	            moments[n] = 0
-	            for (j in 0:n) moments[n] = moments[n] + 
-	                d(j, n, nu/2)*exp(2*(j^2+j*nu)*tau)
-	            moments[n] = prod(1:n) * moments[n] / (2^(2*n)) }
-	        moments }
-	    tau = sigma^2*Time/4
-	    nu = 2*r/sigma^2-1
-	    (4/sigma^2)^(1:M) * moments(M, tau, nu) }
-	M = .DufresneAsianOptionMoments(M = 4, Time = Time, r = r, sigma = sigma)
+    M = .DufresneMoments(M = 4, Time = Time, r = r, sigma = sigma)
 
     # Centered Moments:
     m = M
@@ -502,8 +523,8 @@ function(x, y, deriv = c(1, 2))
     #   of the functuin y(x) by finite differences.
     
     # Arguments:
-    #	x - a numeric vector of values
-    #	y - a numeric vectror of function values y(x)
+    #   x - a numeric vector of values
+    #   y - a numeric vectror of function values y(x)
     #   deriv - the degree of differentiation, either 1 or 2.
     
     # FUNCTION:
@@ -517,7 +538,7 @@ function(x, y, deriv = c(1, 2))
         list(x = x[2:length(x)]-diff(x)/2, y = diff(y)/diff(x))}
     
     # First Numerical Derivative:
-    result = calcderiv(x,y)
+    result = calcderiv(x, y)
     
     # Second Numerical Derivative, if desired:
     if (deriv == 2) result = calcderiv(result$x, result$y)

@@ -12,8 +12,9 @@
 
 \description{
 
-    Popups the example menu and starts or continues the example 
-    and demo programs.
+    Popups the example menu and starts or continues 
+    the example and demo programs.
+    \cr
     
 }
 
@@ -58,12 +59,14 @@ xmpOptions(prompt = "")
 
 \author{
 
-    Diethelm Wuertz for this R-Port.
+    Diethelm Wuertz for the Rmetrics \R-port.
 
 }
 
 
 \examples{
+## SOURCE("fBasics.A0-SPlusCompatibility")
+
 \dontrun{
 ## xmpfOptions -
    # Popup the examples menu:

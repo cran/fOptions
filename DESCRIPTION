@@ -1,14 +1,14 @@
 Package: fOptions
-Version: 200.10058
-Date: 1996 - 2004 
+Version: 201.10059
+Date: 1996 - 2005
 Title: Financial Software Collection - fOptions
 Author: Diethelm Wuertz and many others, see the SOURCE file
-Depends: R (>= 1.9.0), fBasics, methods
+Depends: R (>= 1.9.0), methods, fBasics, fCalendar, fSeries
 Maintainer: Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-Description: fOptions Library from Rmetrics -
+Description: fOptions from Rmetrics -
 	Rmetrics is an Environment and 
 	Software Collection for teaching
 	"Financial Engineering and Computational Finance"
 License: GPL Version 2 or later
-URL: http://www.itp.phys.ethz.ch/econophysics/R/2.0
-Packaged: Fri Dec 10 19:17:29 2004; hornik
+URL: http://www.rmetrics.org
+Packaged: Wed Apr 20 00:11:15 2005; myself

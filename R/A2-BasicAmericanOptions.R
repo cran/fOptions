@@ -36,7 +36,7 @@
 
 
 RollGeskeWhaleyOption = 
-function(S, X, time1, Time2, r, D, sigma) 
+function(S, X, time1, Time2, r, D, sigma, title = NULL, description = NULL) 
 {   # A function implemented by Diethelm Wuertz
  
     # Description:
@@ -59,26 +59,26 @@ function(S, X, time1, Time2, r, D, sigma)
     # Compute:
     Sx = S - D * exp(-r * t1)
     if (D <= X * (1 - exp(-r*(T2-t1)))) {         
-        result = GBSOption("c", Sx, X, T2, r, b=r, sigma)$price
+        result = GBSOption("c", Sx, X, T2, r, b=r, sigma)@price
         cat("\nWarning: Not optimal to exercise\n")
         return(result) }
-    ci = GBSOption("c", S, X, T2-t1, r, b=r, sigma)$price
+    ci = GBSOption("c", S, X, T2-t1, r, b=r, sigma)@price
     HighS = S
     while ( ci-HighS-D+X > 0 && HighS < big ) {
         HighS = HighS * 2
-        ci = GBSOption("c", HighS, X, T2-t1, r, b=r, sigma)$price }
+        ci = GBSOption("c", HighS, X, T2-t1, r, b=r, sigma)@price }
     if (HighS > big) {
-        result = GBSOption("c", Sx, X, T2, r, b=r, sigma)$price
+        result = GBSOption("c", Sx, X, T2, r, b=r, sigma)@price
         stop()}
     LowS = 0
     I = HighS * 0.5
-    ci = GBSOption("c", I, X, T2-t1, r, b=r, sigma)$price 
+    ci = GBSOption("c", I, X, T2-t1, r, b=r, sigma)@price 
     # Search algorithm to find the critical stock price I
     while ( abs(ci-I-D+X) > eps && HighS - LowS > eps ) {
          if (ci-I-D+X < 0 ) { HighS = I }
         else { LowS = I }
         I = (HighS + LowS) / 2
-        ci = GBSOption("c", I, X, T2-t1, r, b=r, sigma)$price }
+        ci = GBSOption("c", I, X, T2-t1, r, b=r, sigma)@price }
     a1 = (log(Sx/X) + (r+sigma^2/2)*T2) / (sigma*sqrt(T2))
     a2 = a1 - sigma*sqrt(T2)
     b1 = (log(Sx/I) + (r+sigma^2/2)*t1) / (sigma*sqrt(t1))
@@ -87,8 +87,29 @@ function(S, X, time1, Time2, r, D, sigma)
         X*exp(-r*T2)*CBND(a2,-b2,-sqrt(t1/T2)) - 
             (X-D)*exp(-r*t1)*CND(b2)
     
+    # Parameters:
+    # S, X, time1, Time2, r, D, sigma
+    param = list()
+    param$S = S
+    param$X = X
+    param$time1 = time1
+    param$Time2 = Time2
+    param$r = r
+    param$D = D
+    param$sigma = sigma
+    
+    # Add title and description:
+    if (is.null(title)) title = "Roll Geske Whaley Option"
+    if (is.null(description)) description = as.character(date())
+    
     # Return Value:
-    result
+    new("fOPTION", 
+        call = match.call(),
+        parameters = param,
+        price = result, 
+        title = title,
+        description = description
+        )      
 }
 
 
@@ -96,7 +117,8 @@ function(S, X, time1, Time2, r, D, sigma)
 
 
 BAWAmericanApproxOption = 
-function(TypeFlag = c("c", "p"), S, X, Time, r, b, sigma)
+function(TypeFlag = c("c", "p"), S, X, Time, r, b, sigma, title = NULL, 
+description = NULL)
 {   # A function implemented by Diethelm Wuertz
  
     # Description:
@@ -130,7 +152,7 @@ function(TypeFlag = c("c", "p"), S, X, Time, r, b, sigma)
             d1 = (log(Si/X)+(b+sigma^2/2)*Time)/(sigma*sqrt(Time))
             Q2 = (-(n-1)+sqrt((n-1)^2+4*K))/2
             LHS = Si-X
-            RHS = GBSOption("c", Si, X, Time, r, b, sigma)$price + 
+            RHS = GBSOption("c", Si, X, Time, r, b, sigma)@price + 
                 (1-exp((b-r)*Time)*CND(d1))*Si/Q2
             bi = exp((b-r)*Time)*CND(d1)*(1-1/Q2) +
                 (1-exp((b-r)*Time)*CND(d1)/(sigma*sqrt(Time)))/Q2
@@ -140,7 +162,7 @@ function(TypeFlag = c("c", "p"), S, X, Time, r, b, sigma)
                 Si = (X+RHS-bi*Si)/(1-bi)
                 d1 = (log(Si/X)+(b+sigma^2/2)*Time)/(sigma*sqrt(Time))
                 LHS = Si-X
-                RHS = GBSOption("c", Si, X, Time, r, b, sigma)$price + 
+                RHS = GBSOption("c", Si, X, Time, r, b, sigma)@price + 
                     (1-exp((b-r)*Time)*CND(d1))*Si/Q2
                 bi = exp((b-r)*Time)*CND(d1)*(1-1/Q2) + 
                 (   1-exp((b-r)*Time)*CND(d1)/(sigma*sqrt(Time)))/Q2 }
@@ -148,7 +170,7 @@ function(TypeFlag = c("c", "p"), S, X, Time, r, b, sigma)
             Si}
         # Compute:
         if (b >= r) {
-            result = GBSOption("c", S, X, Time, r, b, sigma)$price }
+            result = GBSOption("c", S, X, Time, r, b, sigma)@price }
         else {
             Sk = Kc(X, Time, r, b, sigma)
             n = 2*b/sigma^2
@@ -157,7 +179,7 @@ function(TypeFlag = c("c", "p"), S, X, Time, r, b, sigma)
             Q2 = (-(n-1)+sqrt((n-1)^2+4*K))/2
             a2 = (Sk/Q2)*(1-exp((b-r)*Time)*CND(d1))
             if (S < Sk) {
-                result = GBSOption("c", S, X, Time, r, b, sigma)$price +
+                result = GBSOption("c", S, X, Time, r, b, sigma)@price +
                     a2*(S/Sk)^Q2 }
             else {
                 result = S-X } }
@@ -181,7 +203,7 @@ function(TypeFlag = c("c", "p"), S, X, Time, r, b, sigma)
             d1 = (log(Si/X)+(b+sigma^2/2)*Time)/(sigma*sqrt(Time))
             Q1 = (-(n-1)-sqrt((n-1)^2+4*K))/2
             LHS = X-Si
-            RHS = GBSOption("p", Si, X, Time, r, b, sigma)$price -
+            RHS = GBSOption("p", Si, X, Time, r, b, sigma)@price -
                 (1-exp((b-r)*Time)*CND(-d1))*Si/Q1
             bi = -exp((b-r)*Time)*CND(-d1)*(1-1/Q1) -
                 (1+exp((b-r)*Time)*CND(-d1)/(sigma*sqrt(Time)))/Q1
@@ -191,7 +213,7 @@ function(TypeFlag = c("c", "p"), S, X, Time, r, b, sigma)
                 Si = (X-RHS+bi*Si)/(1+bi)
                 d1 = (log(Si/X)+(b+sigma^2/2)*Time)/(sigma*sqrt(Time))
                 LHS = X-Si
-                RHS = GBSOption("p", Si, X, Time, r, b, sigma)$price -
+                RHS = GBSOption("p", Si, X, Time, r, b, sigma)@price -
                     (1-exp((b-r)*Time)*CND(-d1))*Si/Q1
                 bi = -exp((b-r)*Time)*CND(-d1)*(1-1/Q1) -
                     (1+exp((b-r)*Time)*CND(-d1)/(sigma*sqrt(Time)))/Q1 }
@@ -205,7 +227,7 @@ function(TypeFlag = c("c", "p"), S, X, Time, r, b, sigma)
         Q1 = (-(n-1)-sqrt((n-1)^2+4*K))/2
         a1 = -(Sk/Q1)*(1-exp((b-r)*Time)*CND(-d1))
         if (S > Sk) {
-            result = GBSOption("p", S, X, Time, r, b, sigma)$price + 
+            result = GBSOption("p", S, X, Time, r, b, sigma)@price + 
                 a1*(S/Sk)^Q1 }
         else {
             result = X-S }  
@@ -217,9 +239,30 @@ function(TypeFlag = c("c", "p"), S, X, Time, r, b, sigma)
         result = BAWAmCallApproxOption(S, X, Time, r, b, sigma) }
     if (TypeFlag == "p") {      
         result = BAWAmPutApproxOption(S, X, Time, r, b, sigma) }
+       
+    # Parameters:
+    # TypeFlag = c("c", "p"), S, X, Time, r, b, sigma
+    param = list()
+    param$TypeFlag = TypeFlag
+    param$S = S
+    param$X = X
+    param$Time = Time
+    param$r = r
+    param$b = b
+    param$sigma = sigma
+    
+    # Add title and description:
+    if (is.null(title)) title = "BAW American Approximated Option"
+    if (is.null(description)) description = as.character(date())
     
     # Return Value:
-    result
+    new("fOPTION", 
+        call = match.call(),
+        parameters = param,
+        price = result, 
+        title = title,
+        description = description
+        )      
 }
 
 
@@ -227,7 +270,8 @@ function(TypeFlag = c("c", "p"), S, X, Time, r, b, sigma)
 
 
 BSAmericanApproxOption = 
-function(TypeFlag = c("c", "p"), S, X, Time, r, b, sigma)
+function(TypeFlag = c("c", "p"), S, X, Time, r, b, sigma, title = NULL, 
+description = NULL)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -257,8 +301,8 @@ function(TypeFlag = c("c", "p"), S, X, Time, r, b, sigma)
         if (b >= r) { 
         # Never optimal to exersice before maturity
         result = list(
-        Premium=GBSOption("c", S, X, Time, r, b, sigma)$price,
-          TriggerPrice=NA)}
+          Premium = GBSOption("c", S, X, Time, r, b, sigma)@price,
+          TriggerPrice = NA)}
       else {
         Beta = (1/2 - b/sigma^2) + sqrt((b/sigma^2 - 1/2)^2 + 2*r/sigma^2)
         BInfinity = Beta/(Beta-1) * X
@@ -269,13 +313,14 @@ function(TypeFlag = c("c", "p"), S, X, Time, r, b, sigma)
         alpha = (I-X) * I^(-Beta)
         if (S >= I) { 
           result = list(
-           Premium=S-X, TriggerPrice=I) }
+           Premium = S-X, 
+           TriggerPrice = I) }
         else {
           result = list(
-            Premium=alpha*S^Beta - alpha*phi(S,Time,Beta,I,I,r,b,sigma) + 
+            Premium = alpha*S^Beta - alpha*phi(S,Time,Beta,I,I,r,b,sigma) + 
               phi(S,Time,1,I,I,r,b,sigma) - phi(S,Time,1,X,I,r,b,sigma) - 
-              X*phi(S,Time,0,I,I,r,b,sigma) + 
-            X*phi(S,Time,0,X,I,r,b,sigma), TriggerPrice=I) } }
+              X*phi(S,Time,0,I,I,r,b,sigma) + X*phi(S,Time,0,X,I,r,b,sigma), 
+            TriggerPrice = I) } }
       result}
     
     # The Bjerksund and Stensland (1993) American approximation:
@@ -285,10 +330,32 @@ function(TypeFlag = c("c", "p"), S, X, Time, r, b, sigma)
       # Use the Bjerksund and Stensland put-call transformation
       result = BSAmericanCallApprox(X, S, Time, r - b, -b, sigma) }
     
+    # Parameters:
+    # TypeFlag = c("c", "p"), S, X, Time, r, b, sigma
+    param = list()
+    param$TypeFlag = TypeFlag
+    param$S = S
+    param$X = X
+    param$Time = Time
+    param$r = r
+    param$b = b
+    param$sigma = sigma
+    if (!is.na(result$TriggerPrice)) param$TrigerPrice = result$TriggerPrice 
+    
+    # Add title and description:
+    if (is.null(title)) title = "BS American Approximated Option"
+    if (is.null(description)) description = as.character(date())
+    
     # Return Value:
-    result
+    new("fOPTION", 
+        call = match.call(),
+        parameters = param,
+        price = result$Premium, 
+        title = title,
+        description = description
+        )      
 }
 
 
-# ******************************************************************************
+################################################################################
 

@@ -12,22 +12,222 @@
 
 <P>
 <B><FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2">
-    2004-10-11 Built 200.10058</FONT></FONT>
+    2005-04-18 Built 201.10059</FONT></FONT>
 </B></P>
 
 
 <PRE>
 
 This file reports the most recent updates, changes and enhancements made
-to the packages included in the Rmetrics environment.
+to the packages included in the Rmetrics environment. The packages are:
+
+fBasics, fCalendar, fSeries, fMultivar, fExtremes, fOptions, fPortfolio
 
 
 ________________________________________________________________________________
-For the next Rmetrics VERSION 1091.10058
+Rmetrics VERSION 201.10059
+
+
+2005-04-05 fSseries: A3-LongMemoryModeling
+    Nine functions have been added to estimate the self-similarity
+    or Hurst exponent from a long-range dependent time series process
+
+2005-04-03 fSseries: A3-LongMemoryModeling
+    Three  functions have been add to simulate fractional Gaussian
+    noise.
+
+2005-04-03 fSseries: A3-LongMemoryModeling
+    Five functions have been add to simulate fractional Brownian
+    motion.
+
+2005-03-25 fBasics
+    The basics package a been splitted into two parts. All the time, date
+    and calendar functions have been moved into a new package named
+    fCalender.
+
+2005-03-23 fPortfolio
+    The portfolio package has been started. Topics about multivariate
+    distributions, assets modelling, drawdown statistics, value-at-risk
+    modelling, Markowitz portfolio, two assets portfolio and data sets
+    have been added.
+    
+2005-03-21 fPortfolio: A1-MultivariateDistribution
+    This is a collection and description of functions to compute 
+    multivariate densities and probabilities from skew normal and 
+    skew Student-t distribution functions. Furthermore, multivariate 
+    random daviates can be generated, and for multivariate data, 
+    the parameters of the underlying distribution can be estimated 
+    by the maximum log-likelihood estimation.
+    
+2005-03-20 fPortfolio: A2-AssetsModelling
+    This is a collection and description of functions which generate 
+    multivariate artficial data sets of assets, which fit the parameters 
+    to a multivariate normal, skew normal, or (skew) Student-t distribution
+    and which compute some benchmark statistics. In addition a function
+    is provided which allows for the selection and clustering of individual
+    assets from portfolios using hierarchical and k-means clustering
+    approaches.
+    
+2005-03-19 fPortfolio: A3-DrawdownStatistics
+    This is a collection and description of functions which compute 
+    drawdown statistics. Included are density, distribution function,  
+    and random generation for the maximum drawdown distribution. In 
+    addition the expectation of drawdowns for Brownian motion can be 
+    computed.
+    
+2005-03-18 fPortfolio: B1-VaRModelling
+    This is a collection and description of functions to compute 
+    Value-at-Risk and related risk measures for a portfolio of assets. 
+    In addition utility functions are available to compute the maximum 
+    loss, to calculate the total return, and to plot a histogram of
+    the total return.
+    
+2005-03-17 fPortfolio: B2-MarkowitzPortfolio
+    This is a collection and description of functions which investigate 
+    the efficient frontier for a Markowitz portfolio from a given return 
+    series \code{x} in the mean-variance sense when short selling is 
+    forbidden. Tangency, equal weigths, and Monte Carlo portfolios can 
+    also be evaluated.
+    
+2005-03-14 fPortfolio: B3-TwoAssetsPortfolio
+    This is a collection and description of functions which investigate 
+    the efficient frontier for a two assets portfolio from a given return 
+    series \code{x} in the mean-variance and CVaR sense when short selling 
+    is forbidden. 
+    
+2005-03-12 fSeries: A1-ArmaModelling
+    Two new functions have been added. "armaToeplitz" allows to compute
+    the covariance matrix from autocovariances, and "armaFischer"
+    computes the Fischer information matrix for an ARMA time series
+    process. 
+
+2005-03-03 fMultivar: X1-MultivarData
+    Four new data sets have been added for the examples: 'CobbDouglas' and
+    'logCobbDouglas' data for the Cobb-Douglas productivity function as
+    used in exaple 7.10 in the book of D.N. Gujarati; 'Greene4Table131'
+    US yearly investment data as listed in the book of W. Greene, 'pr45'
+    sales and durable goods data as used in the book of R.S. Pyndick and 
+    D.L. Rubinfeld.
+    
+2005-03-02 fMultivar: B1-MatrixAddon
+    Functions vec and vech have been added, that stack a matrix and the 
+    lower triangle matrix.
+    
+2005-03-02 fBasics: HyperbolicDistribution
+    Functions for the computation of the generalized hyperbolic distribution
+    have been added: dgh, pgh, qgh, and rgh.
+
+2005-02-28 fSeries: GarchDistributions
+    The three chapters C2-SkewNormalDistribution, C2-SkewNormalDistribution,
+    C2-SkewGedDistribution have been merged to one, named C2-GarchDistributions.
+    C5-GarchDistributionFits has thus been renamed to C5-GarchDistributionFits.
+
+2005-01-22 fBasics: HyperbolicDistribution
+    Functions to compute probability, density, quantiles and to generate
+    random deviates in 2nd, 3rd and 4th parameterization for the hyperbolic
+    distribution have been added. Furthermore, functions have been 
+    implemented to compute the hyperbolic mode in all four parameterizations.
+    
+2005-01-21 fBasics: StableDistribution
+    Functions to compute probability, density, quantiles and to generate
+    random deviates in "S1" and "S2" parameterizations for the stable
+    distribution have been added. Furthermore, afunction have been 
+    implemented to compute the stable mode.
+    
+2004-12-12 fMultivar: MatrixAddon
+    A function to compute the exponential of a square matrix has been
+    added.
+
+2004-11-17 fSeries: fMultivar
+    The package 'fSeries' has become too "fat", so I partitioned it into
+    twp parts: 'fSeries' and 'fMultivar'. The first part now holds functions
+    for the analysis of time series including ARMA Modelling, GARCH
+    Modelling and Hypothesis Testing, the second part holds now functions
+    for time series anlaysis with regression methods and functions
+    for the technical anlaysis including rolling analysis and benchmarks.
+      
+2004-11-16 fBasics: B4-ClassicalTests/B5-StylizedFacts
+    The script file "B4-ClassicalTests" has become too big, so we divided
+    them into three new parts named "B4-TestsClass", "B5-OneSampleTests",
+    and "B6-TwoSampleTests". The script file "B5-StylizedFacts" has been 
+    renamed "B7-StylizedFacts". This information is given for those who 
+    are interested in the source code and internal structure of the Rmetrics 
+    packages.
+ 
+2004-11-14 fBasics: ClassicalTests
+    We made some changes on the classical test functions. We have 
+    introduced an S4 object of class "fHTEST" which describes the
+    classical tests, we have added the usual arguments "title" and
+    "description" to the argument list, and the output of the test
+    now gives more information than the typical printing of R's S3 
+    object "htest".
+    
+2004-11-13 fBasics: SPlusCompatibility
+    These are R functions which we made available for SPlus, including 
+    - General Functions: strsplit, match.fun, cov, forwardsolve, %x%, 
+      data, NROW, NCOL, sd, nlm, optim, download.file.
+    - Tests: bartlett.test, fligner.test, kruskal.test.    
+    These functions may be helpful for porting Rmetrics functions
+    to SPlus.    
+
+2004-11-11 fSeries: garchSim
+    The function "garchSim" was not working properly when not all model
+    parameters where explicitely specified in the argument list.
+    Missing parameters are now added correctly. [Note, that the "garch" 
+    functions will be replaced soon by a new completely rewritten 
+    package in the near future.]
+
+2004-10-29 fExtremes: gpdFit
+    The residual statistics and the information about threshold value
+    and the number of exceedances have been added to the summary report. 
+    Now, beside numeric vectors also univariate time series objects 
+    are accepted as input arguments.
+    
+2004-10-29 fExtremes: MdaPlots
+    Now, beside numeric vectors also univariate time series objects 
+    are accepted as input arguments.
+
+2004-10-29 fExtremes: gevFit
+    The residual statistics has been added to the summary report. 
+    Now, beside numeric vectors also univariate time series objects 
+    are accepted as input arguments.
+    
+2004-10-29 fExtremes: gevglmFit
+    The residual statistics has been added to the summary report.
+    Now, beside numeric vectors also univariate time series objects 
+    are accepted as input arguments.
+    
+2004-10-27 fExtremes: data/*
+    The "bmw", "danish" and "siemens" data are now 2 column data frame 
+    objects with the first column as ISO-8601 character dates %Y-%m-%d 
+    and the second column as numeric values. Formerly they were numeric
+    vectors with POSIX date attributes. Now these data records can 
+    easily be transformed to 'timeSeries' objects and used in the same
+    way as under SPlus.
+
+2004-10-16 fOptions: xmpfOptions
+    Bug removed. Internal function 'readf.fOptions00Index' corrected
+    as '.readf.fOptions00Index'. Now the fOptions examples should work.
+
+2004-10-16 fOptions: BesselFunctions
+    Modified Bessel Functions of the first and second kind for integer
+    order together with their derivatives have been added. The functions
+    are entirely written in S.
+
+2004-10-14 fOptions: EBMDistribution
+    Examples have been added to the help file. In addition a bug was
+    fixed: An internal used variable for the computation of the second 
+    derivative of the reciprocal Gamma and Johnson Type I distribution
+    was missing.
+   
+    + many other smaller improvements and fixings ...
+    
+________________________________________________________________________________
+Rmetrics VERSION 200.10058
 
 
 2004-10-11 Rmetrics
-    The new version is now proofed to be conform witr R Version 2.0 for
+    The new version is now proofed to be conform with R Version 2.0 for
     all its functions.
 
 2004-10-03 fSeries: ArmaStatistics
@@ -230,7 +430,7 @@ Rmetrics VERSION 1091.10057
     theory of exponential Brownian Motion. The functions included 
     are: In Part I, the Error Function "erf", the Psi or Digamma
     Function "Psi", the Incomplete Gamma Function "igamma", the
-    Gamma Function fpr complex arguments, and the Pochhammer Symbol
+    Gamma Function for complex arguments, and the Pochhammer Symbol
     "Pochhammer". In Part II, the Confluent Hypergeometric Functions 
     of the 1st Kind and 2nd Kind "kummerM" and "kummerU", the
     Whittaker Functions "whittakerM" and "whittakerW" and the

@@ -32,11 +32,15 @@
 
 
 \usage{
-CRRBinomialTreeOption(TypeFlag, S, X, Time, r, b, sigma, n)
-JRBinomialTreeOption(TypeFlag, S, X, Time, r, b, sigma, n)
-TIANBinomialTreeOption(TypeFlag, S, X, Time, r, b, sigma, n)
+CRRBinomialTreeOption(TypeFlag = c("ce", "pe", "ca", "pa"), S, X, 
+	Time, r, b, sigma, n, title = NULL, description = NULL)
+JRBinomialTreeOption(TypeFlag = c("ce", "pe", "ca", "pa"), S, X, 
+	Time, r, b, sigma, n, title = NULL, description = NULL)
+TIANBinomialTreeOption(TypeFlag = c("ce", "pe", "ca", "pa"), S, X, 
+	Time, r, b, sigma, n, title = NULL, description = NULL)
 
-BinomialTreeOption(TypeFlag, S, X, Time, r, b, sigma, n)
+BinomialTreeOption(TypeFlag = c("ce", "pe", "ca", "pa"), S, X, 
+	Time, r, b, sigma, n, title = NULL, description = NULL)
 BinomialTreePlot(BinomialTreeValues, dx = -0.025, dy = 0.4, 
     cex = 1, digits = 2, \dots)
 }
@@ -55,7 +59,10 @@ BinomialTreePlot(BinomialTreeValues, dx = -0.025, dy = 0.4,
         a numerical value giving the amount by which the plotting text
         and symbols should be scaled relative to the default.
         }
-    \item{digits}{
+    \item{description}{
+    	a character string which allows for a brief description.
+    	}
+   	\item{digits}{
         an integer value, how many digits should be displayed in the
         option tree?
         }
@@ -81,6 +88,9 @@ BinomialTreePlot(BinomialTreeValues, dx = -0.025, dy = 0.4,
         the time to maturity measured in years, a numeric 
         value; e.g. 0.5 means 6 months.
         }
+    \item{title}{
+    	a character string which allows for a project title.
+    	}
     \item{TypeFlag}{
         a character string either \code{"ce"}, \code{"ca"} for an 
         European or American call option or a \code{"pe"}, \code{"pa"} 
@@ -125,9 +135,9 @@ BinomialTreePlot(BinomialTreeValues, dx = -0.025, dy = 0.4,
     \bold{TIAN Binomial Tree Model:}
     \cr\crTian (1993) suggested to match discrete and continuous local 
     moments up to third order. 
-    \cr
+    
     Leisen and Reimer (1996) proved that the order of convergence in 
-    pricing European options for all three methods is equal to one, and
+    pricing European options for all three methods is equal to one, and 
     thus the three models are equivalent.
 
 }
@@ -149,8 +159,11 @@ BinomialTreePlot(BinomialTreeValues, dx = -0.025, dy = 0.4,
 
 
 \examples{
+## SOURCE("fBasics.A0-SPlusCompatibility")
+## SOURCE("fOptions.A1-PlainVanillaOptions")
+## SOURCE("fOptions.A3-BinomialTreeOptions")
+
 ## Cox-Ross-Rubinstein Binomial Tree Option Model:
- 
    # Example 14.1 from Hull's Book:
    xmpOptions("\nStart: CRR Binomial Tree > ")
    CRRBinomialTreeOption(TypeFlag = "pa", S = 50, X = 50, 
@@ -162,10 +175,9 @@ BinomialTreePlot(BinomialTreeValues, dx = -0.025, dy = 0.4,
    CRRBinomialTreeOption(TypeFlag = "ce", S = 100, X = 100, 
      Time = 1, r = 0.1, b = 0.1, sigma = 0.25, n = 50)
    GBSOption(TypeFlag = "c", S = 100, X = 100, 
-     Time = 1, r = 0.1, b = 0.1, sigma = 0.25)$price
+     Time = 1, r = 0.1, b = 0.1, sigma = 0.25)@price
      
-## CRR - JR - TIAN Model Comparison
-     
+## CRR - JR - TIAN Model Comparison:  
    # Hull's Example as Function of "n":
    xmpOptions("\nNext: Convergence Behavior > ")
    par(mfrow = c(2, 1), cex = 0.7)
@@ -174,24 +186,23 @@ BinomialTreePlot(BinomialTreeValues, dx = -0.025, dy = 0.4,
      rep(NA, times = steps)
    for (n in 3:steps) { 
      CRROptionValue[n] = CRRBinomialTreeOption(TypeFlag = "pa", S = 50, 
-       X = 50, Time = 0.4167, r = 0.1, b = 0.1, sigma = 0.4, n = n)
+       X = 50, Time = 0.4167, r = 0.1, b = 0.1, sigma = 0.4, n = n)@price
      JROptionValue[n] = JRBinomialTreeOption(TypeFlag = "pa", S = 50, 
-       X = 50, Time = 0.4167, r = 0.1, b = 0.1, sigma = 0.4, n = n) 
+       X = 50, Time = 0.4167, r = 0.1, b = 0.1, sigma = 0.4, n = n)@price 
      TIANOptionValue[n] = TIANBinomialTreeOption(TypeFlag = "pa", S = 50, 
-       X = 50, Time = 0.4167, r = 0.1, b = 0.1, sigma = 0.4, n = n) }           
-   plot(CRROptionValue[3:steps], type = "l", col = "red", 
-     ylab = "Option Value")
+       X = 50, Time = 0.4167, r = 0.1, b = 0.1, sigma = 0.4, n = n)@price 
+   }           
+   plot(CRROptionValue[3:steps], type = "l", col = "red", ylab = "Option Value")
    lines(JROptionValue[3:steps], col = "green")
    lines(TIANOptionValue[3:steps], col = "blue")
    # Add Result from BAW Approximation:
    BAWValue =  BAWAmericanApproxOption(TypeFlag = "p", S = 50, X = 50, 
-     Time = 0.4167, r = 0.1, b = 0.1, sigma = 0.4)
+     Time = 0.4167, r = 0.1, b = 0.1, sigma = 0.4)@price
    abline(h = BAWValue, lty = 3)
    title(main = "Convergence")
    data.frame(CRROptionValue, JROptionValue, TIANOptionValue)
    
 ## Plot CRR Option Tree:
-
    # Again Hull's Example:
    xmpOptions("\nNext: Plot CRR Option Tree > ")
    CRRTree = BinomialTreeOption(TypeFlag = "pa", S = 50, X = 50, 
@@ -240,7 +251,7 @@ Tian Y. (1993);
 
 \author{
 
-    Diethelm Wuertz for this R-Port.
+    Diethelm Wuertz for the Rmetrics \R-port.
     
 }
 

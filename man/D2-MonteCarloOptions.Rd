@@ -191,7 +191,7 @@ MonteCarloOption(delta.t, pathLength, mcSteps, mcLoops, init = TRUE,
 
 \author{
 
-    Diethelm Wuertz for this R-Port.
+    Diethelm Wuertz for the Rmetrics \R-port.
     
 }
 
@@ -218,6 +218,12 @@ Jaeckel P. (2002);
 
 
 \examples{
+## SOURCE("fBasics.A0-SPlusCompatibility")
+## SOURCE("fOptions.A1-PlainVanillaOptions")
+## SOURCE("fOptions.B6-AsianOptions")
+## SOURCE("fOptions.D1-LowDiscrepancy")
+## SOURCE("fOptions.D2-MonteCarloOptions")
+   
 ## How to perform a Monte Carlo Simulation?
    
 ## First Step:
@@ -292,9 +298,7 @@ Jaeckel P. (2002);
      X = 100, Time = 1/12, time = 1/12, tau = 0 , r = 0.1, b = 0.1, 
      sigma = 0.4)$price
    print(TW)
-   abline(h = TW, col = "red")
-   grid()
- 
+   abline(h = TW, col = 2)
 }
 
 

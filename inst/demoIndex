@@ -35,3 +35,7 @@ xmpLDShalton		Computes Halton low discrepancy numbers
 xmpLDSsobol			Computes Sobol low discrepancy numbers
 
 xmpMCoption 		Valuates Option by Monte Carlo Simulation
+
+xmpEBMTables        Tables from Continuous Sampled Options by Wuertz
+xmpEBMFigures       Figures from Continuous Sampled Options by Wuertz
+xmpEBMExamples      Examples from Continuous Sampled Options by Wuertz

@@ -1,6 +1,6 @@
-\name{MultAssetsOptions}
+\name{MultipleAssetsOptions}
 
-\alias{MultAssetsOptions}
+\alias{MultipleAssetsOptions}
 
 \alias{TwoAssetCorrelationOption}
 \alias{EuropeanExchangeOption}
@@ -36,18 +36,18 @@
 
 
 \usage{
-TwoAssetCorrelationOption(TypeFlag, S1, S2, X1, X2, Time, 
-    r, b1, b2, sigma1, sigma2, rho) 
+TwoAssetCorrelationOption(TypeFlag, S1, S2, X1, X2, Time, r,
+    b1, b2, sigma1, sigma2, rho, title = NULL, description = NULL) 
 EuropeanExchangeOption(S1, S2, Q1, Q2, Time, r, b1, b2, 
-    sigma1, sigma2, rho)
-AmericanExchangeOption(S1, S2, Q1, Q2, Time, r, b1, b2, 
-    sigma1, sigma2, rho, doprint)
+    sigma1, sigma2, rho, title = NULL, description = NULL)
+AmericanExchangeOption(S1, S2, Q1, Q2, Time, r, b1, b2, sigma1,
+    sigma2, rho, title = NULL, description = NULL)
 ExchangeOnExchangeOption(TypeFlag, S1, S2, Q, time1, Time2, r, 
-    b1, b2, sigma1, sigma2, rho)
+    b1, b2, sigma1, sigma2, rho, title = NULL, description = NULL)
 TwoRiskyAssetsOption(TypeFlag, S1, S2, X, Time, r, b1, 
-    b2, sigma1, sigma2, rho)
+    b2, sigma1, sigma2, rho, title = NULL, description = NULL)
 SpreadApproxOption(TypeFlag, S1, S2, X, Time, r, sigma1, 
-    sigma2, rho)
+    sigma2, rho, title = NULL, description = NULL)
 }
 
 
@@ -57,11 +57,9 @@ SpreadApproxOption(TypeFlag, S1, S2, X, Time, r, sigma1,
         the annualized cost-of-carry rate for the first and second 
         asset, a numeric value; e.g. 0.1 means 10\% pa.
         }
-    \item{doprint}{
-        [AmericanExchange*] - \cr
-        a logical flag. Should the trigger price be printed?
-        By default \code{FALSE}.
-        }
+    \item{description}{
+    	a character string which allows for a brief description.
+    	}
     \item{Q, Q1, Q2}{
         additionally , quantity of the first and second asset.
         }
@@ -88,6 +86,9 @@ SpreadApproxOption(TypeFlag, S1, S2, X, Time, r, sigma1,
         the time to maturity measured in years, a numeric value; 
         e.g. 0.5 means 6 months.
         }
+    \item{title}{
+    	a character string which allows for a project title.
+    	}
     \item{TypeFlag}{
         usually a character string either \code{"c"} for a call option 
         or a \code{"p"} for a put option, except for \cr
@@ -295,12 +296,16 @@ Zhang P.G. (1995);
 
 \author{
 
-    Diethelm Wuertz for this R-Port.
+    Diethelm Wuertz for the Rmetrics \R-port.
 
 }
 
 
 \examples{
+## SOURCE("fBasics.A0-SPlusCompatibility")
+## SOURCE("fOptions.A1-PlainVanillaOptions")
+## SOURCE("fOptions.B2-MultAssetsOptions")
+
 ## Examples from Chapter 2.8 in E.G. Haug's Option Guide (1997)
 
 ## Two Asset Correlation Options [2.8.1]:
