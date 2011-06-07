@@ -9,44 +9,46 @@ C     PART I: HALTON SEQUENCE:
 C-------------------------------------------------------------------------------
 C     @file  LowDiscrepancy.f
 C     @brief Halton sequence
-C     
+C
 C     @author Diethelm Wuertz
 C     @author Christophe Dutang
-C     
-C     
+C     @author Yohan Chalabi
+C
 C     Copyright (C) Sept. 2002, Diethelm Wuertz, ETH Zurich. All rights
 C     reserved.  slightly modified (better accuracy and speed) by
-C     Christophe Dutang in October 2009.
-C     
+C     Christophe Dutang in October 2009. Delcared all variables and
+C     functions to avoid troubles with new version of gfortran by Yohan
+C     Chalabi in June 2011.
+C
 C     The new BSD License is applied to this software.
 C     Copyright (c) Diethelm Wuertz, ETH Zurich. All rights reserved.
-C     
+C
 C     Redistribution and use in source and binary forms, with or without
-C     modification, are permitted provided that the followingConditions are
+C     modification, are permitted provided that the following conditions are
 C     met:
-C     
-C     - Redistributions of sourceCode must retain the aboveCopyright
-C     notice, this list ofConditions and the following disclaimer.
+C
+C     - Redistributions of source code must retain the above copyright
+C     notice, this list of conditions and the following disclaimer.
 C     - Redistributions in binary form must reproduce the above
-C     Copyright notice, this list ofConditions and the following
+C     Copyright notice, this list of conditions and the following
 C     disclaimer in the documentation and/or other materials provided
 C     with the distribution.
-C     - Neither the name of the ETH Zurich nor the names of its Contributors
+C     - Neither the name of the ETH Zurich nor the names of its contributors
 C     may be used to endorse or promote products derived from this software
 C     without specific prior written permission.
-C     
-C     THIS SOFTWARE IS PROVIDED BY THECOPYRIGHT HOLDERS ANDCONTRIBUTORS
+C
+C     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 C     "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 C     LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-C     A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THECOPYRIGHT
-C     OWNER ORCONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-C     SPECIAL, EXEMPLARY, ORCONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+C     A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+C     OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+C     SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
 C     LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-C     DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVERCAUSED AND ON ANY
-C     THEORY OF LIABILITY, WHETHER INCONTRACT, STRICT LIABILITY, OR TORT
+C     DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+C     THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 C     (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 C     OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-C     
+C
 C-------------------------------------------------------------------------------
 
 
@@ -65,11 +67,14 @@ C-------------------------------------------------------------------------------
 C     INITIALIZE THE HALTON LOW DISCREPANCY SEQUENCE.
 C     THE BASE IS CALCULATED FROM PRIMES
 
+      IMPLICIT NONE
+
       INTEGER DIMEN, BASE(DIMEN), ITER(DIMEN), OFFSET, DIGIT
       DOUBLE PRECISION QUASI(DIMEN), HALF
       INTRINSIC MOD
+      INTEGER NC, I, K, M, N, NB
 
-C     INIT BASE FROM PRIMES - THIS IMPLEMENTS A SIMMPLE SIEVE:
+C     INIT BASE FROM PRIMES - THIS IMPLEMENTS A SIMPLE SIEVE:
       BASE(1) = 2
       BASE(2) = 3
       N = 3
@@ -118,9 +123,12 @@ C-------------------------------------------------------------------------------
 C     GENERATE THE NEXT POINT IN HALTON'S LOW DISCREPANCY SEQUENCE
 C     NOTE, THAT WE HAVE ALREADY "OFFSET" POINTS GENERATED.
 
+      IMPLICIT NONE
+
       INTEGER DIMEN, BASE(DIMEN), ITER(DIMEN), OFFSET, DIGIT
       DOUBLE PRECISION QUASI(DIMEN), HALF
       INTRINSIC MOD
+      INTEGER NB
 
       DO NB = 1, DIMEN
          ITER(NB) = OFFSET
@@ -151,15 +159,19 @@ C     ARGUMENTS:
 C     QN        - THE QUASI NUMBERS, A "N" BY "DIMEN" ARRAY
 C     N         - NUMBERS OF POINTS TO GENERATE
 C     DIMEN     - THE DIMENSION
-C     QUASI     - THE LAST POINT IN THE SEQUENDE
+C     QUASI     - THE LAST POINT IN THE SEQUENCE
 C     BASE      - THE PRIME BASE, A VECTOR OF LENGTH "DIMEN"
 C     OFFSET    - THE OFFSET OF POINTS IN THE NEXT FUNCTION CALL
 C     INIT      - IF ONE, WE INITIALIZE
 C     TRANSFORM - A FLAG, 0 FOR UNIFORM, 1 FOR NORMAL DISTRIBUTION
 
+      IMPLICIT NONE
+
       INTEGER N, DIMEN, OFFSET, INIT, TRANSFORM
       INTEGER BASE(DIMEN)
       DOUBLE PRECISION QN(N,DIMEN), QUASI(DIMEN)
+      DOUBLE PRECISION HQNORM
+      INTEGER I, J
 
 C     IF REQUESTED, INITIALIZE THE GENERATOR:
       IF (INIT.EQ.1) THEN
@@ -192,8 +204,11 @@ C-------------------------------------------------------------------------------
 
       DOUBLE PRECISION FUNCTION HQNORM(P)
 
+      IMPLICIT NONE
+
 C     USED TO CALCULATE HALTON NORMAL DEVIATES:
       DOUBLE PRECISION P,R,T,A,B, EPS
+      DOUBLE PRECISION P0,P1,P2,P3,P4, Q0,Q1,Q2,Q3,Q4
       DATA P0,P1,P2,P3,P4, Q0,Q1,Q2,Q3,Q4
      &     /-0.322232431088E+0, -1.000000000000E+0, -0.342242088547E+0,
      &     -0.204231210245E-1, -0.453642210148E-4, +0.993484626060E-1,
@@ -226,10 +241,13 @@ C-------------------------------------------------------------------------------
 
       SUBROUTINE TESTHALTON()
 
+      IMPLICIT NONE
+
       INTEGER N1,N2,DIMEN,OFFSET,TRANSFORM
       PARAMETER (N1=20,N2=N1/2,DIMEN=5)
       INTEGER BASE(DIMEN)
       DOUBLE PRECISION QN1(N1,DIMEN),QN2(N2,DIMEN)
+      INTEGER J, I, INIT
 
       TRANSFORM = 0
 
@@ -290,9 +308,9 @@ C     PART II: SOBOL SEQUENCE:
 C--------------------------------------------------------------------------
 C     @file  LowDiscrepancy.f
 C     @brief Sobol sequence
-C     
+C
 C     @author Diethelm Wuertz
-C     
+C
 C     ORIGINAL VERSION:
 C     ALGORITHM 659, COLLECTED ALGORITHMS FROM ACM. PUBLISHED IN
 C     TRANSACTIONS ON MATHEMATICAL SOFTWARE, VOL. 14, NO. 1, P.88.
@@ -307,41 +325,41 @@ C     VALUE AND THE MAXIMUM NUMBER OF CALLS (ATMOST) HAS TO BE DONE
 C     R/SPLUS FUNCTION.
 C     SEE:
 C     http://www.acm.org/pubs/copyright_policy/softwareCRnotice.html
-C     
+C
 C     @author Christophe Dutang
-C     
+C
 C     Copyright (C) Sept. 2002, Diethelm Wuertz, ETH Zurich. All rights reserved.
 C     slightly modified (better accuracy and speed) by Christophe Dutang in October 2009.
-C     
+C
 C     The new BSD License is applied to this software.
 C     Copyright (c) Diethelm Wuertz, ETH Zurich. All rights reserved.
-C     
+C
 C     Redistribution and use in source and binary forms, with or without
-C     modification, are permitted provided that the followingConditions are
+C     modification, are permitted provided that the following Conditions are
 C     met:
-C     
-C     - Redistributions of sourceCode must retain the aboveCopyright
-C     notice, this list ofConditions and the following disclaimer.
+C
+C     - Redistributions of source Code must retain the above Copyright
+C     notice, this list of Conditions and the following disclaimer.
 C     - Redistributions in binary form must reproduce the above
-C     Copyright notice, this list ofConditions and the following
+C     Copyright notice, this list of Conditions and the following
 C     disclaimer in the documentation and/or other materials provided
 C     with the distribution.
-C     - Neither the name of the ETH Zurich nor the names of itsContributors
+C     - Neither the name of the ETH Zurich nor the names of its Contributors
 C     may be used to endorse or promote products derived from this software
 C     without specific prior written permission.
-C     
-C     THIS SOFTWARE IS PROVIDED BY THECOPYRIGHT HOLDERS ANDCONTRIBUTORS
+C
+C     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 C     "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 C     LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-C     A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THECOPYRIGHT
-C     OWNER ORCONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-C     SPECIAL, EXEMPLARY, ORCONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+C     A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+C     OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+C     SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
 C     LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-C     DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVERCAUSED AND ON ANY
-C     THEORY OF LIABILITY, WHETHER INCONTRACT, STRICT LIABILITY, OR TORT
+C     DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+C     THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 C     (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 C     OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-C     
+C
 C--------------------------------------------------------------------------
 
 
@@ -366,8 +384,8 @@ C     THIS IS AN INTERFACE TO CREATE "N" POINTS IN "DIMEN" DIMENSIONS
 C     ARGUMENTS:
 C     QN        - QUASI NUMBERS, A "N" BY "DIMEN" ARRAY
 C     N         - NUMBERS OF POINTS TO GENERATE
-C     DIMEN     - DIMENSION OF THE SEQUENCY
-C     QUASI     - LAST POINT IN THE SEQUENDE
+C     DIMEN     - DIMENSION OF THE SEQUENCE
+C     QUASI     - LAST POINT IN THE SEQUENCE
 C     LL        - COMMON DENOMINATOR OF THE ELEMENTS IN SV
 C     COUNT     - SEQUENCE NUMBER OF THE CALL
 C     SV        - TABLE OF DIRECTION NUMBERS
@@ -377,7 +395,7 @@ C     1 - OWEN TYPE SCRAMBLING
 C     2 - FAURE-TEZUKA TYPE SCRAMBLING
 C     3 - OWEN + FAURE-TEZUKA TYPE SCRAMBLING
 C     iSEED     - SCRAMBLING iSEED
-C     INIT      - INITIALIZAYION FLAG, 0 NEXT, 1 RE-INITIALZE
+C     INIT      - INITIALIZATION FLAG, 0 NEXT, 1 RE-INITIALIZE
 C     TRANSFORM - FLAG, 0 FOR UNIFORM, 1 FOR NORMAL DISTRIBUTION
 
       IMPLICIT NONE
@@ -411,18 +429,21 @@ C     GENERATE THE NEXT "N" QUASI RANDOM NUMBERS:
             ENDDO
          ENDDO
       ENDIF
-      
+
       RETURN
       END
-      
+
 
 C-------------------------------------------------------------------------------
 
 
       DOUBLE PRECISION FUNCTION SQNORM(P)
 
+      IMPLICIT NONE
+
 C     USED TO CALCULATE SOBOL NORMAL DEVIATES
       DOUBLE PRECISION P,R,T,A,B, EPS
+      DOUBLE PRECISION P0,P1,P2,P3,P4, Q0,Q1,Q2,Q3,Q4
       DATA P0,P1,P2,P3,P4, Q0,Q1,Q2,Q3,Q4
      &     /-0.322232431088E+0, -1.000000000000E+0, -0.342242088547E+0,
      &     -0.204231210245E-1, -0.453642210148E-4, +0.993484626060E-1,
@@ -464,11 +485,11 @@ C     THE NUMBERS IN "SV" ARE ACTUALLY BINARY FRACTIONS. "RECIPD=1/LL"
 C     HOLDS 1/(THE COMMON DENOMINATOR OF ALL OF THEM).
 C     INITSOBOL IMPLICITLY COMPUTES THE FIRST ALL-ZERO VECTOR.
 C     THE TAUS" IS FOR DETERMINING "FAVORABLE" VALUES. AS DISCUSSED IN
-C     BRATLEY/FOX, HESE HAVE THE FORM "N=2**K" WHERE "K.GE.(TAUS+S-1)"
+C     BRATLEY/FOX, THESE HAVE THE FORM "N=2**K" WHERE "K.GE.(TAUS+S-1)"
 C     FOR INTEGRATION AND "K.GT.TAUS" FOR GLOBAL OPTIMIZATION.
 C     ARGUMENTS:
-C     DIMEN     - DIMENSION OF THE SEQUENCY
-C     QUASI     - LAST POINT IN THE SEQUENDE
+C     DIMEN     - DIMENSION OF THE SEQUENCE
+C     QUASI     - LAST POINT IN THE SEQUENCE
 C     LL        - COMMON DENOMINATOR OF THE ELEMENTS IN SV
 C     COUNT     - SEQUENCE NUMBER OF THE CALL
 C     SV        - TABLE OF DIRECTION NUMBERS
@@ -478,6 +499,8 @@ C     1 - OWEN TYPE SCRAMBLING
 C     2 - FAURE-TEZUKA TYPE SCRAMBLING
 C     3 - OWEN + FAURE-TEZUKA TYPE SCRAMBLING
 C     iSEED     - SCRAMBLING iSEED
+
+      IMPLICIT NONE
 
       INTEGER MAXDIM,MAXDEG,MAXBIT,IFLAG
 C     C      DW ADDED FOLLOWING LINE:
@@ -495,6 +518,8 @@ C     C      INTEGER TEMP1,TEMP2,TEMP4
       INTEGER iSEED
       LOGICAL INCLUD(MAXDEG)
       INTRINSIC MOD, IEOR
+      INTEGER LL, MAXX, MAX, TEMP01
+
 
       DATA (POLY(I),I=2,211)/3,7,11,13,19,25,37,59,47,61,55,41,67,97,91,
      +     109,103,115,131,193,137,145,143,241,157,185,167,229,171,213,
@@ -1479,6 +1504,8 @@ C-------------------------------------------------------------------------------
 
       SUBROUTINE SGENSCRML(MAX, LSM, SHIFT, S, MAXCOL, iSEED)
 
+      IMPLICIT NONE
+
 C     GENERATING LOWER TRIANGULAR SCRAMBLING MATRICES AND SHIFT VECTORS.
       DOUBLE PRECISION UNIS
       INTEGER S,MAXCOL,P,I,J,MAX,TEMP,STEMP,L,LL
@@ -1516,7 +1543,10 @@ C-------------------------------------------------------------------------------
 
       SUBROUTINE SGENSCRMU(USM, USHIFT, S, MAXCOL, iSEED)
 
-C     GENERATING UPPER TRIANGULAR SCRMABLING MATRICES AND SHIFT VECTORS.
+      IMPLICIT NONE
+
+C     GENERATING UPPER TRIANGULAR SCRAMBLING MATRICES AND SHIFT VECTORS.
+
       DOUBLE PRECISION UNIS
       INTEGER USM(31,31),MAXCOL,I,J
       INTEGER USHIFT(31),S,TEMP,STEMP
@@ -1544,7 +1574,7 @@ C-------------------------------------------------------------------------------
 
 
       DOUBLE PRECISION FUNCTION UNIS(IX)
-C     PORTABLE PSEUDORANDOM NUMBER
+C     PORTABLE PSEUDO-RANDOM NUMBER
 C     GENERATOR IMPLEMENTING THE RECURSION
 C     IX=16807*IX MOD(2**31-1)
 C     UNIF=IX/(2**31-1)
@@ -1552,7 +1582,7 @@ C     USING ONLY 32 BITS INCLUDING SIGN
 C     INPUT:
 C     IX =INTEGER STRICTLY BETWEEN 0 AND 2** 31 -1
 C     OUTPUTS:
-C     IX=NEW PSEUDORANDOM INTEGER
+C     IX=NEW PSEUDO-RANDOM INTEGER
 C     STRICTLY BETWEEN 0 AND 2**31-1
 C     UNIF=UNIFORM VARIATE (FRACTION)
 C     STRICTLY BETWEEN 0 AND 1
@@ -1560,6 +1590,9 @@ C     FOR JUSTIFICATION, SEE P. BRATLEY,
 C     B.L. FOX, AND L.E. SCHRAGE (1983)
 C     "A GUIDE TO SIMULATION"
 C     SPRINGER-VERLAG, PAGES 201-202
+
+      IMPLICIT NONE
+
       INTEGER K1,IX
       K1 = IX/127773
       IX = 16807*(IX-K1*127773)-K1*2836
@@ -1574,20 +1607,23 @@ C-------------------------------------------------------------------------------
 
       SUBROUTINE NEXTSOBOL(DIMEN, QUASI, LL, COUNT, SV)
 
-C     GENERATES A NEW QUASIRANDOM VECTOR WITH EACH CALL. IT ADAPTS THE
+C     GENERATES A NEW QUASI-RANDOM VECTOR WITH EACH CALL. IT ADAPTS THE
 C     IDEAS OF ANTONOV AND SALEEV, USSR COMPUT. MATHS. MATH. PHYS. 19,
 C     (1980), 252-256. "INITSOBOL" MUST BE CALLED BEFORE CALLING "NEXTSOBOL".
 C     ARGUMENTS:
-C     DIMEN     - DIMENSION OF THE SEQUENCY
-C     QUASI     - LAST POINT IN THE SEQUENDE
+C     DIMEN     - DIMENSION OF THE SEQUENCE
+C     QUASI     - LAST POINT IN THE SEQUENCE
 C     LL        - COMMON DENOMINATOR OF THE ELEMENTS IN SV
 C     COUNT     - SEQUENCE NUMBER OF THE CALL
+
+      IMPLICIT NONE
 
       INTEGER DIMEN,MAXBIT,I,L,COUNT
       PARAMETER (MAXBIT=30)
       INTEGER SV(DIMEN,MAXBIT)
       DOUBLE PRECISION QUASI(DIMEN)
       INTRINSIC MOD, IEOR
+      INTEGER LL
 
       L = 0
       I = COUNT
@@ -1613,12 +1649,16 @@ C-------------------------------------------------------------------------------
 
       SUBROUTINE TESTSOBOL()
 
+      IMPLICIT NONE
+
 C     TESTROUTINE, CALLED FROM THE FORTRAN MAIN PROGRAM
       INTEGER MAXBIT,DIMEN,TRANSFORM
+      INTEGER N1, N2
       PARAMETER (N1=20,N2=N1/2,DIMEN=5,MAXBIT=30)
       INTEGER LL,COUNT,SV(DIMEN,MAXBIT)
       DOUBLE PRECISION QN1(N1,DIMEN),QN2(N2,DIMEN),QUASI(DIMEN)
       INTEGER iSEED, iSEED1
+      INTEGER I, INIT, IFLAG, J
 
       TRANSFORM = 1
       IFLAG = 3

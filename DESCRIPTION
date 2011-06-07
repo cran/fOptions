@@ -1,7 +1,7 @@
 Package: fOptions
-Version: 2110.78
-Revision: 4844
-Date: 2010-04-23
+Version: 2140.79
+Revision: 5107
+Date: 2011-06-07
 Title: Basics of Option Valuation
 Author: Diethelm Wuertz and many others, see the SOURCE file
 Depends: R (>= 2.4.0), methods, timeDate, timeSeries, fBasics
@@ -16,6 +16,6 @@ LazyLoad: yes
 LazyData: yes
 License: GPL (>= 2)
 URL: http://www.rmetrics.org
-Packaged: 2010-04-27 07:14:14 UTC; yankee
+Packaged: 2011-06-07 20:24:03 UTC; chalabi
 Repository: CRAN
-Date/Publication: 2010-04-27 20:02:44
+Date/Publication: 2011-06-08 07:03:49
