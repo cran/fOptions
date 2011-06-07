@@ -1,5 +1,5 @@
 Package: fOptions
-Version: 2140.79
+Version: 2160.80
 Revision: 5107
 Date: 2011-06-07
 Title: Basics of Option Valuation
@@ -12,10 +12,9 @@ Description: Environment for teaching "Financial Engineering and
 NOTE: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE
         FUTURE. THIS TYPICALLY INCLUDES FUNCTION AND ARGUMENT NAMES, AS
         WELL AS DEFAULTS FOR ARGUMENTS AND RETURN VALUES.
-LazyLoad: yes
 LazyData: yes
 License: GPL (>= 2)
 URL: http://www.rmetrics.org
-Packaged: 2011-06-07 20:24:03 UTC; chalabi
+Packaged: 2012-03-20 08:27:24 UTC; yankee
 Repository: CRAN
-Date/Publication: 2011-06-08 07:03:49
+Date/Publication: 2012-03-20 10:05:39
