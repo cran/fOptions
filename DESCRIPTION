@@ -1,10 +1,10 @@
 Package: fOptions
-Version: 2160.80
-Revision: 5107
-Date: 2011-06-07
+Version: 2160.81
+Revision: 5325
+Date: 2012-04-17
 Title: Basics of Option Valuation
 Author: Diethelm Wuertz and many others, see the SOURCE file
-Depends: R (>= 2.4.0), methods, timeDate, timeSeries, fBasics
+Depends: methods, timeDate, timeSeries, fBasics
 Suggests: RUnit, tcltk
 Maintainer: Rmetrics Core Team <Rmetrics-core@r-project.org>
 Description: Environment for teaching "Financial Engineering and
@@ -15,6 +15,6 @@ NOTE: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE
 LazyData: yes
 License: GPL (>= 2)
 URL: http://www.rmetrics.org
-Packaged: 2012-03-20 08:27:24 UTC; yankee
+Packaged: 2012-04-17 19:02:02 UTC; yohan
 Repository: CRAN
-Date/Publication: 2012-03-20 10:05:39
+Date/Publication: 2012-04-18 04:40:55

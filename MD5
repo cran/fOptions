@@ -1,11 +1,11 @@
-e80618cd32b9ac897efe11d74ef416fd *ChangeLog
-9e0b75ee1bf78dd9903b6b0ef875e0ed *DESCRIPTION
-aae3de8b211dde2e43e4ceb0d419fe4d *NAMESPACE
+f348e97983b867eceea44fba81a076c2 *ChangeLog
+00b1bd9b6657a2e3854da2bf52db607e *DESCRIPTION
+87538fa8d9d11652f0b15db6468d82f6 *NAMESPACE
 ebdddcdb66f6f07846353b7000028e10 *R/BasicAmericanOptions.R
 347b11e63cdbb67c724b5019001f7d89 *R/BinomialTreeOptions.R
 5ada33e4429a2514d7ca1fe2b08a1a3d *R/HestonNandiGarchFit.R
 96651e302387b2e55228e308a6e33486 *R/HestonNandiOptions.R
-7063048137b8591c6215fac8392d4a42 *R/LowDiscrepancy.R
+795365d58e9b644a898eeee0e3299263 *R/LowDiscrepancy.R
 c50eec8ebfde8d97d3ea547dc91afc6b *R/MonteCarloOptions.R
 b7a9891bee346ef3b9b29c7e9f04cb4a *R/PlainVanillaOptions.R
 aeabc5d969aede3a83155563186731a7 *R/fOptionsEnv.R
@@ -27,6 +27,6 @@ fba9d720010c0ac6564a9ed3b89a42e8 *inst/unitTests/runTests.R
 ba362790de611adac6be71a4aecd2cae *man/LowDiscrepancy.Rd
 ecbc358764d115921d2eb43922350075 *man/MonteCarloOptions.Rd
 55a457038a03a9ce8554f6574c082e1e *man/PlainVanillaOptions.Rd
-78747d5aa5d95029f850a4737db4fbcf *src/085A-LowDiscrepancy.f
+ac2f961e99b1c81e181152e51a224768 *src/085A-LowDiscrepancy.f
 1d848c9e918f0eafbb64d4aa0e593e78 *src/Makevars
 ca566e590ec30abd0718c5375e1a446f *tests/doRUnit.R
