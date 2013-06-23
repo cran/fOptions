@@ -1,5 +1,5 @@
-edc40532768a20289a1c43abf2b91be4 *ChangeLog
-1a4b4fe69bcdaca8aa7abc2f3ee1150b *DESCRIPTION
+aa7f38d14a614b8c8751bf7acae52e3e *ChangeLog
+ce9980dd9dcda201e8fd8247889f3ebd *DESCRIPTION
 87538fa8d9d11652f0b15db6468d82f6 *NAMESPACE
 ebdddcdb66f6f07846353b7000028e10 *R/BasicAmericanOptions.R
 347b11e63cdbb67c724b5019001f7d89 *R/BinomialTreeOptions.R
@@ -9,7 +9,7 @@ ebdddcdb66f6f07846353b7000028e10 *R/BasicAmericanOptions.R
 c50eec8ebfde8d97d3ea547dc91afc6b *R/MonteCarloOptions.R
 b7a9891bee346ef3b9b29c7e9f04cb4a *R/PlainVanillaOptions.R
 aeabc5d969aede3a83155563186731a7 *R/fOptionsEnv.R
-7b5cd011a96ad33dcd0f873549f82765 *R/zzz.R
+39a30d166fa39ed16868c6592ef50664 *R/zzz.R
 6042b9c5e5bec3ecc1b6959cd2858b64 *inst/COPYRIGHT.html
 6833c37bb27a1dab283e65e5672ecee5 *inst/unitTests/Makefile
 fba9d720010c0ac6564a9ed3b89a42e8 *inst/unitTests/runTests.R
@@ -28,5 +28,5 @@ ba362790de611adac6be71a4aecd2cae *man/LowDiscrepancy.Rd
 ecbc358764d115921d2eb43922350075 *man/MonteCarloOptions.Rd
 f5348174bf45abb28eefc199c38668c1 *man/PlainVanillaOptions.Rd
 ac2f961e99b1c81e181152e51a224768 *src/085A-LowDiscrepancy.f
-1d848c9e918f0eafbb64d4aa0e593e78 *src/Makevars
+3996e7c16bfb96fad295ee425815cb4d *src/Makevars
 ca566e590ec30abd0718c5375e1a446f *tests/doRUnit.R
