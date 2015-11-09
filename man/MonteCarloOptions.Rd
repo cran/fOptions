@@ -264,8 +264,8 @@ Jaeckel P. (2002);
 
 ## Final Step: 
    # Set Global Parameters for the plain Vanilla / arithmetic Asian Options:
-   TypeFlag <<- "c"; S <<- 100; X <<- 100
-   Time <<- 1/12; sigma <<- 0.4; r <<- 0.10; b <<- 0.1
+   TypeFlag <- "c"; S <- 100; X <- 100
+   Time <- 1/12; sigma <- 0.4; r <- 0.10; b <- 0.1
    
    # Do the Asian Simulation with scrambled random numbers:
    mc = MonteCarloOption(delta.t = 1/360, pathLength = 30, mcSteps = 5000, 
