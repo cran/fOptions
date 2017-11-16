@@ -1,25 +1,22 @@
 Package: fOptions
 Title: Rmetrics - Pricing and Evaluating Basic Options
-Date: 2015-11-09
-Version: 3022.85
-Author: Rmetrics Core Team,
-	Diethelm Wuertz [aut],
+Date: 2017-11-12
+Version: 3042.86
+Author: Diethelm Wuertz [aut],
 	Tobias Setz [cre],
 	Yohan Chalabi [ctb]
-Maintainer: Tobias Setz <tobias.setz@rmetrics.org>
-Description: Environment for teaching 
-	"Financial Engineering and Computational Finance".
-	Pricing and Evaluating Basic Options.
+Maintainer: Tobias Setz <tobias.setz@live.com>
+Description: Provides a collection of functions to 
+    valuate basic options. This includes the generalized
+	Black-Scholes option, options on futures and options on
+	commodity futures.
 Depends: timeDate, timeSeries, fBasics
 Imports: graphics, methods, stats
 Suggests: RUnit, tcltk
-Note: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE
-        FUTURE. THIS TYPICALLY INCLUDES FUNCTION AND ARGUMENT NAMES, AS
-        WELL AS DEFAULTS FOR ARGUMENTS AND RETURN VALUES.
 LazyData: yes
 License: GPL (>= 2)
 URL: http://www.rmetrics.org
 NeedsCompilation: yes
-Packaged: 2015-11-09 14:49:27 UTC; Tobi
+Packaged: 2017-11-16 17:28:35 UTC; Tobias Setz
 Repository: CRAN
-Date/Publication: 2015-11-09 17:23:12
+Date/Publication: 2017-11-16 22:46:13 UTC

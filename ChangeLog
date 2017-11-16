@@ -1,7 +1,6 @@
 2015-11-09  tsetz
 
 	* Updated Description and Namespace files
-	* Removed global (e.g. sigma <<- 0.4) assignments.
 
 2013-06-23  chalabi
 

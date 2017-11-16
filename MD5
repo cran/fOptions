@@ -1,6 +1,6 @@
-f3b55c5716a459a781f46d93b24a3ad1 *ChangeLog
-15714540d775d957caab3a81be8648b9 *DESCRIPTION
-2e0892bc1cd79bdc3c2158c6856baeb1 *NAMESPACE
+89322d70d9ae86fa750fade5fa5c0627 *ChangeLog
+5226e20d4f2d341522c61befa9df0102 *DESCRIPTION
+5e845b0f5ac210080d3085f1827ba893 *NAMESPACE
 3b03c603cd984bd44f208b3a0cfac098 *R/BasicAmericanOptions.R
 3999361387fd70334d93eabb55eabf28 *R/BinomialTreeOptions.R
 aced832af546528f9af9f032c171b09b *R/HestonNandiGarchFit.R
@@ -9,7 +9,7 @@ de733c16f6dfc645cedfe0b7b642650f *R/HestonNandiOptions.R
 439ad25a02c0a3efc6f6dc437520d1d2 *R/MonteCarloOptions.R
 a51bcfc053b5a7be39c4b9ac93432ff1 *R/PlainVanillaOptions.R
 597b46b7f852c9fa6b85184b11c8d713 *R/fOptionsEnv.R
-0831bd4a1ea68d521ae40ebfea2f07ce *R/zzz.R
+0b079db7cd3c352bbb3c53d6fc0dff6e *R/zzz.R
 6042b9c5e5bec3ecc1b6959cd2858b64 *inst/COPYRIGHT.html
 6833c37bb27a1dab283e65e5672ecee5 *inst/unitTests/Makefile
 fba9d720010c0ac6564a9ed3b89a42e8 *inst/unitTests/runTests.R
@@ -18,15 +18,15 @@ fba9d720010c0ac6564a9ed3b89a42e8 *inst/unitTests/runTests.R
 28eae833137ecbda37da909dd0cf5d7e *inst/unitTests/runit.HestonNandiGarchFit.R
 28bc62719179cdb3390c48a70c640145 *inst/unitTests/runit.HestonnandiGarchOption.R
 2516954efef90d9920c7d26954df29c7 *inst/unitTests/runit.LowDiscrepancy.R
-1ca64c6a59bb46c16b6f028e32faeeb8 *inst/unitTests/runit.MonteCarloOptions.R
+5398ddabf2308b7c938537a95a20aaa0 *inst/unitTests/runit.MonteCarloOptions.R
 6c82cb52ec5dbbe5242ba50edfc223ec *inst/unitTests/runit.PlainVanillaOptions.R
-b7789515cf344b6449e5699a0b7fc911 *man/00fOptions-package.Rd
+7770ec9af8c4a947cfe5ca051109d905 *man/00fOptions-package.Rd
 95a12de45860ba19a3c88d7000605091 *man/BasicAmericanOptions.Rd
 40fbb867428b242f4bb052897afc57ed *man/BinomialTreeOptions.Rd
 04be047d7af7f1f4c650d6e4fd82b8b3 *man/HestonNandiGarchFit.Rd
 58463c1aea2dd3a16f64bb0d79e657f4 *man/HestonNandiOptions.Rd
 ba362790de611adac6be71a4aecd2cae *man/LowDiscrepancy.Rd
-58feb8718bd21ead1589c5a20e8e001e *man/MonteCarloOptions.Rd
+2c91df381a9998bd3302b71ed33ef089 *man/MonteCarloOptions.Rd
 b67011eaf073059bb443b8e66e001d7d *man/PlainVanillaOptions.Rd
 ac2f961e99b1c81e181152e51a224768 *src/LowDiscrepancy.f
 3996e7c16bfb96fad295ee425815cb4d *src/Makevars
